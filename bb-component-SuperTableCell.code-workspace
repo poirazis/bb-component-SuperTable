@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../bb-component-SuperTableCell"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../bb-component-SuperTableColumn"
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,314 @@
+{
+  "type": "component",
+  "metadata": {},
+  "schema": {
+    "name": "bb-component-SuperTable",
+    "friendlyName": "Super Table",
+    "description": "A Fully Customizable Table Component with Superpowers !",
+    "icon": "Table",
+    "styles": [
+      "padding",
+      "size",
+      "background",
+      "border",
+      "shadow"
+    ],
+    "hasChildren": true,
+    "settings": [
+      { 
+        "type": "dataProvider",
+        "key": "dataProvider",
+        "label": "Data Provider",
+        "required": true
+      },
+      { 
+        "type": "field",
+        "key": "idColumn",
+        "label": "ID Column",
+        "required": true
+      },
+      { 
+        "type": "select",
+        "key": "size",
+        "label": "Size",
+        "options": [ 
+          { "label": "Extra Small", "value": "XS" }, 
+          { "label": "Small", "value": "S" }, 
+          { "label": "Medium", "value": "M" },
+          { "label": "Large", "value": "L" },
+          { "label": "Extra Large", "value": "XL" },
+          { "label": "Custom", "value": "custom"}
+        ],
+        "defaultValue" : "M"
+      },
+      {
+        "section": true,
+        "name": "Custom Sizing Settings",
+        "dependsOn": { "setting": "size", "value": "custom" },
+        "settings": [
+          {
+            "type": "number",
+            "key": "rowVerticalPadding",
+            "label": "Row Vertical Padding",
+            "min": 0,
+            "max": 32,
+            "defaultValue": 11
+          },
+          {
+            "type": "number",
+            "key": "rowHorizontalPadding",
+            "label": "Row Horizontal Padding",
+            "min": 0,
+            "max": 32,
+            "defaultValue": 16
+          },
+          { 
+            "type": "number",
+            "key": "rowFontSize",
+            "label": "Row Font Size",
+            "min": 6,
+            "defaultValue" : 14
+          }
+        ]
+      },
+      {
+        "type": "number",
+        "key": "visibleRowCount",
+        "label": "Visible Rows",
+        "defaultValue": 5
+      },
+      {
+        "type": "boolean",
+        "key": "rowSelection",
+        "label": "Row Selection",
+        "defaultValue": false
+      },
+      {
+        "type": "boolean",
+        "key": "customize",
+        "label": "Customize",
+        "defaultValue": false
+      },
+      {
+        "section": true,
+        "name": "Default Header Settings",
+        "dependsOn": "customize",
+        "settings": [
+          {
+            "type": "select",
+            "label": "Header Align",
+            "key": "headerAlign",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "options": [
+              {
+                "label": "Left",
+                "value": "left",
+                "barIcon": "TextAlignLeft",
+                "barTitle": "Text Align Left"
+              },
+              {
+                "label": "Center",
+                "value": "center",
+                "barIcon": "TextAlignCenter",
+                "barTitle": "Row layout"
+              },
+              {
+                "label": "Right",
+                "value": "right",
+                "barIcon": "TextAlignRight",
+                "barTitle": "Row layout"
+              }
+            ],
+            "defaultValue": "left"
+          },
+          {
+            "type": "color",
+            "key": "headerFontColor",
+            "label": "Text Color"
+          },
+          {
+            "type": "color",
+            "key": "headerBackground",
+            "label": "Background Color"
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Default Row Settings",
+        "dependsOn": "customize",
+        "settings": [
+          {
+            "type": "select",
+            "label": "Contents Horizontal Align",
+            "key": "rowHorizontalAlign",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "options": [
+              {
+                "label": "Left",
+                "value": "flex-start",
+                "barIcon": "AlignLeft",
+                "barTitle": "Align left"
+              },
+              {
+                "label": "Center",
+                "value": "center",
+                "barIcon": "AlignCenter",
+                "barTitle": "Align center"
+              },
+              {
+                "label": "Right",
+                "value": "flex-end",
+                "barIcon": "AlignRight",
+                "barTitle": "Align right"
+              },
+              {
+                "label": "Stretch",
+                "value": "stretch",
+                "barIcon": "MoveLeftRight",
+                "barTitle": "Align stretched horizontally"
+              }
+            ],
+            "defaultValue": "flex-start"
+          },
+          {
+            "type": "select",
+            "label": "Contents Vertical Align",
+            "key": "rowVerticalAlign",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "options": [
+              {
+                "label": "Top",
+                "value": "flex-start",
+                "barIcon": "AlignTop",
+                "barTitle": "Align top"
+              },
+              {
+                "label": "Middle",
+                "value": "center",
+                "barIcon": "AlignMiddle",
+                "barTitle": "Align middle"
+              },
+              {
+                "label": "Bottom",
+                "value": "flex-end",
+                "barIcon": "AlignBottom",
+                "barTitle": "Align bottom"
+              },
+              {
+                "label": "Stretch",
+                "value": "stretch",
+                "barIcon": "MoveUpDown",
+                "barTitle": "Align stretched vertically"
+              }
+            ],
+            "defaultValue": "flex-start"
+          },
+          {
+            "type": "color",
+            "key": "rowFontColor",
+            "label": "Text Color"
+          },
+          {
+            "type": "color",
+            "key": "rowBackground",
+            "label": "Background Color"
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Default Footer Settings",
+        "dependsOn": "customize",
+        "settings": [
+          {
+            "type": "select",
+            "label": "Footer Align",
+            "key": "footerAlign",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "options": [
+              {
+                "label": "Left",
+                "value": "flex-start",
+                "barIcon": "TextAlignLeft",
+                "barTitle": "Text Align Left"
+              },
+              {
+                "label": "Center",
+                "value": "center",
+                "barIcon": "TextAlignCenter",
+                "barTitle": "Row layout"
+              },
+              {
+                "label": "Right",
+                "value": "flex-end",
+                "barIcon": "TextAlignRight",
+                "barTitle": "Row layout"
+              }
+            ],
+            "defaultValue": "flex-start"
+          },
+          {
+            "type": "color",
+            "key": "footerFontColor",
+            "label": "Text Color"
+          },
+          {
+            "type": "color",
+            "key": "footerBackground",
+            "label": "Background Color"
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Dividers Settings",
+        "dependsOn": "customize",
+        "settings": [
+          {
+            "type": "select",
+            "key": "dividers",
+            "label": "Dividers",
+            "options": [
+              { "label": "None" , "value": "none"},
+              { "label": "Horizontal" , "value": "horizontal"},
+              { "label": "Vertical" , "value": "vertical"},
+              { "label": "Both" , "value": "both"}
+            ],
+            "defaultValue": "horizontal"
+          },
+          {
+            "type": "color",
+            "key": "dividersColor",
+            "label": "Dividers Color"
+          }
+        ]
+      },
+      {
+      "section": true,
+      "name": "On Row Selection",
+      "settings": [
+        {
+          "type": "event",
+          "key": "onRowSelect",
+          "context": [
+            {
+              "label": "RowID",
+              "key": "rowwID"
+            },
+            {
+              "label": "Selected Rows",
+              "key": "selectedRows",
+              "type": "array"
+            }
+          ]
+        }
+      ]
+    }
+    ]
+  }
+}
