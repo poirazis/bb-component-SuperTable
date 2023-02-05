@@ -80,6 +80,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-bottom-width: var(--super-table-row-bottom-border-size);
   }
 
   .is-hovered {

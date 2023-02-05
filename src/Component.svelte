@@ -14,10 +14,8 @@
   const component = getContext("component");
   const loading = getContext("loading");
 
-
   export let dataProvider 
   export let idColumn;
-
   export let visibleRowCount
   export let rowSelection;
   export let size;
@@ -25,7 +23,6 @@
   export let headerAlign, headerFontSize, headerFontColor, headerBackground
   export let rowVerticalAlign, rowHorizontalAlign, rowFontSize, rowFontColor, rowBackground
   export let footerAlign, footerFontSize, footerFontColor, footerBackground
-
   export let rowVerticalPadding, rowHorizontalPadding
 
   // Events
@@ -81,6 +78,9 @@
   $: $tableStateStore.stylingOptions.footerFontColor = footerFontColor ? footerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))"
   $: $tableStateStore.stylingOptions.footerBackground = footerBackground ? footerBackground : "transparent"
 
+  $: $tableStateStore.stylingOptions.dividersColor = dividers != "none" ? dividersColor : "none"
+  $: $tableStateStore.stylingOptions.dividers = dividers
+
   // Append Super Table Styling variables
   $: styles = {
     ...$component?.styles,
@@ -129,6 +129,10 @@
     styles["--spectrum-table-regular-cell-padding-top"] = $tableStateStore.stylingOptions.rowVerticalPadding + "px";
     styles["--spectrum-table-regular-cell-padding-left"] = $tableStateStore.stylingOptions.rowHorizontalPadding + "px";
     styles["--spectrum-table-regular-cell-padding-right"] = $tableStateStore.stylingOptions.rowHorizontalPadding + "px";
+
+    // Dividers 
+    styles["--super-table-row-bottom-border-size"] = $tableStateStore.stylingOptions.dividers == "horizontal" ||  $tableStateStore.stylingOptions.dividers == "both" ? "1px" : "0px" 
+    styles["--spectrum-table-m-regular-border-color"] = $tableStateStore.stylingOptions.dividersColor
 
     // Footer
     styles["--super-table-footer-horizontal-align"] = $tableStateStore.stylingOptions.footerAlign;
