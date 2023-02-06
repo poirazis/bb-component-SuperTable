@@ -24,7 +24,7 @@
   <div class="welcome-text">
     <h2> Welcome to the Super Table Component </h2>
     <p> You need to connect your Super Table to a Data Provider </p>
-    <p> and select the ID column </p>
+    <p> and select the <strong>Unique ID Column</strong> </p>
     <p> Then add some Super Columns to start designing you table </p>
   </div>
 </div>

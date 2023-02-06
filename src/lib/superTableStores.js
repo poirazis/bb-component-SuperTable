@@ -162,8 +162,6 @@ const createSuperTableDataStore = () => {
 	};
 };
 
-
-
 export const tableDataStore = createSuperTableDataStore()
 export const tableStateStore = createSuperTableStateStore()
 export const tableFilterStore = createSuperTableFilterStore()

@@ -75,7 +75,8 @@
         "type": "number",
         "key": "visibleRowCount",
         "label": "Visible Rows",
-        "defaultValue": 5
+        "defaultValue": 5,
+        "min": 1
       },
       {
         "type": "boolean",

@@ -5,9 +5,18 @@
 
   // Keep scrolling position in synch
   let bodyContainer
+  let id = "scroller"
+
+  function handleScroll () {
+    if ( $tableStateStore.scrollY !== bodyContainer?.scrollTop )
+    {
+      $tableStateStore.controllerID = id
+      $tableStateStore.scrollY = bodyContainer?.scrollTop 
+    }
+  }
 
   afterUpdate(() => {
-    if (bodyContainer && bodyContainer?.scrollTop != $tableStateStore.scrollY)
+    if (bodyContainer && ( $tableStateStore.controllerID != id  ) && (bodyContainer?.scrollTop != $tableStateStore.scrollY))
       bodyContainer.scrollTop = $tableStateStore.scrollY
   })
 </script>
@@ -17,8 +26,8 @@
     <div style:min-height={"2.5rem"} class="spectrum-Table-headCell"></div>
   </div>
 
-  <div bind:this={bodyContainer} class="spectrum-Table-body">
-    {#each $tableDataStore.data as row, index }
+  <div on:scroll={handleScroll} bind:this={bodyContainer} class="spectrum-Table-body">
+    {#each $tableDataStore?.data ?? [] as row, index }
       <div class="spectrum-Table-row" style:min-height={$tableStateStore?.rowHeights[index] + "px" }>
       </div>
     {/each}

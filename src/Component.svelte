@@ -31,14 +31,15 @@
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, activeFilters, isFiltered = false
   let loaded = false
   
-  // Initialize Stores
-  let rowMinHeight = size != "custom" ? sizingMap[size].rowMinHeight : 40
-
+  // Initialize Store with appropriate row heights to avoid flicker when they load
+  let rowMinHeight = size != "custom" 
+    ? sizingMap[size].rowMinHeight 
+    : ( rowVerticalPadding * 2 ) + rowFontSize
   $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
 
   $: if ( !$loading ) { loaded = true; $tableDataStore.loaded = true ; }
   $: $tableDataStore.data = loaded 
-    ? dataProvider.rows 
+    ? dataProvider?.rows 
     : new Array(visibleRowCount).fill({})
   
   $: if ( loaded ) $tableDataStore.dataSource = dataProvider?.datasource ?? {};
@@ -174,14 +175,18 @@
     }
     onRowSelect?.( context )
   }
+
+ function handleScrool ( e ) {
+  console.log("Scrolled !")
+ }
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
 
-  {#if !$component.empty}
+  {#if !$component.empty && dataProvider}
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
-    <div class="st-master-columns"> <slot /> </div>
-    <div class="st-master-scroll"> <SuperTableVerticalScroller /> </div>
+    <div on:scroll={handleScrool} class="st-master-columns"> <slot /> </div>
+    <div class="st-master-scroll"> { #if $tableDataStore.loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
     <SuperTableWelcome />
   {/if}
@@ -209,5 +214,9 @@
     justify-content: stretch;
     align-items: stretch;
     overflow-x: auto;
+  }
+
+  .st-master-scroll {
+    max-width: 10px;
   }
 </style>

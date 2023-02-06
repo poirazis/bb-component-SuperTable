@@ -8,14 +8,28 @@
 
   // Keep scrolling position in synch
   let bodyContainer
+  let id = "rowSelectColumn"
+
+  function handleScroll () {
+    if ( $tableStateStore.scrollY !== bodyContainer?.scrollTop )
+    {
+      $tableStateStore.controllerID = id
+      $tableStateStore.scrollY = bodyContainer?.scrollTop 
+    }
+  }
 
   afterUpdate(() => {
-    if (bodyContainer && bodyContainer?.scrollTop != $tableStateStore.scrollY)
+    if (bodyContainer && ($tableStateStore.controllerID != id ) && (bodyContainer?.scrollTop != $tableStateStore.scrollY)) {
       bodyContainer.scrollTop = $tableStateStore.scrollY
+    }
   })
   
   function toggleSelectAll ( ) {
-    // TODO : If partially selected, select all else unselect all
+    if ($tableSelectionStore.length == $tableDataStore.data.length) {
+      $tableSelectionStore = []
+    } else {
+      $tableSelectionStore = $tableDataStore.data.map ( row => row[$tableDataStore.idColumn] )
+    }
   }
 </script>
 
@@ -23,18 +37,29 @@
 
   <div class="spectrum-Table-head">
     <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
-      <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
-        <input on:click={() => ( toggleSelectAll() )} type="checkbox" class="spectrum-Checkbox-input" title="Select All">
+      <label 
+        class="spectrum-Checkbox spectrum-Checkbox--sizeM"
+        class:is-indeterminate={$tableSelectionStore.length > 0 && $tableSelectionStore.length < $tableDataStore.data.length}>
+        <input 
+          on:click={() => ( toggleSelectAll() )} 
+          type="checkbox" 
+          class="spectrum-Checkbox-input" 
+          title="Select All"
+          checked={$tableSelectionStore.length == $tableDataStore.data.length}
+          >
         <span class="spectrum-Checkbox-box">
           <svg class="spectrum-Icon spectrum-UIIcon-Checkmark100 spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
             <use xlink:href="#spectrum-css-icon-Checkmark100" />
+          </svg>
+          <svg class="spectrum-Icon spectrum-UIIcon-Dash50 spectrum-Checkbox-partialCheckmark" focusable="false" aria-hidden="true">
+            <use xlink:href="#spectrum-css-icon-Dash50" />
           </svg>
         </span>
       </label>
     </div>
   </div>
 
-  <div bind:this={bodyContainer} class="spectrum-Table-body">
+  <div bind:this={bodyContainer} on:scroll={handleScroll} class="spectrum-Table-body">
   {#each $tableDataStore.data as row, index }
     <div 
       class="spectrum-Table-row" 
@@ -100,15 +125,21 @@
 
   .spectrum-Table-body {
     max-height: var(--super-table-body-height);
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     border-radius: 0px;
-    overflow: scroll;
-    border: none;
+    overflow-y: scroll !important;
+    overflow-x: hidden;
     padding: 0px;
     margin: 0px;
+    border-left: unset;
+    border-top: unset;
+    border-bottom: unset;
+    border-right-width: var(--super-table-column-right-border-size);
+    scrollbar-width: none;   
   }
+
   .spectrum-Table-body::-webkit-scrollbar {
     display: none;
   }
