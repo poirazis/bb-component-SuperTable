@@ -3,6 +3,7 @@
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
+  const tableSelectionStore = getContext("tableSelectionStore")
   const dispatch = createEventDispatcher();
 
   // Keep scrolling position in synch
@@ -39,13 +40,19 @@
       class="spectrum-Table-row" 
       on:mouseenter={ () => { if ($tableStateStore.hoveredRow !== index ) $tableStateStore.hoveredRow = index }} 
       on:mouseleave={ () => { $tableStateStore.hoveredRow = null } } 
-      class:is-selected={ $tableDataStore.selectedRows.includes(row[$tableDataStore.idColumn]) } 
+      class:is-selected={ $tableSelectionStore.includes(row[$tableDataStore.idColumn]) } 
       class:is-hovered={ $tableStateStore.hoveredRow === index }
       style:min-height={ $tableStateStore.rowHeights[index] + "px" }
       >
       <div class="spectrum-Table-cell">
         <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
-          <input bind:group={$tableDataStore.selectedRows} value={row[$tableDataStore.idColumn]} type="checkbox" class="spectrum-Checkbox-input" id="checkbox-0">
+          <input 
+            bind:group={$tableSelectionStore} 
+            value={row[$tableDataStore.idColumn]} 
+            on:change={ () => dispatch ("selectionChange", { "rowID": row[$tableDataStore.idColumn] }) }
+            type="checkbox" 
+            class="spectrum-Checkbox-input" 
+          >
           <span class="spectrum-Checkbox-box">
             <svg class="spectrum-Icon spectrum-UIIcon-Checkmark100 spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
               <use xlink:href="#spectrum-css-icon-Checkmark100" />

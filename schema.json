@@ -297,8 +297,8 @@
           "key": "onRowSelect",
           "context": [
             {
-              "label": "RowID",
-              "key": "rowwID"
+              "label": "Triggered By",
+              "key": "rowID"
             },
             {
               "label": "Selected Rows",

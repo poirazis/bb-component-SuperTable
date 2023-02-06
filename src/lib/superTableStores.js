@@ -6,7 +6,7 @@ const createSuperTableStateStore = () => {
 	const { set, update, subscribe } = writable({
 		controllerID: null,
 		columnRowHeights: [],
-		rowHeights: new Array(12).fill(40),
+		rowHeights: [],
 		hoveredRow: null,
 		hoveredColumn: null,
 		loaded: false,
@@ -92,6 +92,7 @@ const createSuperTableFilterStore = () => {
 	}
 }
 
+
 // The main store holds the data related and Super Table Columns registration and data synchronization
 const createSuperTableDataStore = () => {
 	const { set, update, subscribe } = writable({
@@ -161,6 +162,9 @@ const createSuperTableDataStore = () => {
 	};
 };
 
+
+
 export const tableDataStore = createSuperTableDataStore()
 export const tableStateStore = createSuperTableStateStore()
 export const tableFilterStore = createSuperTableFilterStore()
+export const tableSelectionStore = new writable([])

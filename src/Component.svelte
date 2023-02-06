@@ -3,12 +3,12 @@
   import { get } from "svelte/store"
   import { LuceneUtils } from "./frontend-core"
 
-  import { tableDataStore, tableFilterStore, tableStateStore } from "./lib/superTableStores"
+  import { tableDataStore, tableFilterStore, tableStateStore, tableSelectionStore } from "./lib/superTableStores"
   import { sizingMap } from "./lib/superTableThemes"
 
-  import RowSelectColumn from "./lib/RowSelectColumn.svelte";
-  import Scroller from "./lib/Scroller.svelte";
-  import WelcomeWizard from "./lib/WelcomeWizard.svelte";
+  import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
+  import SuperTableRowSelect from "./lib/SuperTableRowSelect.svelte";
+  import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
 
   const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
   const component = getContext("component");
@@ -31,10 +31,15 @@
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, activeFilters, isFiltered = false
   let loaded = false
   
+  // Initialize Stores
+  let rowMinHeight = size != "custom" ? sizingMap[size].rowMinHeight : 40
+
+  $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
+
   $: if ( !$loading ) { loaded = true; $tableDataStore.loaded = true ; }
-  $: $tableDataStore.data = loaded && dataProvider?.rows?.length 
+  $: $tableDataStore.data = loaded 
     ? dataProvider.rows 
-    : new Array(dataProvider?.limit > 20 ? 20 : dataProvider?.limit ?? 12).fill({})
+    : new Array(visibleRowCount).fill({})
   
   $: if ( loaded ) $tableDataStore.dataSource = dataProvider?.datasource ?? {};
   $: if ( loaded ) $tableDataStore.schema = dataProvider?.schema ?? {};
@@ -78,7 +83,7 @@
   $: $tableStateStore.stylingOptions.footerFontColor = footerFontColor ? footerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))"
   $: $tableStateStore.stylingOptions.footerBackground = footerBackground ? footerBackground : "transparent"
 
-  $: $tableStateStore.stylingOptions.dividersColor = dividers != "none" ? dividersColor : "none"
+  $: $tableStateStore.stylingOptions.dividersColor = dividersColor ? dividersColor : "var(--spectrum-table-m-regular-border-color, var(--spectrum-alias-border-color-mid))"
   $: $tableStateStore.stylingOptions.dividers = dividers
 
   // Append Super Table Styling variables
@@ -93,6 +98,7 @@
   setContext("tableDataStore", tableDataStore)
   setContext("tableStateStore", tableStateStore)
   setContext("tableFilterStore", tableFilterStore)
+  setContext("tableSelectionStore", tableSelectionStore)
 
   // Component Function Definitions
   function setDataProviderFiltering( filters ) {
@@ -104,11 +110,20 @@
     } 
   }
 
+  function setDataProviderSorting(column, direction) {
+    if ( loaded && ((column != sortedColumn) || (direction != sortedDirection)) ) 
+    { 
+      setSorting?.({ column: column, order: direction }) 
+      sortedColumn = column
+      sortedDirection = direction
+    }
+  }
+
   // Generate the variable overrides 
   function generateStyling() {
     let styles = {};
     // Table
-    styles["--super-table-body-height"] = (visibleRowCount * ($tableStateStore.rowHeights[0] || sizingMap[size].rowMinHeight )) + "px"
+    styles["--super-table-body-height"] = (visibleRowCount * $tableStateStore.rowHeights[0]) + "px"
 
     // Header
     styles["--spectrum-table-regular-header-text-size"] = $tableStateStore.stylingOptions.headerFontSize + "px"
@@ -132,6 +147,7 @@
 
     // Dividers 
     styles["--super-table-row-bottom-border-size"] = $tableStateStore.stylingOptions.dividers == "horizontal" ||  $tableStateStore.stylingOptions.dividers == "both" ? "1px" : "0px" 
+    styles["--super-table-column-right-border-size"] = $tableStateStore.stylingOptions.dividers == "vertical" ||  $tableStateStore.stylingOptions.dividers == "both" ? "1px" : "0px" 
     styles["--spectrum-table-m-regular-border-color"] = $tableStateStore.stylingOptions.dividersColor
 
     // Footer
@@ -145,15 +161,6 @@
     return styles;
   }
 
-  function setDataProviderSorting(column, direction) {
-    if ( loaded && ((column != sortedColumn) || (direction != sortedDirection)) ) 
-    { 
-      setSorting?.({ column: column, order: direction }) 
-      sortedColumn = column
-      sortedDirection = direction
-    }
-  }
-
   function addNewColumn () {
     let subStore = $tableDataStore.columnStores[0]
     let store = get (subStore)
@@ -162,8 +169,8 @@
 
   function handleRowSelect ( event ) {
     let context = {
-      "rowID" : 1,
-      "selectedRows": $tableDataStore.selectedRows
+      "rowID" : event.detail.rowID,
+      "selectedRows": $tableSelectionStore
     }
     onRowSelect?.( context )
   }
@@ -172,11 +179,11 @@
 <div class="st-master-wrapper" use:styleable={styles}>
 
   {#if !$component.empty}
-    <div class="st-master-control"> {#if rowSelection} <RowSelectColumn /> {/if}</div>
+    <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
     <div class="st-master-columns"> <slot /> </div>
-    <div class="st-master-scroll"> <Scroller /> </div>
+    <div class="st-master-scroll"> <SuperTableVerticalScroller /> </div>
   {:else}
-    <WelcomeWizard />
+    <SuperTableWelcome />
   {/if}
 
 </div>
