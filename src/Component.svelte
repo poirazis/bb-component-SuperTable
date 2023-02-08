@@ -3,7 +3,7 @@
   import { get } from "svelte/store"
   import { LuceneUtils } from "./frontend-core"
 
-  import { tableDataStore, tableFilterStore, tableStateStore, tableSelectionStore } from "./lib/superTableStores"
+  import { tableDataStore, tableDataChangesStore, tableFilterStore, tableStateStore, tableSelectionStore } from "./lib/superTableStores"
   import { sizingMap } from "./lib/superTableThemes"
 
   import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
@@ -27,6 +27,7 @@
 
   // Events
   export let onRowSelect
+  export let onDataChange
 
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, activeFilters, isFiltered = false
   let loaded = false
@@ -35,6 +36,7 @@
   let rowMinHeight = size != "custom" 
     ? sizingMap[size].rowMinHeight 
     : ( rowVerticalPadding * 2 ) + rowFontSize
+
   $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
 
   $: if ( !$loading ) { loaded = true; $tableDataStore.loaded = true ; }
@@ -61,6 +63,7 @@
 
   $: setDataProviderFiltering ( $tableFilterStore?.filters )
   $: setDataProviderSorting ( $tableDataStore?.sortColumn, $tableDataStore?.sortDirection)
+  $: handleDataChange ( $tableDataChangesStore )
 
   $: $tableDataStore._parentID = $component?.id;
   $: $tableDataStore.idColumn = idColumn;
@@ -97,6 +100,7 @@
   };
 
   setContext("tableDataStore", tableDataStore)
+  setContext("tableDataChangesStore", tableDataChangesStore)
   setContext("tableStateStore", tableStateStore)
   setContext("tableFilterStore", tableFilterStore)
   setContext("tableSelectionStore", tableSelectionStore)
@@ -176,21 +180,25 @@
     onRowSelect?.( context )
   }
 
- function handleScrool ( e ) {
-  console.log("Scrolled !")
- }
+  function handleScroll ( event ) {
+    console.log("Scrolled !")
+  }
+
+  function handleDataChange ( changes )
+  {
+    let context = { dataChanges: changes }
+    onDataChange?.( context )
+  }
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
-
   {#if !$component.empty && dataProvider}
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
-    <div on:scroll={handleScrool} class="st-master-columns"> <slot /> </div>
-    <div class="st-master-scroll"> { #if $tableDataStore.loaded } <SuperTableVerticalScroller /> {/if} </div>
+    <div class="st-master-columns" on:scroll={handleScroll}> <slot /> </div>
+    <div class="st-master-scroll"> {#if $tableDataStore.loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
     <SuperTableWelcome />
   {/if}
-
 </div>
 
 <style>
@@ -214,9 +222,5 @@
     justify-content: stretch;
     align-items: stretch;
     overflow-x: auto;
-  }
-
-  .st-master-scroll {
-    max-width: 10px;
   }
 </style>

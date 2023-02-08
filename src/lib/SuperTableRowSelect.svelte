@@ -1,5 +1,5 @@
 <script>
-  import { getContext, createEventDispatcher, afterUpdate } from "svelte"
+  import { getContext, createEventDispatcher, afterUpdate, beforeUpdate } from "svelte"
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
@@ -8,6 +8,7 @@
 
   // Keep scrolling position in synch
   let bodyContainer
+  let shouldUpdate = false
   let id = "rowSelectColumn"
 
   function handleScroll () {
@@ -18,8 +19,9 @@
     }
   }
 
+  beforeUpdate (() => { shouldUpdate = bodyContainer && $tableStateStore.controllerID !== id})
   afterUpdate(() => {
-    if (bodyContainer && ($tableStateStore.controllerID != id ) && (bodyContainer?.scrollTop != $tableStateStore.scrollY)) {
+    if (shouldUpdate) {
       bodyContainer.scrollTop = $tableStateStore.scrollY
     }
   })
@@ -69,7 +71,6 @@
       class:is-hovered={ $tableStateStore.hoveredRow === index }
       style:min-height={ $tableStateStore.rowHeights[index] + "px" }
       >
-      <div class="spectrum-Table-cell">
         <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
           <input 
             bind:group={$tableSelectionStore} 
@@ -82,13 +83,9 @@
             <svg class="spectrum-Icon spectrum-UIIcon-Checkmark100 spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
               <use xlink:href="#spectrum-css-icon-Checkmark100" />
             </svg>
-            <svg class="spectrum-Icon spectrum-UIIcon-Dash100 spectrum-Checkbox-partialCheckmark" focusable="false" aria-hidden="true">
-              <use xlink:href="#spectrum-css-icon-Dash100" />
-            </svg>
           </span>
         </label>
       </div>
-    </div>
   {/each}
   </div>
 
@@ -112,6 +109,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: unset;
+    margin: unset;
     border-bottom-width: var(--super-table-row-bottom-border-size);
   }
 

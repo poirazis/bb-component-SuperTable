@@ -309,6 +309,27 @@
           ]
         }
       ]
+    },
+      {
+      "section": true,
+      "name": "On Data Change",
+      "settings": [
+        {
+          "type": "event",
+          "key": "onDataChange",
+          "context": [
+            {
+              "label": "Triggered By",
+              "key": "rowID"
+            },
+            {
+              "label": "Data Changes",
+              "key": "dataChanges",
+              "type": "array"
+            }
+          ]
+        }
+      ]
     }
     ]
   }

@@ -1,11 +1,11 @@
 <script>
-  import { getContext, afterUpdate } from "svelte"
-  const tableDataStore = getContext("tableDataStore")
+  import { getContext, afterUpdate, beforeUpdate } from "svelte"
   const tableStateStore = getContext("tableStateStore")
 
   // Keep scrolling position in synch
   let bodyContainer
   let id = "scroller"
+  let shouldUpdate = false
 
   function handleScroll () {
     if ( $tableStateStore.scrollY !== bodyContainer?.scrollTop )
@@ -15,9 +15,12 @@
     }
   }
 
-  afterUpdate(() => {
-    if (bodyContainer && ( $tableStateStore.controllerID != id  ) && (bodyContainer?.scrollTop != $tableStateStore.scrollY))
-      bodyContainer.scrollTop = $tableStateStore.scrollY
+  beforeUpdate( () => {
+    shouldUpdate = bodyContainer && ( $tableStateStore.controllerID != id  )
+  })
+
+  afterUpdate( () => {
+    if ( shouldUpdate ) bodyContainer.scrollTop = $tableStateStore.scrollY
   })
 </script>
 
@@ -27,9 +30,8 @@
   </div>
 
   <div on:scroll={handleScroll} bind:this={bodyContainer} class="spectrum-Table-body">
-    {#each $tableDataStore?.data ?? [] as row, index }
-      <div class="spectrum-Table-row" style:min-height={$tableStateStore?.rowHeights[index] + "px" }>
-      </div>
+    {#each $tableStateStore.rowHeights as row }
+      <div class="spectrum-Table-row" style:min-height={ row + "px" }></div>
     {/each}
   </div>
 
@@ -37,22 +39,16 @@
 </div>
 
 <style>
-  .spectrum-Table-row {
-    padding: unset;
-    margin: unset;
-    width: 0px;
-  }
-
   .spectrum-Table-body {
     max-height: var(--super-table-body-height);
     display: flex;
     flex-direction: column;
     border-radius: 0px;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     overflow-x: hidden;
-    border: none;
     padding: 0px;
     margin: 0px;
+    border: unset;
   }
 
   .spectrum-Table-footer {
