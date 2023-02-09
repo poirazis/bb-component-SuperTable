@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "1.0.13-alpha",
+  "version": "1.0.14-alpha",
   "description": "A Fully Customizable Budibase Table Component with Superpowers !",
   "author": "Michael Poirazi",
   "license": "MIT",
@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@crownframework/svelte-error-boundary": "^1.0.3",
+    "@spectrum-css/icon": "^3.0.32",
     "@spectrum-css/table": "^4.0.24",
+    "@spectrum-css/vars": "^8.0.3",
     "svelte": "^3.49.0"
   },
   "devDependencies": {

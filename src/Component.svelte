@@ -9,6 +9,7 @@
   import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./lib/SuperTableRowSelect.svelte";
   import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
+    import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
 
   const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
   const component = getContext("component");
@@ -39,7 +40,7 @@
 
   $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
 
-  $: if ( !$loading ) { loaded = true; $tableDataStore.loaded = true ; }
+  $: if ( !$loading ) { loaded = true; $tableDataStore.loaded = true ; $tableStateStore.loaded = true; }
   $: $tableDataStore.data = loaded 
     ? dataProvider?.rows 
     : new Array(visibleRowCount).fill({})
@@ -180,10 +181,6 @@
     onRowSelect?.( context )
   }
 
-  function handleScroll ( event ) {
-    console.log("Scrolled !")
-  }
-
   function handleDataChange ( changes )
   {
     let context = { dataChanges: changes }
@@ -194,7 +191,7 @@
 <div class="st-master-wrapper" use:styleable={styles}>
   {#if !$component.empty && dataProvider}
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
-    <div class="st-master-columns" on:scroll={handleScroll}> <slot /> </div>
+    <div class="st-master-columns"> {#if $loading} <SuperTableSkeleton /> {:else} <slot /> {/if} </div>
     <div class="st-master-scroll"> {#if $tableDataStore.loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
     <SuperTableWelcome />

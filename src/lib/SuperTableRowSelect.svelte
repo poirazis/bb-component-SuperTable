@@ -19,9 +19,9 @@
     }
   }
 
-  beforeUpdate (() => { shouldUpdate = bodyContainer && $tableStateStore.controllerID !== id})
+  beforeUpdate (() => { shouldUpdate = (bodyContainer && $tableStateStore.controllerID !== id)})
   afterUpdate(() => {
-    if (shouldUpdate) {
+    if (shouldUpdate && bodyContainer) {
       bodyContainer.scrollTop = $tableStateStore.scrollY
     }
   })
