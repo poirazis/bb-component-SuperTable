@@ -19,7 +19,9 @@
   <div class="spectrum-Table-body">
   {#each $tableStateStore.rowHeights as row, index }
     <div class="spectrum-Table-row" style:min-height={ $tableStateStore.rowHeights[index] + "px" }>
-      <Skeleton> Loading ... </Skeleton>
+      <div class="spectrum-Table-cell" style="width: 100%;">
+        <Skeleton> Loading ... </Skeleton>
+      </div>
     </div>
   {/each}
   </div>
@@ -39,18 +41,16 @@
   }
 
   .spectrum-Table-row {
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-left: 16px;
-    padding-right: 16px;
     border-bottom-width: var(--super-table-row-bottom-border-size);
   }
 
   .spectrum-Table-body {
     max-height: var(--super-table-body-height);
-    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     border-radius: 0px;
