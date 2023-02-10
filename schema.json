@@ -310,7 +310,7 @@
         }
       ]
     },
-      {
+    {
       "section": true,
       "name": "On Data Change",
       "settings": [
@@ -326,6 +326,22 @@
               "label": "Data Changes",
               "key": "dataChanges",
               "type": "array"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": true,
+      "name": "On Row Click",
+      "settings": [
+        {
+          "type": "event",
+          "key": "onRowClick",
+          "context": [
+            {
+              "label": "Row ID",
+              "key": "rowID"
             }
           ]
         }

@@ -9,7 +9,7 @@
   import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./lib/SuperTableRowSelect.svelte";
   import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
-    import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
+  import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
 
   const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
   const component = getContext("component");
@@ -29,6 +29,7 @@
   // Events
   export let onRowSelect
   export let onDataChange
+  export let onRowClick
 
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, activeFilters, isFiltered = false
   let loaded = false
@@ -65,6 +66,7 @@
   $: setDataProviderFiltering ( $tableFilterStore?.filters )
   $: setDataProviderSorting ( $tableDataStore?.sortColumn, $tableDataStore?.sortDirection)
   $: handleDataChange ( $tableDataChangesStore )
+  $: handleRowClick( $tableStateStore.rowClicked )
 
   $: $tableDataStore._parentID = $component?.id;
   $: $tableDataStore.idColumn = idColumn;
@@ -185,6 +187,14 @@
   {
     let context = { dataChanges: changes }
     onDataChange?.( context )
+  }
+
+  function handleRowClick ( rowKey ) {
+    if (rowKey) {
+      let context = { rowID : rowKey }
+      $tableStateStore.rowClicked = null;
+      onRowClick?.( context )
+    }
   }
 </script>
 

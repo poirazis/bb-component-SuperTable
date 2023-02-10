@@ -10,6 +10,7 @@ const createSuperTableStateStore = () => {
 		hoveredRow: null,
 		hoveredColumn: null,
 		loaded: false,
+		rowClicked: null,
 		scrollY: 0,
 		screenX: 0,
 		size: "M",

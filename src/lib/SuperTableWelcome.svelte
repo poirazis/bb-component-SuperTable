@@ -12,7 +12,7 @@
     <defs>
       <style>
         .fill {
-          fill: var(--spectrum-global-color-indigo-600);
+          fill: #1DA1F2;
         }
       </style>
     </defs>
