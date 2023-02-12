@@ -13,29 +13,7 @@ const createSuperTableStateStore = () => {
 		rowClicked: null,
 		scrollY: 0,
 		screenX: 0,
-		size: "M",
-		stylingOptions: {
-			headerAlign: "flex-start",
-			headerFontColor: "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))",
-			headerFontSize: undefined,
-			headerFontWeight: undefined,
-			headerBackground: undefined,
-			headerHorizontalPadding: undefined,
-			headerVerticalPadding: undefined,
-			rowVerticalAlign: "flex-start",
-			rowVerticalPadding: 11,
-			rowHorizontalAlign: "flex-start",
-			rowHorizontalPadding: 16,
-			rowFontColor: undefined,
-			rowFontSize: 14,
-			rowBackground: undefined,
-			footerAlign: "flex-start",
-			footerFontColor: undefined,
-			footerFontSize: undefined,
-			footerBackground: undefined,
-			dividers: "horizontal",
-			dividersColor: undefined
-		}
+		size: "M"
 	})
 
 	return {
@@ -59,6 +37,34 @@ const createSuperTableStateStore = () => {
 			})
 		}
 	}
+}
+
+const createSuperTableThemeStore = () => {
+	const { set, update, subscribe } = writable({
+		headerAlign: "flex-start",
+		headerFontColor: "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))",
+		headerFontSize: undefined,
+		headerFontWeight: undefined,
+		headerBackground: undefined,
+		headerHorizontalPadding: undefined,
+		headerVerticalPadding: undefined,
+		rowVerticalAlign: "flex-start",
+		rowVerticalPadding: 11,
+		rowHorizontalAlign: "flex-start",
+		rowHorizontalPadding: 16,
+		rowFontColor: undefined,
+		rowFontSize: 14,
+		rowBackground: undefined,
+		footerAlign: "flex-start",
+		footerFontColor: undefined,
+		footerFontSize: undefined,
+		footerBackground: undefined,
+		dividers: "horizontal",
+		dividersColor: undefined,
+		maxBodyHeight: undefined
+	})
+
+	return { set, update, subscribe }
 }
 
 // The FilterStore will hold all filter definitions as requested by each Super Column
@@ -164,6 +170,7 @@ const createSuperTableDataStore = () => {
 
 export const tableDataStore = createSuperTableDataStore()
 export const tableStateStore = createSuperTableStateStore()
+export const tableThemeStore = createSuperTableThemeStore()
 export const tableFilterStore = createSuperTableFilterStore()
 export const tableSelectionStore = new writable([])
 export const tableDataChangesStore = new writable([])

@@ -3,7 +3,7 @@
   import { get } from "svelte/store"
   import { LuceneUtils } from "./frontend-core"
 
-  import { tableDataStore, tableDataChangesStore, tableFilterStore, tableStateStore, tableSelectionStore } from "./lib/superTableStores"
+  import { tableDataStore, tableDataChangesStore, tableFilterStore, tableStateStore, tableThemeStore, tableSelectionStore } from "./lib/superTableStores"
   import { sizingMap } from "./lib/superTableThemes"
 
   import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
@@ -31,17 +31,28 @@
   export let onDataChange
   export let onRowClick
 
-  let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, activeFilters, isFiltered = false
+  let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection
   let loaded = false
+  
   
   // Initialize Store with appropriate row heights to avoid flicker when they load
   let rowMinHeight = size != "custom" 
     ? sizingMap[size].rowMinHeight 
     : ( rowVerticalPadding * 2 ) + rowFontSize
 
-  $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
 
-  $: if ( !$loading ) { loaded = true; $tableDataStore.loaded = true ; $tableStateStore.loaded = true; }
+  $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
+  $tableThemeStore.maxBodyHeight = visibleRowCount * rowMinHeight
+
+  $: if ( !$loading ) {
+       loaded = true; 
+       $tableDataStore.loaded = true ; 
+       $tableStateStore.loaded = true; 
+       // Grab the new minHeight after loading as rows will adapt their size
+       // Take it off the main thread to allow the row to render itself
+       setTimeout( () => {  $tableThemeStore.maxBodyHeight = visibleRowCount * get(tableStateStore).rowHeights[0];}, 50); 
+      }
+
   $: $tableDataStore.data = loaded 
     ? dataProvider?.rows 
     : new Array(visibleRowCount).fill({})
@@ -71,34 +82,34 @@
   $: $tableDataStore._parentID = $component?.id;
   $: $tableDataStore.idColumn = idColumn;
 
-  // Keep store in synch with property updates or fallback to defaults
-  $: $tableStateStore.size = size
-  $: $tableStateStore.stylingOptions.headerAlign = headerAlign ? headerAlign : "flext-start"
-  $: $tableStateStore.stylingOptions.headerFontColor = headerFontColor ? headerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))" 
-  $: $tableStateStore.stylingOptions.headerBackground = headerBackground ? headerBackground : "var(--spectrum-table-m-regular-header-background-color, var(--spectrum-alias-label-text-color))" 
-  $: $tableStateStore.stylingOptions.headerFontSize = size == "custom" ? headerFontSize : sizingMap[size].headerFontSize
+  // Keep store in synch with property updates or fa  llback to defaults
+  $: $tableThemeStore.size = size
+  $: $tableThemeStore.headerAlign = headerAlign ? headerAlign : "flext-start"
+  $: $tableThemeStore.headerFontColor = headerFontColor ? headerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))" 
+  $: $tableThemeStore.headerBackground = headerBackground ? headerBackground : "var(--spectrum-table-m-regular-header-background-color, var(--spectrum-alias-label-text-color))" 
+  $: $tableThemeStore.headerFontSize = size == "custom" ? headerFontSize : sizingMap[size].headerFontSize
 
-  $: $tableStateStore.stylingOptions.rowVerticalAlign = rowVerticalAlign ?? $tableStateStore.stylingOptions.rowVerticalAlign
-  $: $tableStateStore.stylingOptions.rowVerticalPadding = size == "custom" ? rowVerticalPadding : sizingMap[size].rowVerticalPadding
-  $: $tableStateStore.stylingOptions.rowHorizontalAlign = rowHorizontalAlign ?? $tableStateStore.stylingOptions.rowHorizontalAlign
-  $: $tableStateStore.stylingOptions.rowHorizontalPadding = size == "custom" ? rowHorizontalPadding : sizingMap[size].rowHorizontalPadding
-  $: $tableStateStore.stylingOptions.rowFontSize =  size == "custom" ? rowFontSize : sizingMap[size].rowFontSize
-  $: $tableStateStore.stylingOptions.rowFontColor = rowFontColor ? rowFontColor : "var(--spectrum-table-m-regular-cell-text-color, var(--spectrum-alias-text-color))"
-  $: $tableStateStore.stylingOptions.rowBackground = rowBackground ? rowBackground : "var(--spectrum-table-m-regular-row-background-color)"
+  $: $tableThemeStore.rowVerticalAlign = rowVerticalAlign ?? $tableThemeStore.rowVerticalAlign
+  $: $tableThemeStore.rowVerticalPadding = size == "custom" ? rowVerticalPadding : sizingMap[size].rowVerticalPadding
+  $: $tableThemeStore.rowHorizontalAlign = rowHorizontalAlign ?? $tableThemeStore.rowHorizontalAlign
+  $: $tableThemeStore.rowHorizontalPadding = size == "custom" ? rowHorizontalPadding : sizingMap[size].rowHorizontalPadding
+  $: $tableThemeStore.rowFontSize =  size == "custom" ? rowFontSize : sizingMap[size].rowFontSize
+  $: $tableThemeStore.rowFontColor = rowFontColor ? rowFontColor : "var(--spectrum-table-m-regular-cell-text-color, var(--spectrum-alias-text-color))"
+  $: $tableThemeStore.rowBackground = rowBackground ? rowBackground : "var(--spectrum-table-m-regular-row-background-color)"
 
-  $: $tableStateStore.stylingOptions.footerAlign = footerAlign ? footerAlign : "flext-start"
-  $: $tableStateStore.stylingOptions.footerFontColor = footerFontColor ? footerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))"
-  $: $tableStateStore.stylingOptions.footerBackground = footerBackground ? footerBackground : "transparent"
+  $: $tableThemeStore.footerAlign = footerAlign ? footerAlign : "flext-start"
+  $: $tableThemeStore.footerFontColor = footerFontColor ? footerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))"
+  $: $tableThemeStore.footerBackground = footerBackground ? footerBackground : "transparent"
 
-  $: $tableStateStore.stylingOptions.dividersColor = dividersColor ? dividersColor : "var(--spectrum-table-m-regular-border-color, var(--spectrum-alias-border-color-mid))"
-  $: $tableStateStore.stylingOptions.dividers = dividers
+  $: $tableThemeStore.dividersColor = dividersColor ? dividersColor : "var(--spectrum-table-m-regular-border-color, var(--spectrum-alias-border-color-mid))"
+  $: $tableThemeStore.dividers = dividers
 
   // Append Super Table Styling variables
   $: styles = {
     ...$component?.styles,
     normal: {
       ...$component?.styles.normal,
-      ...generateStyling($tableStateStore),
+      ...generateStyling($tableThemeStore),
     },
   };
 
@@ -131,41 +142,41 @@
   function generateStyling() {
     let styles = {};
     // Table
-    styles["--super-table-body-height"] = (visibleRowCount * $tableStateStore.rowHeights[0]) + "px"
+    styles["--super-table-body-height"] =  $tableThemeStore.maxBodyHeight  + "px"
 
     // Header
-    styles["--spectrum-table-regular-header-text-size"] = $tableStateStore.stylingOptions.headerFontSize + "px"
-    styles["--spectrum-table-m-regular-header-text-color"] = $tableStateStore.stylingOptions.headerFontColor
-    styles["--spectrum-table-m-regular-header-background-color"] = $tableStateStore.stylingOptions.headerBackground
-    styles["--spectrum-table-regular-header-padding-left"] = $tableStateStore.stylingOptions.rowHorizontalPadding + "px";
+    styles["--spectrum-table-regular-header-text-size"] = $tableThemeStore.headerFontSize + "px"
+    styles["--spectrum-table-m-regular-header-text-color"] = $tableThemeStore.headerFontColor
+    styles["--spectrum-table-m-regular-header-background-color"] = $tableThemeStore.headerBackground
+    styles["--spectrum-table-regular-header-padding-left"] = $tableThemeStore.rowHorizontalPadding + "px";
 
-    styles["--super-table-header-horizontal-align"] = $tableStateStore.stylingOptions.headerAlign
+    styles["--super-table-header-horizontal-align"] = $tableThemeStore.headerAlign
 
     // Row 
-    styles["--spectrum-table-m-regular-row-background-color"] = $tableStateStore.stylingOptions.rowBackground
-    styles["--super-table-row-editor-font-size"] = $tableStateStore.stylingOptions.rowFontSize - 2 + "px"
-    styles["--super-table-row-vertical-align"] = $tableStateStore.stylingOptions.rowVerticalAlign;
-    styles["--super-table-row-horizontal-align"] = $tableStateStore.stylingOptions.rowHorizontalAlign;
-    styles["--spectrum-table-regular-cell-text-size"] = $tableStateStore.stylingOptions.rowFontSize + "px";
-    styles["--spectrum-table-m-regular-cell-text-color"] = $tableStateStore.stylingOptions.rowFontColor
-    styles["--spectrum-table-regular-cell-padding-bottom"] = $tableStateStore.stylingOptions.rowVerticalPadding + "px";
-    styles["--spectrum-table-regular-cell-padding-top"] = $tableStateStore.stylingOptions.rowVerticalPadding + "px";
-    styles["--spectrum-table-regular-cell-padding-left"] = $tableStateStore.stylingOptions.rowHorizontalPadding + "px";
-    styles["--spectrum-table-regular-cell-padding-right"] = $tableStateStore.stylingOptions.rowHorizontalPadding + "px";
+    styles["--spectrum-table-m-regular-row-background-color"] = $tableThemeStore.rowBackground
+    styles["--super-table-row-editor-font-size"] = $tableThemeStore.rowFontSize - 2 + "px"
+    styles["--super-table-row-vertical-align"] = $tableThemeStore.rowVerticalAlign;
+    styles["--super-table-row-horizontal-align"] = $tableThemeStore.rowHorizontalAlign;
+    styles["--spectrum-table-regular-cell-text-size"] = $tableThemeStore.rowFontSize + "px";
+    styles["--spectrum-table-m-regular-cell-text-color"] = $tableThemeStore.rowFontColor
+    styles["--spectrum-table-regular-cell-padding-bottom"] = $tableThemeStore.rowVerticalPadding + "px";
+    styles["--spectrum-table-regular-cell-padding-top"] = $tableThemeStore.rowVerticalPadding + "px";
+    styles["--spectrum-table-regular-cell-padding-left"] = $tableThemeStore.rowHorizontalPadding + "px";
+    styles["--spectrum-table-regular-cell-padding-right"] = $tableThemeStore.rowHorizontalPadding + "px";
 
     // Dividers 
-    styles["--super-table-row-bottom-border-size"] = $tableStateStore.stylingOptions.dividers == "horizontal" ||  $tableStateStore.stylingOptions.dividers == "both" ? "1px" : "0px" 
-    styles["--super-table-column-right-border-size"] = $tableStateStore.stylingOptions.dividers == "vertical" ||  $tableStateStore.stylingOptions.dividers == "both" ? "1px" : "0px" 
-    styles["--spectrum-table-m-regular-border-color"] = $tableStateStore.stylingOptions.dividersColor
+    styles["--super-table-row-bottom-border-size"] = $tableThemeStore.dividers == "horizontal" ||  $tableThemeStore.dividers == "both" ? "1px" : "0px" 
+    styles["--super-table-column-right-border-size"] = $tableThemeStore.dividers == "vertical" ||  $tableThemeStore.dividers == "both" ? "1px" : "0px" 
+    styles["--spectrum-table-m-regular-border-color"] = $tableThemeStore.dividersColor
 
     // Footer
-    styles["--super-table-footer-horizontal-align"] = $tableStateStore.stylingOptions.footerAlign;
-    styles["--super-table-footer-font-color"] = $tableStateStore.stylingOptions.footerFontColor;
-    styles["--super-table-footer-background-color"] = $tableStateStore.stylingOptions.footerBackground;
+    styles["--super-table-footer-horizontal-align"] = $tableThemeStore.footerAlign;
+    styles["--super-table-footer-font-color"] = $tableThemeStore.footerFontColor;
+    styles["--super-table-footer-background-color"] = $tableThemeStore.footerBackground;
 
     // Extra 
-    styles["--spectrum-checkbox-m-box-size"] = $tableStateStore.stylingOptions.rowFontSize + "px"
-    styles["--spectrum-checkbox-m-height"] = $tableStateStore.stylingOptions.rowFontSize + 2 + "px"
+    styles["--spectrum-checkbox-m-box-size"] = $tableThemeStore.rowFontSize + "px"
+    styles["--spectrum-checkbox-m-height"] = $tableThemeStore.rowFontSize + 2 + "px"
     return styles;
   }
 
