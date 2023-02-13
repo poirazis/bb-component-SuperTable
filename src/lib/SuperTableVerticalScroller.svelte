@@ -20,7 +20,7 @@
   })
 
   afterUpdate( () => {
-    if ( shouldUpdate ) bodyContainer.scrollTop = $tableStateStore.scrollY
+    if ( shouldUpdate && bodyContainer ) bodyContainer.scrollTop = $tableStateStore.scrollY
   })
 </script>
 
@@ -31,7 +31,7 @@
 
   <div on:scroll={handleScroll} bind:this={bodyContainer} class="spectrum-Table-body">
     {#each $tableStateStore.rowHeights as row }
-      <div class="spectrum-Table-row" style:min-height={ row + "px" }></div>
+      <div class="spectrum-Table-row" style:min-height={ row + "px" } style:border-color={"transparent"} ></div>
     {/each}
   </div>
 
@@ -49,6 +49,7 @@
     padding: 0px;
     margin: 0px;
     border: unset;
+    width: 10px;
   }
 
   .spectrum-Table-footer {

@@ -23,12 +23,15 @@ const createSuperTableStateStore = () => {
 		updateRowHeights(columnID, newRowHeights) {
 			update(state => {
 				let index = state.columnRowHeights.findIndex(v => v.columnID === columnID)
+
 				if (index > -1) {
 					state.columnRowHeights[index].rowHeights = newRowHeights
 				} else {
 					state.columnRowHeights.push({ columnID: columnID, rowHeights: newRowHeights })
 				}
 				
+				if ( newRowHeights.length < state.rowHeights.length ) state.rowHeights.length = newRowHeights.length 
+
 				newRowHeights.forEach( ( v, idx )  => {
 					state.rowHeights[idx] = Math.max (...state.columnRowHeights.map(t => t.rowHeights[idx]))
 				})
