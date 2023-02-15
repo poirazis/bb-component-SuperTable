@@ -2,7 +2,7 @@ import { get, writable } from "svelte/store";
 
 // The state store holds UI/UX related synch changes to avoind unecessary refreshes of the main data store
 // It acts as the single source of truth for all super columns to adjust accordingly
-const createSuperTableStateStore = () => {
+export const createSuperTableStateStore = () => {
 	const { set, update, subscribe } = writable({
 		controllerID: null,
 		columnRowHeights: [],
@@ -42,7 +42,7 @@ const createSuperTableStateStore = () => {
 	}
 }
 
-const createSuperTableThemeStore = () => {
+export const createSuperTableThemeStore = () => {
 	const { set, update, subscribe } = writable({
 		headerAlign: "flex-start",
 		headerFontColor: "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))",
@@ -72,7 +72,7 @@ const createSuperTableThemeStore = () => {
 
 // The FilterStore will hold all filter definitions as requested by each Super Column
 // so the can be centrally applied to the dataProvider by the Super Table
-const createSuperTableFilterStore = () => {
+export const createSuperTableFilterStore = () => {
 	const { set, update, subscribe } = writable({
 		filters: []
 	})
@@ -103,7 +103,7 @@ const createSuperTableFilterStore = () => {
 
 
 // The main store holds the data related and Super Table Columns registration and data synchronization
-const createSuperTableDataStore = () => {
+export const createSuperTableDataStore = () => {
 	const { set, update, subscribe } = writable({
 		_parentID: undefined,
 		dataSource: {},
@@ -170,10 +170,3 @@ const createSuperTableDataStore = () => {
 		}
 	};
 };
-
-export const tableDataStore = createSuperTableDataStore()
-export const tableStateStore = createSuperTableStateStore()
-export const tableThemeStore = createSuperTableThemeStore()
-export const tableFilterStore = createSuperTableFilterStore()
-export const tableSelectionStore = new writable([])
-export const tableDataChangesStore = new writable([])

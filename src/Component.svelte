@@ -1,9 +1,9 @@
 <script>
   import { getContext, setContext } from "svelte";
-  import { get } from "svelte/store"
+  import { get, writable } from "svelte/store"
   import { LuceneUtils } from "./frontend-core"
 
-  import { tableDataStore, tableDataChangesStore, tableFilterStore, tableStateStore, tableThemeStore, tableSelectionStore } from "./lib/superTableStores"
+  import { createSuperTableDataStore, createSuperTableFilterStore, createSuperTableStateStore, createSuperTableThemeStore } from "./lib/superTableStores"
   import { sizingMap } from "./lib/superTableThemes"
 
   import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
@@ -11,7 +11,7 @@
   import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
   import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
 
-  const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
+  const { styleable, getAction, ActionTypes } = getContext("sdk");
   const component = getContext("component");
   const loading = getContext("loading");
 
@@ -33,6 +33,14 @@
 
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection
   let loaded = false
+
+  // Create Stores
+  const tableDataStore = createSuperTableDataStore()
+  const tableStateStore = createSuperTableStateStore()
+  const tableThemeStore = createSuperTableThemeStore()
+  const tableFilterStore = createSuperTableFilterStore()
+  const tableSelectionStore = new writable([])
+  const tableDataChangesStore = new writable([])
   
   
   // Initialize Store with appropriate row heights to avoid flicker when they load
@@ -79,19 +87,19 @@
   $: handleDataChange ( $tableDataChangesStore )
   $: handleRowClick( $tableStateStore.rowClicked )
 
-  $: $tableDataStore._parentID = $component?.id;
+  $: $tableDataStore._parentID = get(component)?.id;
   $: $tableDataStore.idColumn = idColumn;
 
   // Keep store in synch with property updates or fa  llback to defaults
   $: $tableThemeStore.size = size
-  $: $tableThemeStore.headerAlign = headerAlign ? headerAlign : "flext-start"
+  $: $tableThemeStore.headerAlign = headerAlign ? headerAlign : "flex-start"
   $: $tableThemeStore.headerFontColor = headerFontColor ? headerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))" 
   $: $tableThemeStore.headerBackground = headerBackground ? headerBackground : "var(--spectrum-table-m-regular-header-background-color, var(--spectrum-alias-label-text-color))" 
   $: $tableThemeStore.headerFontSize = size == "custom" ? headerFontSize : sizingMap[size].headerFontSize
 
-  $: $tableThemeStore.rowVerticalAlign = rowVerticalAlign ?? $tableThemeStore.rowVerticalAlign
+  $: $tableThemeStore.rowVerticalAlign = rowVerticalAlign ?? "flex-start"
   $: $tableThemeStore.rowVerticalPadding = size == "custom" ? rowVerticalPadding : sizingMap[size].rowVerticalPadding
-  $: $tableThemeStore.rowHorizontalAlign = rowHorizontalAlign ?? $tableThemeStore.rowHorizontalAlign
+  $: $tableThemeStore.rowHorizontalAlign = rowHorizontalAlign ?? "flex-start"
   $: $tableThemeStore.rowHorizontalPadding = size == "custom" ? rowHorizontalPadding : sizingMap[size].rowHorizontalPadding
   $: $tableThemeStore.rowFontSize =  size == "custom" ? rowFontSize : sizingMap[size].rowFontSize
   $: $tableThemeStore.rowFontColor = rowFontColor ? rowFontColor : "var(--spectrum-table-m-regular-cell-text-color, var(--spectrum-alias-text-color))"
@@ -106,10 +114,10 @@
 
   // Append Super Table Styling variables
   $: styles = {
-    ...$component?.styles,
+    ...$component.styles,
     normal: {
-      ...$component?.styles.normal,
-      ...generateStyling($tableThemeStore),
+      ...$component.styles.normal,
+      ...generateStyling($tableThemeStore)
     },
   };
 
@@ -178,12 +186,6 @@
     styles["--spectrum-checkbox-m-box-size"] = $tableThemeStore.rowFontSize + "px"
     styles["--spectrum-checkbox-m-height"] = $tableThemeStore.rowFontSize + 2 + "px"
     return styles;
-  }
-
-  function addNewColumn () {
-    let subStore = $tableDataStore.columnStores[0]
-    let store = get (subStore)
-    builderStore.actions.duplicateComponent( store.columnID )
   }
 
   function handleRowSelect ( event ) {
