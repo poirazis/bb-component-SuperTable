@@ -27,7 +27,7 @@
 
 <div class="spectrum-Table">
   <div class="spectrum-Table-head">
-    <div style:min-height={"2.5rem"} class="spectrum-Table-headCell"></div>
+    <div style:min-height={"2.5rem"}></div>
   </div>
 
   <div on:scroll={handleScroll} bind:this={bodyContainer} class="spectrum-Table-body">

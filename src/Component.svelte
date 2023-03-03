@@ -94,8 +94,8 @@
   $: $tableThemeStore.showFooter = showFooter 
   $: $tableThemeStore.size = size
   $: $tableThemeStore.headerAlign = headerAlign ? headerAlign : "flex-start"
-  $: $tableThemeStore.headerFontColor = headerFontColor ? headerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))" 
-  $: $tableThemeStore.headerBackground = headerBackground ? headerBackground : "var(--spectrum-table-m-regular-header-background-color, var(--spectrum-alias-label-text-color))" 
+  $: $tableThemeStore.headerFontColor = headerFontColor ? headerFontColor : "var(--spectrum-alias-label-text-color)" 
+  $: $tableThemeStore.headerBackground = headerBackground ? headerBackground : "var(--spectrum-table-header-background-color)" 
   $: $tableThemeStore.headerFontSize = size == "custom" ? headerFontSize : sizingMap[size].headerFontSize
 
   $: $tableThemeStore.rowVerticalAlign = rowVerticalAlign ?? "flex-start"
@@ -103,14 +103,14 @@
   $: $tableThemeStore.rowHorizontalAlign = rowHorizontalAlign ?? "flex-start"
   $: $tableThemeStore.rowHorizontalPadding = size == "custom" ? rowHorizontalPadding : sizingMap[size].rowHorizontalPadding
   $: $tableThemeStore.rowFontSize =  size == "custom" ? rowFontSize : sizingMap[size].rowFontSize
-  $: $tableThemeStore.rowFontColor = rowFontColor ? rowFontColor : "var(--spectrum-table-m-regular-cell-text-color, var(--spectrum-alias-text-color))"
-  $: $tableThemeStore.rowBackground = rowBackground ? rowBackground : "var(--spectrum-table-m-regular-row-background-color)"
+  $: $tableThemeStore.rowFontColor = rowFontColor ? rowFontColor : "var(--spectrum-alias-text-color)"
+  $: $tableThemeStore.rowBackground = rowBackground ? rowBackground : "var(--spectrum-table-row-background-color)"
 
   $: $tableThemeStore.footerAlign = footerAlign ? footerAlign : "flext-start"
-  $: $tableThemeStore.footerFontColor = footerFontColor ? footerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))"
+  $: $tableThemeStore.footerFontColor = footerFontColor ? footerFontColor : "var(--spectrum-alias-label-text-color)"
   $: $tableThemeStore.footerBackground = footerBackground ? footerBackground : "transparent"
 
-  $: $tableThemeStore.dividersColor = dividersColor ? dividersColor : "var(--spectrum-table-m-regular-border-color, var(--spectrum-alias-border-color-mid))"
+  $: $tableThemeStore.dividersColor = dividersColor ? dividersColor : "var(--spectrum-alias-border-color-mid)"
   $: $tableThemeStore.dividers = dividers
 
   // Append Super Table Styling variables
@@ -155,21 +155,20 @@
     styles["--super-table-body-height"] = $tableThemeStore.maxBodyHeight + "px"
 
     // Header
-    styles["--spectrum-table-regular-header-text-size"] = $tableThemeStore.headerFontSize + "px"
-    styles["--spectrum-table-m-regular-header-text-color"] = $tableThemeStore.headerFontColor
-    styles["--spectrum-table-m-regular-header-background-color"] = $tableThemeStore.headerBackground
-    styles["--spectrum-table-regular-header-padding-left"] = $tableThemeStore.rowHorizontalPadding + "px";
+    styles["--spectrum-table-header-text-size"] = $tableThemeStore.headerFontSize + "px"
+    styles["--spectrum-table-header-text-color"] = $tableThemeStore.headerFontColor
+    styles["--spectrum-table-header-background-color"] = $tableThemeStore.headerBackground
+    styles["--spectrum-table-header-padding-left"] = $tableThemeStore.rowHorizontalPadding + "px";
 
     styles["--super-table-header-horizontal-align"] = $tableThemeStore.headerAlign
 
     // Row 
-    styles["--spectrum-table-m-regular-row-background-color"] = $tableThemeStore.rowBackground
     styles["--super-table-row-editor-font-size"] = $tableThemeStore.rowFontSize - 2 + "px"
     styles["--super-table-row-vertical-align"] = $tableThemeStore.rowVerticalAlign;
     styles["--super-table-row-horizontal-align"] = $tableThemeStore.rowHorizontalAlign;
-    styles["--spectrum-table-regular-cell-text-size"] = $tableThemeStore.rowFontSize + "px";
+    styles["--spectrum-table-row-background-color"] = $tableThemeStore.rowBackground
     styles["--spectrum-table-cell-text-size"] = $tableThemeStore.rowFontSize + "px";
-    styles["--spectrum-table-m-regular-cell-text-color"] = $tableThemeStore.rowFontColor
+    styles["--spectrum-table-cell-text-color"] = $tableThemeStore.rowFontColor
     styles["--spectrum-table-cell-padding-y"] = $tableThemeStore.rowVerticalPadding + "px";
     styles["--spectrum-table-cell-padding-x"] = $tableThemeStore.rowHorizontalPadding + "px";
 
@@ -177,7 +176,7 @@
     // Dividers 
     styles["--super-table-row-bottom-border-size"] = $tableThemeStore.dividers == "horizontal" ||  $tableThemeStore.dividers == "both" ? "1px" : "0px" 
     styles["--super-table-column-right-border-size"] = $tableThemeStore.dividers == "vertical" ||  $tableThemeStore.dividers == "both" ? "1px" : "0px" 
-    styles["--spectrum-table-m-regular-border-color"] = $tableThemeStore.dividersColor
+    styles["--spectrum-table-border-color"] = $tableThemeStore.dividersColor
 
     // Footer
     styles["--super-table-footer-horizontal-align"] = $tableThemeStore.footerAlign;
