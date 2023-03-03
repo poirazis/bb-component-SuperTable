@@ -86,6 +86,12 @@
       },
       {
         "type": "boolean",
+        "key": "showFooter",
+        "label": "Show Column Footers",
+        "defaultValue": false
+      },
+      {
+        "type": "boolean",
         "key": "customize",
         "label": "Customize",
         "defaultValue": false

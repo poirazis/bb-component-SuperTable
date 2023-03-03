@@ -64,7 +64,8 @@ export const createSuperTableThemeStore = () => {
 		footerBackground: undefined,
 		dividers: "horizontal",
 		dividersColor: undefined,
-		maxBodyHeight: undefined
+		maxBodyHeight: undefined,
+		showFooter: false
 	})
 
 	return { set, update, subscribe }
@@ -74,7 +75,8 @@ export const createSuperTableThemeStore = () => {
 // so the can be centrally applied to the dataProvider by the Super Table
 export const createSuperTableFilterStore = () => {
 	const { set, update, subscribe } = writable({
-		filters: []
+		filters: [],
+		showFilters: false
 	})
 
 	return {

@@ -4,6 +4,7 @@
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
   const tableSelectionStore = getContext("tableSelectionStore")
+  const tableThemeStore = getContext("tableThemeStore")
   const dispatch = createEventDispatcher();
 
   // Keep scrolling position in synch
@@ -89,9 +90,9 @@
   {/each}
   </div>
 
-  <div class="spectrum-Table-footer">
-  </div>
-
+  {#if $tableThemeStore.showFooter}
+    <div class="spectrum-Table-footer"></div>
+  {/if}
 </div>
 
 <style>

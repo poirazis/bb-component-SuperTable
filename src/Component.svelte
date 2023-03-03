@@ -16,11 +16,12 @@
   const loading = getContext("loading");
 
   export let dataProvider 
-  export let idColumn;
+  export let idColumn
   export let visibleRowCount
-  export let rowSelection;
-  export let size;
-  export let dividers, dividersColor;
+  export let rowSelection
+  export let showFooter
+  export let size
+  export let dividers, dividersColor
   export let headerAlign, headerFontSize, headerFontColor, headerBackground
   export let rowVerticalAlign, rowHorizontalAlign, rowFontSize, rowFontColor, rowBackground
   export let footerAlign, footerFontSize, footerFontColor, footerBackground
@@ -41,18 +42,17 @@
   const tableFilterStore = createSuperTableFilterStore()
   const tableSelectionStore = new writable([])
   const tableDataChangesStore = new writable([])
-  
+  const tableEventStore = new writable({})
   
   // Initialize Store with appropriate row heights to avoid flicker when they load
   let rowMinHeight = size != "custom" 
     ? sizingMap[size].rowMinHeight 
     : ( rowVerticalPadding * 2 ) + rowFontSize
 
-
   $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
   $tableThemeStore.maxBodyHeight = visibleRowCount * rowMinHeight
 
-  $: if ( !$loading ) {
+  $: if ( !$loading && size ) {
        loaded = true; 
        $tableDataStore.loaded = true ; 
        $tableStateStore.loaded = true; 
@@ -87,10 +87,11 @@
   $: handleDataChange ( $tableDataChangesStore )
   $: handleRowClick( $tableStateStore.rowClicked )
 
-  $: $tableDataStore._parentID = get(component)?.id;
+  $: $tableDataStore._parentID = $component.id;
   $: $tableDataStore.idColumn = idColumn;
 
-  // Keep store in synch with property updates or fa  llback to defaults
+  // Keep store in synch with property updates or fallback to defaults
+  $: $tableThemeStore.showFooter = showFooter 
   $: $tableThemeStore.size = size
   $: $tableThemeStore.headerAlign = headerAlign ? headerAlign : "flex-start"
   $: $tableThemeStore.headerFontColor = headerFontColor ? headerFontColor : "var(--spectrum-table-m-regular-header-text-color, var(--spectrum-alias-label-text-color))" 
@@ -122,6 +123,7 @@
   };
 
   setContext("tableDataStore", tableDataStore)
+  setContext("tableThemeStore", tableThemeStore)
   setContext("tableDataChangesStore", tableDataChangesStore)
   setContext("tableStateStore", tableStateStore)
   setContext("tableFilterStore", tableFilterStore)
@@ -150,7 +152,7 @@
   function generateStyling() {
     let styles = {};
     // Table
-    styles["--super-table-body-height"] =  $tableThemeStore.maxBodyHeight  + "px"
+    styles["--super-table-body-height"] = $tableThemeStore.maxBodyHeight + "px"
 
     // Header
     styles["--spectrum-table-regular-header-text-size"] = $tableThemeStore.headerFontSize + "px"
@@ -166,11 +168,11 @@
     styles["--super-table-row-vertical-align"] = $tableThemeStore.rowVerticalAlign;
     styles["--super-table-row-horizontal-align"] = $tableThemeStore.rowHorizontalAlign;
     styles["--spectrum-table-regular-cell-text-size"] = $tableThemeStore.rowFontSize + "px";
+    styles["--spectrum-table-cell-text-size"] = $tableThemeStore.rowFontSize + "px";
     styles["--spectrum-table-m-regular-cell-text-color"] = $tableThemeStore.rowFontColor
-    styles["--spectrum-table-regular-cell-padding-bottom"] = $tableThemeStore.rowVerticalPadding + "px";
-    styles["--spectrum-table-regular-cell-padding-top"] = $tableThemeStore.rowVerticalPadding + "px";
-    styles["--spectrum-table-regular-cell-padding-left"] = $tableThemeStore.rowHorizontalPadding + "px";
-    styles["--spectrum-table-regular-cell-padding-right"] = $tableThemeStore.rowHorizontalPadding + "px";
+    styles["--spectrum-table-cell-padding-y"] = $tableThemeStore.rowVerticalPadding + "px";
+    styles["--spectrum-table-cell-padding-x"] = $tableThemeStore.rowHorizontalPadding + "px";
+
 
     // Dividers 
     styles["--super-table-row-bottom-border-size"] = $tableThemeStore.dividers == "horizontal" ||  $tableThemeStore.dividers == "both" ? "1px" : "0px" 
@@ -212,10 +214,10 @@
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
-  {#if !$component.empty && dataProvider}
+  {#if !$component.empty && idColumn && dataProvider}
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
     <div class="st-master-columns"> {#if $loading} <SuperTableSkeleton /> {:else} <slot /> {/if} </div>
-    <div class="st-master-scroll"> {#if $tableDataStore.loaded } <SuperTableVerticalScroller /> {/if} </div>
+    <div class="st-master-scroll">  {#if loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
     <SuperTableWelcome />
   {/if}
