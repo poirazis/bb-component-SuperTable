@@ -12,6 +12,8 @@
   let shouldUpdate = false
   let id = "rowSelectColumn"
 
+  $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
+
   function handleScroll () {
     if ( $tableStateStore.scrollY !== bodyContainer?.scrollTop )
     {
@@ -28,12 +30,22 @@
   })
   
   function toggleSelectAll ( ) {
-    if ($tableSelectionStore.length == $tableDataStore.data.length) {
-      $tableSelectionStore = []
+    // if all are slected, uselect all else select all
+    if (selected_rows.length == $tableDataStore.data.length) {
+      $tableSelectionStore = {}
     } else {
-      $tableSelectionStore = $tableDataStore.data.map ( row => row[$tableDataStore.idColumn] )
+      $tableDataStore.data.forEach(element => {
+        $tableSelectionStore[element[$tableDataStore.idColumn]] = true
+      });
     }
+
+    dispatch ("selectionChange", { "rowID": -1} ) 
   }
+
+  function handleSelection ( rowID ) {
+    dispatch ("selectionChange", { "rowID": rowID} ) 
+  }
+
 </script>
 
 <div style:width={"2.5rem"} class="spectrum-Table">
@@ -42,13 +54,13 @@
     <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
       <label 
         class="spectrum-Checkbox spectrum-Checkbox--sizeM"
-        class:is-indeterminate={$tableSelectionStore.length > 0 && $tableSelectionStore.length < $tableDataStore.data.length}>
+        class:is-indeterminate={selected_rows.length > 0 && selected_rows.length < $tableDataStore.data.length}>
         <input 
           on:click={() => ( toggleSelectAll() )} 
           type="checkbox" 
           class="spectrum-Checkbox-input" 
           title="Select All"
-          checked={$tableSelectionStore.length == $tableDataStore.data.length}
+          checked={ (selected_rows.length == $tableDataStore.data.length) && ($tableDataStore.data.length > 0 ) }
           >
         <span class="spectrum-Checkbox-box">
           <svg class="spectrum-Icon spectrum-UIIcon-Checkmark100 spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
@@ -68,15 +80,15 @@
       class="spectrum-Table-row" 
       on:mouseenter={ () => { if ($tableStateStore.hoveredRow !== index ) $tableStateStore.hoveredRow = index }} 
       on:mouseleave={ () => { $tableStateStore.hoveredRow = null } } 
-      class:is-selected={ $tableSelectionStore.includes(row[$tableDataStore.idColumn]) } 
+      class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
       class:is-hovered={ $tableStateStore.hoveredRow === index }
       style:min-height={ $tableStateStore.rowHeights[index] + "px" }
       >
         <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
           <input 
-            bind:group={$tableSelectionStore} 
+            bind:checked={$tableSelectionStore[row[$tableDataStore.idColumn]]}
             value={row[$tableDataStore.idColumn]} 
-            on:change={ () => dispatch ("selectionChange", { "rowID": row[$tableDataStore.idColumn] }) }
+            on:change={ () => handleSelection (row[$tableDataStore.idColumn])}
             type="checkbox" 
             class="spectrum-Checkbox-input" 
           >

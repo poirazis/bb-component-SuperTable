@@ -40,7 +40,7 @@
   const tableStateStore = createSuperTableStateStore()
   const tableThemeStore = createSuperTableThemeStore()
   const tableFilterStore = createSuperTableFilterStore()
-  const tableSelectionStore = new writable([])
+  const tableSelectionStore = new writable({})
   const tableDataChangesStore = new writable([])
   const tableEventStore = new writable({})
   
@@ -192,7 +192,7 @@
   function handleRowSelect ( event ) {
     let context = {
       "rowID" : event.detail.rowID,
-      "selectedRows": $tableSelectionStore
+      "selectedRows": Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
     }
     onRowSelect?.( context )
   }
