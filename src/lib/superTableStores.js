@@ -1,41 +1,84 @@
 import { get, writable } from "svelte/store";
 
-// The state store holds UI/UX related synch changes to avoind unecessary refreshes of the main data store
+// The state store holds UI/UX related synch changes to avoid unecessary refreshes of the main data store
 // It acts as the single source of truth for all super columns to adjust accordingly
 export const createSuperTableStateStore = () => {
 	const { set, update, subscribe } = writable({
 		controllerID: null,
 		columnRowHeights: [],
 		rowHeights: [],
+		minRowHeight: 18,
+		fixedRowHeight: true,
 		hoveredRow: null,
 		hoveredColumn: null,
+		crossHairsOn: false,
 		loaded: false,
 		rowClicked: null,
+		holdLastRowClicked: false,
 		scrollY: 0,
-		screenX: 0,
+		scrollX: 0,
 		size: "M"
 	})
 
 	return {
 		set,
-		update,
 		subscribe,
-		updateRowHeights(columnID, newRowHeights) {
-			update(state => {
+		setRowMinHeight ( rowMin ) {
+			update ( state => {
+				state.minRowHeight = rowMin
+				state.rowHeights = new Array(100).fill(rowMin)
+				return state
+			})
+		},
+		hoverRow ( columnID, rowIndex ) {
+			update ( state => {
+				state.hoveredRow = rowIndex
+				if ( state.crossHairsOn )
+					state.hoveredColumn = columnID
+				return state
+			})
+		},
+		unhoverRow ()  {
+			update ( state => {
+				state.hoveredRow = null
+				state.hoveredColumn = null 
+				return state
+			})
+		},
+		resizeRow ( columnID, rowIndex, height ) {
+			update( state => {
 				let index = state.columnRowHeights.findIndex(v => v.columnID === columnID)
-
-				if (index > -1) {
-					state.columnRowHeights[index].rowHeights = newRowHeights
+				if ( index > -1 ) {
+					state.columnRowHeights[index].rowHeights[rowIndex] = height
 				} else {
+					let newRowHeights=[]
+					newRowHeights[rowIndex] = height
 					state.columnRowHeights.push({ columnID: columnID, rowHeights: newRowHeights })
 				}
-				
-				if ( newRowHeights.length < state.rowHeights.length ) state.rowHeights.length = newRowHeights.length 
 
-				newRowHeights.forEach( ( v, idx )  => {
-					state.rowHeights[idx] = Math.max (...state.columnRowHeights.map(t => t.rowHeights[idx]))
-				})
-				
+				state.rowHeights[rowIndex] = Math.max (...state.columnRowHeights.map(t => t.rowHeights[rowIndex]))
+				return state
+			})
+		},
+		synchScrollY ( offset ) {
+			update ( state => {
+				state.scrollY = offset
+				return state
+			} )
+		},
+		removeRowHeights ( columnID ) {
+			update(state => {
+				let index = state.columnRowHeights.findIndex( v => v.columnID === columnID )
+				if (index > -1)  {
+					state.columnRowHeights.splice(index, 1)
+					if ( state.columnRowHeights.length > 0 ){ 
+						for (let idx = 0; idx < state.rowHeights.length; idx++) {
+							state.rowHeights[idx] = Math.max (...state.columnRowHeights.map(t => t.rowHeights[idx]))
+						}
+					} else {
+						state.rowHeights = new Array(100).fill(state.minRowHeight)
+					}
+				}
 				return state
 			})
 		}
@@ -102,7 +145,6 @@ export const createSuperTableFilterStore = () => {
 		}
 	}
 }
-
 
 // The main store holds the data related and Super Table Columns registration and data synchronization
 export const createSuperTableDataStore = () => {

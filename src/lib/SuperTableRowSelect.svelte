@@ -1,5 +1,5 @@
 <script>
-  import { getContext, createEventDispatcher, afterUpdate, beforeUpdate } from "svelte"
+  import { getContext, createEventDispatcher } from "svelte"
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
@@ -9,25 +9,17 @@
 
   // Keep scrolling position in synch
   let bodyContainer
-  let shouldUpdate = false
   let id = "rowSelectColumn"
 
   $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
 
-  function handleScroll () {
-    if ( $tableStateStore.scrollY !== bodyContainer?.scrollTop )
-    {
-      $tableStateStore.controllerID = id
-      $tableStateStore.scrollY = bodyContainer?.scrollTop 
+  function handleScroll( e ) {
+    if (e.isTrusted) {
+      tableStateStore.synchScrollY ( bodyContainer?.scrollTop )
     }
-  }
+  } 
 
-  beforeUpdate (() => { shouldUpdate = (bodyContainer && $tableStateStore.controllerID !== id)})
-  afterUpdate(() => {
-    if (shouldUpdate && bodyContainer) {
-      bodyContainer.scrollTop = $tableStateStore.scrollY
-    }
-  })
+  $: if ( bodyContainer ) bodyContainer.scrollTop = $tableStateStore.scrollY
   
   function toggleSelectAll ( ) {
     // if all are slected, uselect all else select all
@@ -74,15 +66,15 @@
     </div>
   </div>
 
-  <div bind:this={bodyContainer} on:scroll={handleScroll} class="spectrum-Table-body">
+  <div bind:this={bodyContainer} on:scroll|preventDefault={handleScroll} class="spectrum-Table-body">
   {#each $tableDataStore.data as row, index }
     <div 
       class="spectrum-Table-row" 
-      on:mouseenter={ () => { if ($tableStateStore.hoveredRow !== index ) $tableStateStore.hoveredRow = index }} 
-      on:mouseleave={ () => { $tableStateStore.hoveredRow = null } } 
+      on:mouseenter={ () => tableStateStore.hoverRow( null, index ) }
+      on:mouseleave={ () => tableStateStore.unhoverRow() }
       class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
       class:is-hovered={ $tableStateStore.hoveredRow === index }
-      style:min-height={ $tableStateStore.rowHeights[index] + "px" }
+      style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
       >
         <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
           <input 

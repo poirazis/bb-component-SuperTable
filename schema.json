@@ -80,6 +80,18 @@
       },
       {
         "type": "boolean",
+        "key": "superPowers",
+        "label": "Super Powers",
+        "defaultValue": false
+      },
+      {
+        "type": "fieldConfiguration",
+        "key" : "fieldList",
+        "label" : "Select Fields",
+        "dependsOn" : "superPowers"
+      },
+      {
+        "type": "boolean",
         "key": "rowSelection",
         "label": "Row Selection",
         "defaultValue": false
@@ -87,7 +99,7 @@
       {
         "type": "boolean",
         "key": "showFooter",
-        "label": "Show Column Footers",
+        "label": "Column Footers",
         "defaultValue": false
       },
       {
