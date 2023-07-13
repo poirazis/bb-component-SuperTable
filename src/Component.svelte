@@ -1,6 +1,6 @@
 <script>
-  import { getContext, setContext } from "svelte";
-  import { get, writable } from "svelte/store"
+  import { getContext, setContext, onMount } from "svelte";
+  import { writable } from "svelte/store"
   import { LuceneUtils } from "./frontend-core"
 
   import { createSuperTableDataStore, createSuperTableFilterStore, createSuperTableStateStore, createSuperTableThemeStore } from "./lib/superTableStores"
@@ -11,7 +11,7 @@
   import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
   import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
 
-  const { styleable, getAction, ActionTypes } = getContext("sdk");
+  const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
   const component = getContext("component");
   const loading = getContext("loading");
 
@@ -21,6 +21,10 @@
   export let rowSelection
   export let showFooter
   export let size
+  export let superPowers 
+  export let fieldList 
+
+
   export let dividers, dividersColor
   export let headerAlign, headerFontSize, headerFontColor, headerBackground
   export let rowVerticalAlign, rowHorizontalAlign, rowFontSize, rowFontColor, rowBackground
@@ -43,22 +47,32 @@
   const tableSelectionStore = new writable({})
   const tableDataChangesStore = new writable([])
   const tableEventStore = new writable({})
+
+  // Detect DataPovider changes
+  $: if ( !(idColumn in dataProvider.schema) ) {
+       if  ($builderStore.inBuilder ) {
+          console.log("Mismatch in Builder")
+          builderStore.actions.updateProp ("idColumn", null )
+          idColumn = null
+       }
+
+  } 
   
   // Initialize Store with appropriate row heights to avoid flicker when they load
-  let rowMinHeight = size != "custom" 
+  $: rowMinHeight = size != "custom" 
     ? sizingMap[size].rowMinHeight 
     : ( rowVerticalPadding * 2 ) + rowFontSize
 
-  $tableStateStore.rowHeights = new Array(visibleRowCount).fill(rowMinHeight)
-  $tableThemeStore.maxBodyHeight = visibleRowCount * rowMinHeight
+  $: tableStateStore.setRowMinHeight(rowMinHeight)
+
+  $: $tableThemeStore.maxBodyHeight = visibleRowCount * $tableStateStore.rowHeights[0]
 
   $: if ( !$loading && size ) {
        loaded = true; 
-       $tableDataStore.loaded = true ; 
-       $tableStateStore.loaded = true; 
+
        // Grab the new minHeight after loading as rows will adapt their size
        // Take it off the main thread to allow the row to render itself
-       setTimeout( () => {  $tableThemeStore.maxBodyHeight = visibleRowCount * get(tableStateStore).rowHeights[0];}, 50); 
+       // setTimeout( () => {  $tableThemeStore.maxBodyHeight = visibleRowCount * get(tableStateStore).rowHeights[0];}, 50); 
       }
 
   $: $tableDataStore.data = loaded 
@@ -210,11 +224,19 @@
       onRowClick?.( context )
     }
   }
+
+  onMount( () => {
+    $tableDataStore.loaded = true ; 
+    $tableStateStore.loaded = true ; 
+  })
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
   {#if !$component.empty && idColumn && dataProvider}
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
+    {#each fieldList as field }
+      <div class="st-master-columns"> field </div>
+    {/each}
     <div class="st-master-columns"> {#if $loading} <SuperTableSkeleton /> {:else} <slot /> {/if} </div>
     <div class="st-master-scroll">  {#if loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
