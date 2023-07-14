@@ -3,13 +3,15 @@
   import { writable } from "svelte/store"
   import { LuceneUtils } from "./frontend-core"
 
-  import { createSuperTableDataStore, createSuperTableFilterStore, createSuperTableStateStore, createSuperTableThemeStore } from "./lib/superTableStores"
-  import { sizingMap } from "./lib/superTableThemes"
+  import { createSuperTableDataStore, createSuperTableFilterStore, createSuperTableStateStore, createSuperTableThemeStore } from "./lib/SuperTable/stores/superTableStores"
+  import { sizingMap } from "./lib/SuperTable/themes/superTableThemes"
 
-  import SuperTableVerticalScroller from "./lib/SuperTableVerticalScroller.svelte";
-  import SuperTableRowSelect from "./lib/SuperTableRowSelect.svelte";
-  import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
-  import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
+  import SuperTableVerticalScroller from "./lib/SuperTable/controls/SuperTableVerticalScroller.svelte";
+  import SuperTableRowSelect from "./lib/SuperTable/controls/SuperTableRowSelect.svelte";
+  import SuperTableWelcome from "./lib/SuperTable/controls/SuperTableWelcome.svelte";
+  import SuperTableSkeleton from "./lib/SuperTable/controls/SuperTableSkeleton.svelte";
+
+  // Imports from submodules
   import { SuperTableColumn } from "../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
 
   const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
@@ -24,7 +26,6 @@
   export let size
   export let superPowers 
   export let columnList 
-
 
   export let dividers, dividersColor
   export let headerAlign, headerFontSize, headerFontColor, headerBackground
@@ -231,7 +232,6 @@
     $tableStateStore.loaded = true ; 
   })
 
-  $: console.log(columnList)
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
@@ -263,14 +263,6 @@
     align-items: stretch;
   }
   .st-master-columns {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
-    align-items: stretch;
-    overflow-x: auto;
-  }
-  .st-classic-columns {
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
