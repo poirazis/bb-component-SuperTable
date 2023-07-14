@@ -15,7 +15,8 @@
     "@spectrum-css/icon": "^3.0.32",
     "@spectrum-css/table": "^4.0.24",
     "@spectrum-css/vars": "^8.0.3",
-    "svelte": "^3.49.0"
+    "svelte": "^3.49.0",
+    "svelte-legos": "^0.2.1"
   },
   "devDependencies": {
     "@budibase/backend-core": "^2.0.13",

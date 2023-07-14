@@ -10,6 +10,7 @@
   import SuperTableRowSelect from "./lib/SuperTableRowSelect.svelte";
   import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
   import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
+  import { SuperTableColumn } from "../bb-component-SuperTableColumn/src/SuperTableColumn/index.js"
 
   const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
   const component = getContext("component");
@@ -22,7 +23,7 @@
   export let showFooter
   export let size
   export let superPowers 
-  export let fieldList 
+  export let columnList 
 
 
   export let dividers, dividersColor
@@ -229,15 +230,18 @@
     $tableDataStore.loaded = true ; 
     $tableStateStore.loaded = true ; 
   })
+
+  $: console.log(columnList)
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
-  {#if !$component.empty && idColumn && dataProvider}
+  {#if !$component.empty || !(columnList.length < 1) }
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
-    {#each fieldList as field }
-      <div class="st-master-columns"> field </div>
-    {/each}
-    <div class="st-master-columns"> {#if $loading} <SuperTableSkeleton /> {:else} <slot /> {/if} </div>
+    <div class="st-master-columns"> {#if $loading} <SuperTableSkeleton /> {:else} 
+      {#each columnList as columnOptions }
+        <SuperTableColumn {columnOptions} />
+      {/each}
+    <slot /> {/if} </div>
     <div class="st-master-scroll">  {#if loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
     <SuperTableWelcome />
@@ -259,6 +263,14 @@
     align-items: stretch;
   }
   .st-master-columns {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: stretch;
+    overflow-x: auto;
+  }
+  .st-classic-columns {
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;

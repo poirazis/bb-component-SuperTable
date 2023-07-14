@@ -6,6 +6,7 @@
     "friendlyName": "Super Table",
     "description": "A Fully Customizable Table Component with Superpowers !",
     "icon": "Table",
+    "showEmptyState": false,
     "styles": [
       "padding",
       "size",
@@ -85,9 +86,9 @@
         "defaultValue": false
       },
       {
-        "type": "fieldConfiguration",
-        "key" : "fieldList",
-        "label" : "Select Fields",
+        "type": "columns",
+        "key" : "columnList",
+        "label" : "Select Columns",
         "dependsOn" : "superPowers"
       },
       {
