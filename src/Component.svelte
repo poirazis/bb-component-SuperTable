@@ -10,7 +10,7 @@
   import SuperTableRowSelect from "./lib/SuperTableRowSelect.svelte";
   import SuperTableWelcome from "./lib/SuperTableWelcome.svelte";
   import SuperTableSkeleton from "./lib/SuperTableSkeleton.svelte";
-  import { SuperTableColumn } from "../bb-component-SuperTableColumn/src/SuperTableColumn/index.js"
+  import { SuperTableColumn } from "../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
 
   const { styleable, getAction, ActionTypes, builderStore } = getContext("sdk");
   const component = getContext("component");
