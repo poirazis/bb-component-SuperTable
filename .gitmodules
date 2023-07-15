@@ -1,6 +1,3 @@
-[submodule "bb-component-SuperTableCell"]
-	path = bb-component-SuperTableCell
-	url = https://github.com/poirazis/bb-component-SuperTableCell
 [submodule "bb-component-SuperTableColumn"]
 	path = bb-component-SuperTableColumn
 	url = https://github.com/poirazis/bb-component-SuperTableColumn
