@@ -25,6 +25,7 @@
   export let showFooter
   export let size
   export let superPowers 
+  export let superColumnsFirst
   export let columnList 
 
   export let dividers, dividersColor
@@ -235,13 +236,22 @@
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
+
   {#if !$component.empty || !(columnList.length < 1) }
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
-    <div class="st-master-columns"> {#if $loading} <SuperTableSkeleton /> {:else} 
-      {#each columnList as columnOptions }
-        <SuperTableColumn {columnOptions} />
-      {/each}
-    <slot /> {/if} </div>
+
+    <div class="st-master-columns">
+      {#if $loading}
+        <SuperTableSkeleton />
+      {:else} 
+        {#if superColumnsFirst} <slot /> {/if}
+        {#each columnList as columnOptions }
+          <SuperTableColumn {columnOptions} />
+        {/each}
+        {#if !superColumnsFirst} <slot /> {/if}
+      {/if} 
+    </div>
+
     <div class="st-master-scroll">  {#if loaded } <SuperTableVerticalScroller /> {/if} </div>
   {:else}
     <SuperTableWelcome />

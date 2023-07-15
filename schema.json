@@ -86,6 +86,12 @@
         "defaultValue": false
       },
       {
+        "type": "boolean",
+        "key": "superColumnsFirst",
+        "label": "Super Columns First",
+        "defaultValue": false
+      },
+      {
         "type": "columns",
         "key" : "columnList",
         "label" : "Select Columns",
