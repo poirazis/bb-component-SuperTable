@@ -1,15 +1,15 @@
 <script>
   import { getContext, setContext, onMount } from "svelte";
   import { writable } from "svelte/store"
-  import { LuceneUtils } from "./frontend-core"
+  import { LuceneUtils } from "../lib/frontend-core"
 
-  import { createSuperTableDataStore, createSuperTableFilterStore, createSuperTableStateStore, createSuperTableThemeStore } from "./lib/SuperTable/stores/superTableStores"
-  import { sizingMap } from "./lib/SuperTable/themes/superTableThemes"
+  import { createSuperTableDataStore, createSuperTableFilterStore, createSuperTableStateStore, createSuperTableThemeStore } from "../lib/SuperTable/stores/superTableStores.js"
+  import { sizingMap } from "../lib/SuperTable/themes/superTableThemes"
 
-  import SuperTableVerticalScroller from "./lib/SuperTable/controls/SuperTableVerticalScroller.svelte";
-  import SuperTableRowSelect from "./lib/SuperTable/controls/SuperTableRowSelect.svelte";
-  import SuperTableWelcome from "./lib/SuperTable/controls/SuperTableWelcome.svelte";
-  import SuperTableSkeleton from "./lib/SuperTable/controls/SuperTableSkeleton.svelte";
+  import SuperTableVerticalScroller from "../lib/SuperTable/controls/SuperTableVerticalScroller.svelte";
+  import SuperTableRowSelect from "../lib/SuperTable/controls/SuperTableRowSelect.svelte";
+  import SuperTableWelcome from "../lib/SuperTable/controls/SuperTableWelcome.svelte";
+  import SuperTableSkeleton from "../lib/SuperTable/controls/SuperTableSkeleton.svelte";
 
   // Imports from submodules
   import { SuperTableColumn } from "../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
@@ -236,7 +236,6 @@
 </script>
 
 <div class="st-master-wrapper" use:styleable={styles}>
-
   {#if !$component.empty || !(columnList.length < 1) }
     <div class="st-master-control"> {#if rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if}</div>
 
