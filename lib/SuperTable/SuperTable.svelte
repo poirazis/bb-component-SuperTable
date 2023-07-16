@@ -77,11 +77,7 @@
   $: $tableDataStore._parentID = tableOptions.componentID
   $: $tableDataStore.idColumn = tableOptions.idColumn;
 
-  setContext("tableDataStore", tableDataStore)
-  setContext("tableDataChangesStore", tableDataChangesStore)
-  setContext("tableStateStore", tableStateStore)
-  setContext("tableFilterStore", tableFilterStore)
-  setContext("tableSelectionStore", tableSelectionStore)
+
 
   // Component Function Definitions
   function setDataProviderFiltering( filters ) {
@@ -131,6 +127,13 @@
     $tableDataStore.loaded = true ; 
     $tableDataStore.data = dataProvider.rows
   })
+
+  setContext("tableDataStore", tableDataStore)
+  setContext("tableDataChangesStore", tableDataChangesStore)
+  setContext("tableStateStore", tableStateStore)
+  setContext("tableFilterStore", tableFilterStore)
+  setContext("tableSelectionStore", tableSelectionStore)
+  
 </script>
 
 <div 
