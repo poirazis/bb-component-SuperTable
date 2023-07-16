@@ -1,12 +1,12 @@
 <script>
   import { getContext } from "svelte"
   const tableStateStore = getContext("tableStateStore")
-  const tableThemeStore = getContext("tableThemeStore")
   const tableDataStore = getContext("tableDataStore")
 
   // Keep scrolling position in synch
   let bodyContainer
   let id = "scroller"
+  export let showFooter = false 
 
   function handleScroll( e ) {
     if (e.isTrusted) {
@@ -28,7 +28,7 @@
     {/each}
   </div>
 
-  {#if $tableThemeStore.showFooter}
+  {#if showFooter}
     <div class="spectrum-Table-footer"></div>
   {/if}
       

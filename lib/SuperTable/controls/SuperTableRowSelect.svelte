@@ -4,12 +4,12 @@
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
   const tableSelectionStore = getContext("tableSelectionStore")
-  const tableThemeStore = getContext("tableThemeStore")
   const dispatch = createEventDispatcher();
 
   // Keep scrolling position in synch
   let bodyContainer
   let id = "rowSelectColumn"
+  export let showFooter = false
 
   $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
 
@@ -94,7 +94,7 @@
   {/each}
   </div>
 
-  {#if $tableThemeStore.showFooter}
+  {#if showFooter}
     <div class="spectrum-Table-footer"></div>
   {/if}
 </div>
