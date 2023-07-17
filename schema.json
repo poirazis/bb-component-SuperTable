@@ -27,6 +27,7 @@
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
+        "defaultValue": "_id",
         "required": true
       },
       { 
@@ -50,11 +51,11 @@
         "settings": [
           {
             "type": "number",
-            "key": "rowVerticalPadding",
-            "label": "Row Vertical Padding",
+            "key": "rowHeight",
+            "label": "Row Height",
             "min": 0,
-            "max": 32,
-            "defaultValue": 11
+            "max": 400,
+            "defaultValue": 55
           },
           {
             "type": "number",
@@ -81,6 +82,11 @@
         "min": 1
       },
       {
+        "type": "columns",
+        "key" : "columnList",
+        "label" : "Classic Columns"
+      },
+      {
         "type": "boolean",
         "key": "superPowers",
         "label": "Super Powers",
@@ -90,13 +96,7 @@
         "type": "boolean",
         "key": "superColumnsFirst",
         "label": "Super Columns First",
-        "defaultValue": false
-      },
-      {
-        "type": "columns",
-        "key" : "columnList",
-        "label" : "Select Columns",
-        "dependsOn" : "superPowers"
+        "defaultValue": true
       },
       {
         "type": "boolean",
@@ -116,6 +116,7 @@
         "label": "Customize",
         "defaultValue": false
       },
+      
       {
         "section": true,
         "name": "Default Header Settings",

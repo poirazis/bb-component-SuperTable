@@ -1,5 +1,6 @@
 <script>
   import { getContext, createEventDispatcher } from "svelte"
+  import { prevent_default } from "svelte/internal";
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
@@ -14,6 +15,7 @@
   $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
 
   function handleScroll( e ) {
+    e.prevent_default();
     if (e.isTrusted) {
       tableStateStore.synchScrollY ( bodyContainer?.scrollTop )
     }
