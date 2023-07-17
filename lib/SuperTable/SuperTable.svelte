@@ -32,6 +32,15 @@
 
   const dispatch = createEventDispatcher();
 
+  // Static Assignments
+  $tableStateStore.loaded = true ; 
+  $tableDataStore.loaded = true ; 
+  $tableDataStore.data = dataProvider.rows
+  $tableDataStore.dataSource = dataProvider.datasource
+  $tableDataStore.schema = dataProvider.schema
+
+
+	// Reactive Assignments
   $: superPowers = tableOptions.hasChildren;
 
   // Initialize Store with appropriate row heights to avoid flicker when they load
@@ -64,7 +73,7 @@
   $: handleRowClick( $tableStateStore.rowClicked )
 
   $: $tableDataStore._parentID = tableOptions.componentID
-  $: $tableDataStore.idColumn = tableOptions.idColumn;
+  $: $tableDataStore.idColumn = tableOptions.idColumn
 
 
 
@@ -87,8 +96,6 @@
     }
   }
 
-
-
   function handleRowSelect ( event ) {
     let context = {
       "rowID" : event.detail.rowID,
@@ -110,14 +117,6 @@
       onRowClick?.( context )
     }
   }
-
-  onMount( () => {
-    $tableStateStore.loaded = true ; 
-    $tableDataStore.loaded = true ; 
-    $tableDataStore.data = dataProvider.rows
-    $tableDataStore.dataSource = dataProvider.datasource
-    $tableDataStore.schema = dataProvider.schema
-  })
 
   setContext("tableDataStore", tableDataStore)
   setContext("tableDataChangesStore", tableDataChangesStore)

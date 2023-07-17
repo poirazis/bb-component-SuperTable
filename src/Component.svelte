@@ -33,7 +33,6 @@
 
   function getAllColumns() {
     let allColumns
-
     allColumns = Object.keys(dataProvider.schema).map( v => { return { name: v, displayName: v } } )
     return allColumns
   }
@@ -41,14 +40,13 @@
   $: tableOptions = {
     componentID: $component.id,
     hasChildren: $component.children,
-    schema: dataProvider.schema,
     columns: !$component.children && columnList?.length === 0 ? getAllColumns() : columnList,
     idColumn: idColumn,
     superColumnsFirst: superColumnsFirst,
     size: size,
     customSize: {
       rowHeight: rowHeight,
-      cellLeftPadding: 20
+      cellLeftPadding: rowHorizontalPadding
     },
     showFooter: showFooter,
     visibleRowCount: visibleRowCount,
@@ -59,10 +57,9 @@
     },
     columnOptions: {
       rowBackground : rowBackground,
-      rowHorizontalPadding : rowHorizontalPadding
+      rowHorizontalPadding : rowHorizontalPadding,
     }
   };
-
 </script>
 
 <div use:styleable={$component.styles}>
