@@ -37,7 +37,6 @@
     return allColumns
   }
 
-  $: console.log(tableOptions.columnOptions.showFooter)
   $: tableOptions = {
     componentID: $component.id,
     hasChildren: $component.children,
