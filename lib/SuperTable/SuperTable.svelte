@@ -30,6 +30,7 @@
   const tableDataChangesStore = new writable([])
   const tableEventStore = new writable({})
   const tableScrollPosition = new writable (0);
+  const hoveredRow = new writable (1);
 
   const dispatch = createEventDispatcher();
 
@@ -39,7 +40,6 @@
   $tableDataStore.data = dataProvider.rows
   $tableDataStore.dataSource = dataProvider.datasource
   $tableDataStore.schema = dataProvider.schema
-
 
 	// Reactive Assignments
   $: superPowers = tableOptions.hasChildren;
@@ -52,7 +52,6 @@
   $: tableStateStore.setRowMinHeight(rowMinHeight)
 
   $: maxBodyHeight = tableOptions.visibleRowCount * $tableStateStore.rowHeights[0]
-
   
   // Get dataProvider sorting / filtering functions
   $: setSorting = getAction(
@@ -75,8 +74,6 @@
 
   $: $tableDataStore._parentID = tableOptions.componentID
   $: $tableDataStore.idColumn = tableOptions.idColumn
-
-
 
   // Component Function Definitions
   function setDataProviderFiltering( filters ) {
@@ -115,7 +112,7 @@
     if (rowKey) {
       let context = { rowID : rowKey }
       $tableStateStore.rowClicked = null;
-      onRowClick?.( context )
+      tableOptions?.events?.onRowClick?.( context )
     }
   }
 
@@ -142,7 +139,7 @@
       {/each}
       {#if !tableOptions.superColumnsFirst} <slot /> {/if}
     </div>
-    <div class="st-master-scroll">  <SuperTableVerticalScroller /> </div>
+    <div class="st-master-scroll"> <SuperTableVerticalScroller /> </div>
 </div>
 
 <style>
@@ -151,6 +148,8 @@
     flex-direction: row;
     justify-content: stretch;
     align-items: stretch;
+    border: 1px solid aliceblue;
+    padding: 1rem;
   }
 
   .st-master-control {
@@ -166,5 +165,10 @@
     justify-content: stretch;
     align-items: stretch;
     overflow-x: auto;
+    border: 1px solid lime;
+  }
+
+  .st-master-scroll {
+    border: 1px solid orange;
   }
 </style>

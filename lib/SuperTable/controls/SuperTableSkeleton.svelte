@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte"
-    import Skeleton from "./Skeleton.svelte";
+  import Skeleton from "./Skeleton.svelte";
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
@@ -26,8 +26,7 @@
   {/each}
   </div>
 
-  <div class="spectrum-Table-footer">
-  </div>
+  <div class="spectrum-Table-footer"></div>
 
 </div>
 
