@@ -48,7 +48,6 @@
       rowHeight: rowHeight,
       cellLeftPadding: rowHorizontalPadding
     },
-    showFooter: showFooter,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
     dividers: dividers ?? "Horizontal",
@@ -56,17 +55,19 @@
       onRowClick: onRowClick
     },
     columnOptions: {
+      showFooter: showFooter,
       rowBackground : rowBackground,
       rowHorizontalPadding : rowHorizontalPadding,
     }
   };
+
+  $: console.log(tableOptions)
 </script>
 
 <div use:styleable={$component.styles}>
   <SuperTable 
     {tableOptions} 
     {dataProvider}
-    on:rowClicked = {onRowClick}
   >
     <slot />
   </SuperTable>

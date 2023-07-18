@@ -1,5 +1,5 @@
 <script>
-  import { getContext, setContext, onMount, createEventDispatcher } from "svelte";
+  import { getContext, setContext, createEventDispatcher } from "svelte";
   import { writable } from "svelte/store"
   import { LuceneUtils } from "../frontend-core"
 
@@ -29,6 +29,7 @@
   const tableSelectionStore = new writable({})
   const tableDataChangesStore = new writable([])
   const tableEventStore = new writable({})
+  const tableScrollPosition = new writable (0);
 
   const dispatch = createEventDispatcher();
 
@@ -123,7 +124,8 @@
   setContext("tableStateStore", tableStateStore)
   setContext("tableFilterStore", tableFilterStore)
   setContext("tableSelectionStore", tableSelectionStore)
-  
+  setContext("tableScrollPosition", tableScrollPosition)
+  setContext("tableOptions", tableOptions)
 </script>
 
 <div 
@@ -136,11 +138,10 @@
     <div class="st-master-columns"> 
       {#if tableOptions.superColumnsFirst} <slot /> {/if}
       {#each tableOptions.columns as column }
-        <SuperTableColumn columnOptions={{...column, showFooter: tableOptions.showFooter }}/>
+        <SuperTableColumn columnOptions={{...column, showFooter: tableOptions?.columnOptions?.showFooter }}/>
       {/each}
       {#if !tableOptions.superColumnsFirst} <slot /> {/if}
     </div>
-
     <div class="st-master-scroll">  <SuperTableVerticalScroller /> </div>
 </div>
 

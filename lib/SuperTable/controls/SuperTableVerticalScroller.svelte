@@ -1,23 +1,25 @@
 <script>
-  import { getContext } from "svelte"
-  const tableStateStore = getContext("tableStateStore")
+  import { getContext, beforeUpdate } from "svelte"
+
   const tableDataStore = getContext("tableDataStore")
+  const tableStateStore = getContext("tableStateStore")
+  const tableScrollPosition = getContext("tableScrollPosition")
+  const tableOptions = getContext("tableOption")
 
   // Keep scrolling position in synch
   let bodyContainer
-  let id = "scroller"
-  export let showFooter = false 
+  let mouseOver
 
   function handleScroll( e ) {
-    if (e.isTrusted) {
-      tableStateStore.synchScrollY ( bodyContainer?.scrollTop )
+    if ( mouseOver ) {
+      $tableScrollPosition = bodyContainer?.scrollTop;
     }
-  } 
+  }
 
-  $: if ( bodyContainer ) bodyContainer.scrollTop = $tableStateStore.scrollY
+  beforeUpdate( () => { if ( bodyContainer ) bodyContainer.scrollTop = $tableScrollPosition } )
 </script>
 
-<div class="spectrum-Table">
+<div class="spectrum-Table" on:mouseenter={() => mouseOver = true } on:mouseleave={() => mouseOver = false } >
   <div class="spectrum-Table-head">
     <div style:min-height={"2.5rem"}></div>
   </div>
@@ -28,7 +30,7 @@
     {/each}
   </div>
 
-  {#if showFooter}
+  {#if tableOptions?.columnOptions?.showFooter }
     <div class="spectrum-Table-footer"></div>
   {/if}
       
@@ -36,7 +38,7 @@
 
 <style>
   .spectrum-Table-body {
-    max-height: var(--super-table-body-height);
+    height: var(--super-table-body-height);
     display: flex;
     flex-direction: column;
     border-radius: 0px;

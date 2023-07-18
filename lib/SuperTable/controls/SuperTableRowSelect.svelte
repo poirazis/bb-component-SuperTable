@@ -1,28 +1,27 @@
 <script>
-  import { getContext, createEventDispatcher } from "svelte"
-  import { prevent_default } from "svelte/internal";
+  import { getContext, createEventDispatcher, beforeUpdate } from "svelte"
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
   const tableSelectionStore = getContext("tableSelectionStore")
+  const tableScrollPosition = getContext("tableScrollPosition")
+  const tableOptions = getContext("tableOptions")
   const dispatch = createEventDispatcher();
 
   // Keep scrolling position in synch
   let bodyContainer
-  let id = "rowSelectColumn"
-  export let showFooter = false
+  let mouseOver = false
 
   $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
 
   function handleScroll( e ) {
-    e.prevent_default();
-    if (e.isTrusted) {
-      tableStateStore.synchScrollY ( bodyContainer?.scrollTop )
+    if ( mouseOver ) {
+      $tableScrollPosition = bodyContainer?.scrollTop;
     }
-  } 
+  }
 
-  $: if ( bodyContainer ) bodyContainer.scrollTop = $tableStateStore.scrollY
-  
+  beforeUpdate( () => { if ( bodyContainer ) bodyContainer.scrollTop = $tableScrollPosition } )
+
   function toggleSelectAll ( ) {
     // if all are slected, uselect all else select all
     if (selected_rows.length == $tableDataStore.data.length) {
@@ -42,8 +41,7 @@
 
 </script>
 
-<div style:width={"2.5rem"} class="spectrum-Table">
-
+<div style:width={"2.5rem"} class="spectrum-Table" on:mouseenter={() => mouseOver = true } on:mouseleave={() => mouseOver = false }>
   <div class="spectrum-Table-head">
     <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
       <label 
@@ -96,7 +94,7 @@
   {/each}
   </div>
 
-  {#if showFooter}
+  {#if tableOptions?.columnOption?.showFooter }
     <div class="spectrum-Table-footer"></div>
   {/if}
 </div>
