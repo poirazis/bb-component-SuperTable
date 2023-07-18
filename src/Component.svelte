@@ -37,6 +37,7 @@
     return allColumns
   }
 
+  $: console.log(tableOptions.columnOptions.showFooter)
   $: tableOptions = {
     componentID: $component.id,
     hasChildren: $component.children,
@@ -60,15 +61,15 @@
       rowHorizontalPadding : rowHorizontalPadding,
     }
   };
-
-  $: console.log(tableOptions)
 </script>
 
 <div use:styleable={$component.styles}>
+  {#key showFooter}
   <SuperTable 
     {tableOptions} 
     {dataProvider}
   >
-    <slot />
+      <slot />
   </SuperTable>
+  {/key}
 </div>

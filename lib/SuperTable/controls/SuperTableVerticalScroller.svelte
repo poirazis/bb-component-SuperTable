@@ -24,9 +24,9 @@
     <div style:min-height={"2.5rem"}></div>
   </div>
 
-  <div on:scroll={handleScroll} bind:this={bodyContainer} class="spectrum-Table-body">
+  <div bind:this={bodyContainer} class="spectrum-Table-body">
     {#each $tableDataStore.data as row , idx }
-      <div class="spectrum-Table-row" style:min-height={ $tableStateStore.rowHeights[idx] + "px" } style:border-color={"transparent"} ></div>
+      <div class="spectrum-Table-row" style:height={ $tableStateStore.rowHeights[idx] + "px" } style:border-color={"transparent"} ></div>
     {/each}
   </div>
 
@@ -39,8 +39,6 @@
 <style>
   .spectrum-Table-body {
     height: var(--super-table-body-height);
-    display: flex;
-    flex-direction: column;
     border-radius: 0px;
     overflow-y: scroll !important;
     overflow-x: hidden;
@@ -48,7 +46,7 @@
     margin: 0px;
     border: unset;
     width: 10px;
-    margin-left: -10px;
+    margin-left: 15px;;
   }
 
   .spectrum-Table-footer {

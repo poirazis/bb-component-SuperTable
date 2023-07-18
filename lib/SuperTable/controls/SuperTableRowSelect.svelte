@@ -20,7 +20,7 @@
     }
   }
 
-  beforeUpdate( () => { if ( bodyContainer ) bodyContainer.scrollTop = $tableScrollPosition } )
+  beforeUpdate( () => { if ( bodyContainer && !mouseOver ) bodyContainer.scrollTop = $tableScrollPosition } )
 
   function toggleSelectAll ( ) {
     // if all are slected, uselect all else select all
