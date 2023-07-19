@@ -19,7 +19,7 @@
   beforeUpdate( () => { if ( bodyContainer ) bodyContainer.scrollTop = $tableScrollPosition } )
 </script>
 
-<div class="spectrum-Table" on:mouseenter={() => mouseOver = true } on:mouseleave={() => mouseOver = false } >
+<div class="superTableScroller" on:mouseenter={() => mouseOver = true } on:mouseleave={() => mouseOver = false } >
   <div class="spectrum-Table-head">
     <div style:min-height={"2.5rem"}></div>
   </div>
@@ -37,16 +37,16 @@
 </div>
 
 <style>
+  .superTableScroller {
+    width: 30px;
+  }
+
   .spectrum-Table-body {
     height: var(--super-table-body-height);
     border-radius: 0px;
     overflow-y: scroll !important;
-    overflow-x: hidden;
-    padding: 0px;
-    margin: 0px;
-    border: unset;
     width: 10px;
-    margin-left: 15px;;
+    border: unset;
   }
 
   .spectrum-Table-footer {

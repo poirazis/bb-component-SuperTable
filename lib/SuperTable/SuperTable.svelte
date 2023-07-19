@@ -148,8 +148,6 @@
     flex-direction: row;
     justify-content: stretch;
     align-items: stretch;
-    border: 1px solid aliceblue;
-    padding: 1rem;
   }
 
   .st-master-control {
@@ -165,10 +163,10 @@
     justify-content: stretch;
     align-items: stretch;
     overflow-x: auto;
-    border: 1px solid lime;
   }
 
   .st-master-scroll {
-    border: 1px solid orange;
+    opacity: 0.8;
+    margin-left: -1px;
   }
 </style>
