@@ -31,13 +31,13 @@
     regenerator-runtime "^0.13.11"
 
 "@budibase/backend-core@^2.0.13":
-  version "2.8.11"
-  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.8.11.tgz#e00dff66922fd1df40a045df000fdf4b1199e7c5"
-  integrity sha512-M9CzEdarNU5dMFxFQP7C/qQiSieSAfFLM/AYDY9XTNB59J5rNxM17EKGF1QLtKgu6WF0qo5C4nIgWbnnceuq3w==
+  version "2.8.14"
+  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.8.14.tgz#92b03f91a40349d45137fcbe67ab975b3ebc5fc9"
+  integrity sha512-29iwSHyxlElwFbizTX4GbUo1OqX28aCf04MaeAqD8so/XeyVYsFz4dcPpYwPmoDp5YsKpqkRDNdqu5mvGlEa6A==
   dependencies:
     "@budibase/nano" "10.1.2"
     "@budibase/pouchdb-replication-stream" "1.2.10"
-    "@budibase/types" "2.8.11"
+    "@budibase/types" "2.8.14"
     "@shopify/jest-koa-mocks" "5.0.1"
     "@techpass/passport-openidconnect" "0.3.2"
     aws-cloudfront-sign "2.2.0"
@@ -96,10 +96,10 @@
     pouchdb-promise "^6.0.4"
     through2 "^2.0.0"
 
-"@budibase/types@2.8.11":
-  version "2.8.11"
-  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.8.11.tgz#614e8e0f868b52cd262905b7d26728c385c73318"
-  integrity sha512-2MHFjKO/djRI1TXANoLviXszz4/LEnHL5pMA/sjpHEpfUm2YJYvBx6ol1pQiPMIeWZ3tyKKsufuqWF/+XCX9Mg==
+"@budibase/types@2.8.14":
+  version "2.8.14"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.8.14.tgz#312366555db96f4ef2fe11fbc2683937974ffe20"
+  integrity sha512-LP6nUNmXJHiDsYYZrEE+9/xHMyfgIRow5DFSA8Sy27Ad8xCHKPwAFAdZkp/XkPJ0PXYaIK0wOSUEaWwKlIRwng==
   dependencies:
     scim-patch "^0.7.0"
 
@@ -712,9 +712,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001503:
-  version "1.0.30001516"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001516.tgz#621b1be7d85a8843ee7d210fd9d87b52e3daab3a"
-  integrity sha512-Wmec9pCBY8CWbmI4HsjBeQLqDTqV91nFVR83DnZpYyRnPI1wePDsTg0bGLPC5VU/3OIZV1fmxEea1b+tFKe86g==
+  version "1.0.30001517"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001517.tgz#90fabae294215c3495807eb24fc809e11dc2f0a8"
+  integrity sha512-Vdhm5S11DaFVLlyiKu4hiUTkpZu+y1KA/rZZqVQfOD5YdDT/eQKlkt7NaE0WGOFgX32diqt9MiP9CAiFeRklaA==
 
 canvas-confetti@^1.6.0:
   version "1.6.0"
@@ -1082,9 +1082,9 @@ destroy@^1.0.4:
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
 
 detect-libc@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-2.0.1.tgz#e1897aa88fa6ad197862937fbc0441ef352ee0cd"
-  integrity sha512-463v3ZeIrcWtdgIg6vI6XUncguvr2TnGl4SzDXinkt9mSLpBJKXT3mW6xT3VQdDN11+WVs29pgvivTc4Lp8v+w==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-2.0.2.tgz#8ccf2ba9315350e1241b88d0ac3b0e1fbd99605d"
+  integrity sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw==
 
 dom-serializer@^1.0.1:
   version "1.4.1"
@@ -1157,9 +1157,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.463"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.463.tgz#8eb04355f24fef5c8097661d14e143f6d8554055"
-  integrity sha512-fT3hvdUWLjDbaTGzyOjng/CQhQJSQP8ThO3XZAoaxHvHo2kUXiRQVMj9M235l8uDFiNPsPa6KHT1p3RaR6ugRw==
+  version "1.4.464"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.464.tgz#2f94bad78dff34e527aacbfc5d0b1a33cf046507"
+  integrity sha512-guZ84yoou4+ILNdj0XEbmGs6DEWj6zpVOWYpY09GU66yEb0DSYvP/biBPzHn0GuW/3RC/pnaYNUWlQE1fJYtgA==
 
 emitter-listener@1.1.2:
   version "1.1.2"

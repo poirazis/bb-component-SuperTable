@@ -38,7 +38,7 @@
 
 <style>
   .superTableScroller {
-    width: 30px;
+    width: 10px;
   }
 
   .spectrum-Table-body {

@@ -50,7 +50,8 @@
     },
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
-    dividers: dividers ?? "Horizontal",
+    dividers: dividers,
+    dividersColor: dividersColor,
     tableEvents: {
       onRowClick: onRowClick
     },
