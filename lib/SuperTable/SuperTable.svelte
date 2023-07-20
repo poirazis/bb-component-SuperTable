@@ -135,7 +135,9 @@
     <div class="st-master-columns"> 
       {#if tableOptions.superColumnsFirst} <slot /> {/if}
       {#each tableOptions.columns as column }
-        <SuperTableColumn columnOptions={{...column, showFooter: tableOptions?.columnOptions?.showFooter }}/>
+        <SuperTableColumn 
+          columnOptions={{...column, showFooter: tableOptions?.columnOptions?.showFooter }}
+          />
       {/each}
       {#if !tableOptions.superColumnsFirst} <slot /> {/if}
     </div>
