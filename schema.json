@@ -88,9 +88,15 @@
       },
       {
         "type": "boolean",
-        "key": "superPowers",
-        "label": "Super Powers",
-        "defaultValue": false
+        "key": "filtering",
+        "label": "Filtering",
+        "defaultValue": true
+      },
+      {
+        "type": "boolean",
+        "key": "sorting",
+        "label": "Sorting",
+        "defaultValue": true
       },
       {
         "type": "boolean",

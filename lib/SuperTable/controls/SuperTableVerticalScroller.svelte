@@ -38,14 +38,14 @@
 
 <style>
   .superTableScroller {
-    width: 10px;
+    width: 12px;
   }
 
   .spectrum-Table-body {
     height: var(--super-table-body-height);
     border-radius: 0px;
     overflow-y: scroll !important;
-    width: 10px;
+    width: 12px;
     border: unset;
   }
 

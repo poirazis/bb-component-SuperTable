@@ -11,7 +11,8 @@
   export let rowSelection;
   export let showFooter;
   export let size;
-  export let superPowers;
+  export let filtering 
+  export let sorting;
   export let superColumnsFirst;
   export let columnList = []
 
@@ -43,10 +44,12 @@
     columns: !$component.children && columnList?.length === 0 ? getAllColumns() : columnList,
     idColumn: idColumn,
     superColumnsFirst: superColumnsFirst,
+    filtering: filtering,
+    sorting: sorting,
     size: size,
     customSize: {
       rowHeight: rowHeight,
-      cellLeftPadding: rowHorizontalPadding
+      cellPadding: rowHorizontalPadding
     },
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
@@ -64,7 +67,7 @@
 </script>
 
 <div use:styleable={$component.styles}>
-  {#key showFooter}
+  {#key showFooter }
   <SuperTable 
     {tableOptions} 
     {dataProvider}

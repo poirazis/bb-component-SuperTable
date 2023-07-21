@@ -14,7 +14,6 @@
 
   // Imports from submodules
   import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
-
   const { getAction, ActionTypes } = getContext("sdk");
 
   export let tableOptions
@@ -37,9 +36,9 @@
   // Static Assignments
   $tableStateStore.loaded = true ; 
   $tableDataStore.loaded = true ; 
-  $tableDataStore.data = dataProvider.rows
-  $tableDataStore.dataSource = dataProvider.datasource
-  $tableDataStore.schema = dataProvider.schema
+  $: $tableDataStore.data = dataProvider.rows
+  $: $tableDataStore.dataSource = dataProvider.datasource
+  $: $tableDataStore.schema = dataProvider.schema
 
 	// Reactive Assignments
   $: superPowers = tableOptions.hasChildren;
@@ -48,6 +47,10 @@
   $: rowMinHeight = tableOptions.size != "custom" 
     ? sizingMap[tableOptions.size ].rowMinHeight 
     : tableOptions.customSize.rowHeight
+
+  $: cellPadding = tableOptions.size != "custom" 
+    ? sizingMap[tableOptions.size ].cellPadding 
+    : tableOptions.customSize.cellPadding
 
   $: tableStateStore.setRowMinHeight(rowMinHeight)
 
@@ -84,13 +87,14 @@
       unsetFiltering?.(tableOptions.componentID);
     } 
   }
-
+  
   function setDataProviderSorting(column, direction) {
     if ( (column != sortedColumn) || (direction != sortedDirection) ) 
     { 
       setSorting?.({ column: column, order: direction }) 
       sortedColumn = column
       sortedDirection = direction
+      console.log("here", setSorting)
     }
   }
 
@@ -128,6 +132,8 @@
 <div 
   class="st-master-wrapper"
   style:--super-table-body-height={maxBodyHeight + "px"}
+  style:--super-table-cell-padding={ cellPadding + "px"}
+  style:--super-table-vertical-dividers={ tableOptions.dividers == "both" || tableOptions.dividers == "vertical" ? "1px solid var(--spectrum-table-border-color, var(--spectrum-alias-border-color-mid))" : "none" }
   style:--spectrum-table-row-background-color = {tableOptions.columnOptions.rowBackground}
 >
     <div class="st-master-control"> 
@@ -136,7 +142,11 @@
       {#if tableOptions.superColumnsFirst} <slot /> {/if}
       {#each tableOptions.columns as column }
         <SuperTableColumn 
-          columnOptions={{...column, showFooter: tableOptions?.columnOptions?.showFooter }}
+          columnOptions={{...column, 
+            showFooter: tableOptions?.columnOptions?.showFooter, 
+            filtering: tableOptions?.filtering, 
+            sorting: tableOptions?.sorting 
+          }}
           />
       {/each}
       {#if !tableOptions.superColumnsFirst} <slot /> {/if}
@@ -168,7 +178,6 @@
   }
 
   .st-master-scroll {
-    opacity: 0.8;
-    margin-left: -1px;
+    opacity: 1;
   }
 </style>
