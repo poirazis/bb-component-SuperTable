@@ -27,21 +27,22 @@
   const tableFilterStore = createSuperTableFilterStore()
   const tableSelectionStore = new writable({})
   const tableDataChangesStore = new writable([])
-  const tableEventStore = new writable({})
   const tableScrollPosition = new writable (0);
-  const hoveredRow = new writable (1);
+  const tableHoverStore = new writable (0);
 
   const dispatch = createEventDispatcher();
 
   // Static Assignments
   $tableStateStore.loaded = true ; 
   $tableDataStore.loaded = true ; 
-  $: $tableDataStore.data = dataProvider.rows
-  $: $tableDataStore.dataSource = dataProvider.datasource
-  $: $tableDataStore.schema = dataProvider.schema
+
 
 	// Reactive Assignments
   $: superPowers = tableOptions.hasChildren;
+  $: $tableDataStore.data = dataProvider.rows
+  $: $tableDataStore.dataSource = dataProvider.datasource
+  $: $tableDataStore.schema = dataProvider.schema
+  $: $tableStateStore.rowCount = dataProvider.rows.length;
 
   // Initialize Store with appropriate row heights to avoid flicker when they load
   $: rowMinHeight = tableOptions.size != "custom" 
@@ -127,6 +128,7 @@
   setContext("tableSelectionStore", tableSelectionStore)
   setContext("tableScrollPosition", tableScrollPosition)
   setContext("tableOptions", tableOptions)
+  setContext("tableHoverStore", tableHoverStore)
 </script>
 
 <div 
