@@ -1,6 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import { SuperTable } from "../lib/SuperTable";
+  import { sizingMap } from "../lib/SuperTable/themes/superTableThemes";
 
   const { styleable } = getContext("sdk");
   const component = getContext("component");
@@ -13,6 +14,7 @@
   export let size;
   export let filtering 
   export let sorting;
+  export let editable;
   export let superColumnsFirst;
   export let columnList = []
 
@@ -46,33 +48,25 @@
     superColumnsFirst: superColumnsFirst,
     filtering: filtering,
     sorting: sorting,
-    size: size,
-    customSize: {
-      rowHeight: rowHeight,
-      cellPadding: rowHorizontalPadding
-    },
+    editable: editable,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
     dividers: dividers,
     dividersColor: dividersColor,
+    cellPadding: size != "custom" ? sizingMap[size].cellPadding : rowHorizontalPadding,
+    rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
     tableEvents: {
-      onRowClick: onRowClick
-    },
-    columnOptions: {
-      showFooter: showFooter,
-      rowBackground : rowBackground,
-      rowHorizontalPadding : rowHorizontalPadding,
+      onRowClick: onRowClick  
     }
   };
 </script>
 
 <div use:styleable={$component.styles}>
-  {#key showFooter }
   <SuperTable 
     {tableOptions} 
     {dataProvider}
   >
-      <slot />
+    <slot />
   </SuperTable>
-  {/key}
+
 </div>

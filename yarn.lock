@@ -31,13 +31,13 @@
     regenerator-runtime "^0.13.11"
 
 "@budibase/backend-core@^2.0.13":
-  version "2.8.14"
-  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.8.14.tgz#92b03f91a40349d45137fcbe67ab975b3ebc5fc9"
-  integrity sha512-29iwSHyxlElwFbizTX4GbUo1OqX28aCf04MaeAqD8so/XeyVYsFz4dcPpYwPmoDp5YsKpqkRDNdqu5mvGlEa6A==
+  version "2.8.21"
+  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.8.21.tgz#301503dcc30a1543b2af6fc1ffba8cb8cd3a514f"
+  integrity sha512-WKoevaHc+r+Mc8UuVLq6/fiQWVZTC0kd7KrH+eNtZ5zwbyTGDH8Khg07suBhOXc2dNS5IFqdujmwjDuPawx44g==
   dependencies:
     "@budibase/nano" "10.1.2"
     "@budibase/pouchdb-replication-stream" "1.2.10"
-    "@budibase/types" "2.8.14"
+    "@budibase/types" "2.8.21"
     "@shopify/jest-koa-mocks" "5.0.1"
     "@techpass/passport-openidconnect" "0.3.2"
     aws-cloudfront-sign "2.2.0"
@@ -96,10 +96,10 @@
     pouchdb-promise "^6.0.4"
     through2 "^2.0.0"
 
-"@budibase/types@2.8.14":
-  version "2.8.14"
-  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.8.14.tgz#312366555db96f4ef2fe11fbc2683937974ffe20"
-  integrity sha512-LP6nUNmXJHiDsYYZrEE+9/xHMyfgIRow5DFSA8Sy27Ad8xCHKPwAFAdZkp/XkPJ0PXYaIK0wOSUEaWwKlIRwng==
+"@budibase/types@2.8.21":
+  version "2.8.21"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.8.21.tgz#d88824c3089354d4060b734f0836d0c0d6badb90"
+  integrity sha512-aXDFlt7LOfepks9BHjWGM3IlkhbHU22eeGiL9/KEqYeeqbd7/qH1uCEko2CJomIZ67mPcYJm3gycVIEKgcGVPg==
   dependencies:
     scim-patch "^0.7.0"
 
@@ -333,9 +333,9 @@
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
 "@types/node@*":
-  version "20.4.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.2.tgz#129cc9ae69f93824f92fac653eebfb4812ab4af9"
-  integrity sha512-Dd0BYtWgnWJKwO1jkmTrzofjK2QXXcai0dmtzvIBhcA+RsG5h8R3xlyta0kGOZRNfL9GuRtb1knmPEhQrePCEw==
+  version "20.4.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.4.tgz#c79c7cc22c9d0e97a7944954c9e663bcbd92b0cb"
+  integrity sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==
 
 "@types/resolve@1.17.1":
   version "1.17.1"
@@ -1157,9 +1157,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.464"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.464.tgz#2f94bad78dff34e527aacbfc5d0b1a33cf046507"
-  integrity sha512-guZ84yoou4+ILNdj0XEbmGs6DEWj6zpVOWYpY09GU66yEb0DSYvP/biBPzHn0GuW/3RC/pnaYNUWlQE1fJYtgA==
+  version "1.4.468"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.468.tgz#3cbf64ad67d9f12bfe69fefe5eb1935ec4f6ab7a"
+  integrity sha512-6M1qyhaJOt7rQtNti1lBA0GwclPH+oKCmsra/hkcWs5INLxfXXD/dtdnaKUYQu/pjOBP/8Osoe4mAcNvvzoFag==
 
 emitter-listener@1.1.2:
   version "1.1.2"
@@ -3210,9 +3210,9 @@ postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
 postcss@^8.2.10:
-  version "8.4.26"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.26.tgz#1bc62ab19f8e1e5463d98cf74af39702a00a9e94"
-  integrity sha512-jrXHFF8iTloAenySjM/ob3gSj7pCu0Ji49hnjqzsgSRa50hkWCKD0HQ+gMNJkW38jBI68MpAAg7ZWwHwX8NMMw==
+  version "8.4.27"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.27.tgz#234d7e4b72e34ba5a92c29636734349e0d9c3057"
+  integrity sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
@@ -4192,9 +4192,9 @@ tar@^6.1.11:
     yallist "^4.0.0"
 
 terser@^5.0.0:
-  version "5.19.1"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.19.1.tgz#dbd7231f224a9e2401d0f0959542ed74d76d340b"
-  integrity sha512-27hxBUVdV6GoNg1pKQ7Z5cbR6V9txPVyBA+FQw3BaZ1Wuzvztce5p156DaP0NVZNrMZZ+6iG9Syf7WgMNKDg2Q==
+  version "5.19.2"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.19.2.tgz#bdb8017a9a4a8de4663a7983f45c506534f9234e"
+  integrity sha512-qC5+dmecKJA4cpYxRa5aVkKehYsQKc+AHeKl0Oe62aYjBL8ZA33tTljktDHJSaxxMnbI5ZYw+o/S2DxxLu8OfA==
   dependencies:
     "@jridgewell/source-map" "^0.3.3"
     acorn "^8.8.2"

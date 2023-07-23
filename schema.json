@@ -59,8 +59,8 @@
           },
           {
             "type": "number",
-            "key": "rowHorizontalPadding",
-            "label": "Row Horizontal Padding",
+            "key": "cellPadding",
+            "label": "Cell Padding L/R",
             "min": 0,
             "max": 32,
             "defaultValue": 16
@@ -85,6 +85,12 @@
         "type": "columns/basic",
         "key" : "columnList",
         "label" : "Classic Columns"
+      },
+      {
+        "type": "boolean",
+        "key": "editable",
+        "label": "Editable",
+        "defaultValue": false
       },
       {
         "type": "boolean",

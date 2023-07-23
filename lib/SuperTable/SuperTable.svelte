@@ -7,8 +7,6 @@
            createSuperTableFilterStore, 
            createSuperTableStateStore } from "./stores/superTableStores.js"
 
-  import { sizingMap } from "./themes/superTableThemes.js"
-
   import SuperTableVerticalScroller from "./controls/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
 
@@ -45,16 +43,7 @@
   $: $tableStateStore.rowCount = dataProvider.rows.length;
 
   // Initialize Store with appropriate row heights to avoid flicker when they load
-  $: rowMinHeight = tableOptions.size != "custom" 
-    ? sizingMap[tableOptions.size ].rowMinHeight 
-    : tableOptions.customSize.rowHeight
-
-  $: cellPadding = tableOptions.size != "custom" 
-    ? sizingMap[tableOptions.size ].cellPadding 
-    : tableOptions.customSize.cellPadding
-
-  $: tableStateStore.setRowMinHeight(rowMinHeight)
-
+  $: tableStateStore.setRowMinHeight(tableOptions.rowHeight)
   $: maxBodyHeight = tableOptions.visibleRowCount * $tableStateStore.rowHeights[0]
   
   // Get dataProvider sorting / filtering functions
@@ -134,9 +123,8 @@
 <div 
   class="st-master-wrapper"
   style:--super-table-body-height={maxBodyHeight + "px"}
-  style:--super-table-cell-padding={ cellPadding + "px"}
+  style:--super-table-cell-padding={ tableOptions.cellPadding + "px"}
   style:--super-table-vertical-dividers={ tableOptions.dividers == "both" || tableOptions.dividers == "vertical" ? "1px solid var(--spectrum-table-border-color, var(--spectrum-alias-border-color-mid))" : "none" }
-  style:--spectrum-table-row-background-color = {tableOptions.columnOptions.rowBackground}
 >
     <div class="st-master-control"> 
       {#if tableOptions.rowSelection} <SuperTableRowSelect on:selectionChange={handleRowSelect}/> {/if} </div>
@@ -144,10 +132,11 @@
       {#if tableOptions.superColumnsFirst} <slot /> {/if}
       {#each tableOptions.columns as column }
         <SuperTableColumn 
-          columnOptions={{...column, 
-            showFooter: tableOptions?.columnOptions?.showFooter, 
+          columnOptions={{...column,
+            hasChildren: false, 
             filtering: tableOptions?.filtering, 
-            sorting: tableOptions?.sorting 
+            sorting: tableOptions?.sorting,
+            editable: tableOptions.editable 
           }}
           />
       {/each}
