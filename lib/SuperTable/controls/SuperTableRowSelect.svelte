@@ -6,6 +6,7 @@
   const tableSelectionStore = getContext("tableSelectionStore")
   const tableScrollPosition = getContext("tableScrollPosition")
   const tableOptions = getContext("tableOptions")
+  const tableHoverStore = getContext("tableHoverStore")
   const dispatch = createEventDispatcher();
 
   // Keep scrolling position in synch
@@ -70,10 +71,9 @@
   {#each $tableDataStore.data as row, index }
     <div 
       class="spectrum-Table-row" 
-      on:mouseenter={ () => tableStateStore.hoverRow( null, index ) }
-      on:mouseleave={ () => tableStateStore.unhoverRow() }
+      on:mouseenter={ () => $tableHoverStore = index }
       class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
-      class:is-hovered={ $tableStateStore.hoveredRow === index }
+      class:is-hovered={ $tableHoverStore === index }
       style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
       >
         <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
@@ -116,7 +116,6 @@
     align-items: center;
     padding: unset;
     margin: unset;
-    border-bottom-width: var(--super-table-row-bottom-border-size);
   }
 
   .is-hovered {
@@ -140,7 +139,7 @@
     border-left: unset;
     border-top: unset;
     border-bottom: unset;
-    border-right-width: var(--super-table-column-right-border-size);
+    border-right: var(--super-table-vertical-dividers);
     scrollbar-width: none;   
   }
 

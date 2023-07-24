@@ -84,7 +84,6 @@
       setSorting?.({ column: column, order: direction }) 
       sortedColumn = column
       sortedDirection = direction
-      console.log("here", setSorting)
     }
   }
 
@@ -118,6 +117,7 @@
   setContext("tableScrollPosition", tableScrollPosition)
   setContext("tableOptions", tableOptions)
   setContext("tableHoverStore", tableHoverStore)
+
 </script>
 
 <div 
@@ -136,7 +136,7 @@
             hasChildren: false, 
             filtering: tableOptions?.filtering, 
             sorting: tableOptions?.sorting,
-            editable: tableOptions.editable 
+            editable: tableOptions.editable,
           }}
           />
       {/each}

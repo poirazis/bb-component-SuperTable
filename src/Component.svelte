@@ -26,7 +26,7 @@
     rowFontColor,
     rowBackground;
   export let footerAlign, footerFontSize, footerFontColor, footerBackground;
-  export let rowHorizontalPadding;
+  export let cellPadding;
   export let rowHeight 
 
   // Events
@@ -34,16 +34,19 @@
   export let onDataChange;
   export let onRowClick;
 
-  function getAllColumns() {
+  
+  function getAllColumns( includeAuto ) {
     let allColumns
-    allColumns = Object.keys(dataProvider.schema).map( v => { return { name: v, displayName: v } } )
+    allColumns = Object.keys(dataProvider.schema)
+    .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
+    .map( v => { return { name: v, displayName: v } } )
     return allColumns
   }
 
   $: tableOptions = {
     componentID: $component.id,
     hasChildren: $component.children,
-    columns: !$component.children && columnList?.length === 0 ? getAllColumns() : columnList,
+    columns: !$component.children && columnList?.length === 0 ? getAllColumns( false ) : columnList,
     idColumn: idColumn,
     superColumnsFirst: superColumnsFirst,
     filtering: filtering,
@@ -53,8 +56,9 @@
     rowSelection: rowSelection,
     dividers: dividers,
     dividersColor: dividersColor,
-    cellPadding: size != "custom" ? sizingMap[size].cellPadding : rowHorizontalPadding,
+    cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
     rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
+    showFooter: showFooter,
     tableEvents: {
       onRowClick: onRowClick  
     }
@@ -62,11 +66,12 @@
 </script>
 
 <div use:styleable={$component.styles}>
+  {#key showFooter}
   <SuperTable 
     {tableOptions} 
     {dataProvider}
   >
     <slot />
   </SuperTable>
-
+  {/key}
 </div>

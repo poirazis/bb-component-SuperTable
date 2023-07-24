@@ -82,7 +82,7 @@
         "min": 1
       },
       {
-        "type": "columns/basic",
+        "type": "columns",
         "key" : "columnList",
         "label" : "Classic Columns"
       },
