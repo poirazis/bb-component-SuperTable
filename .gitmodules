@@ -3,5 +3,4 @@
 	url = https://github.com/poirazis/bb-component-SuperTableColumn
 
 [submodule "bb-component-SuperTableColumn/bb-component-SuperTableCell"]
-	path = bb-component-SuperTableColumn/bb-component-SuperTableCell
 	url = https://github.com/poirazis/bb-component-SuperTableCell
