@@ -11,7 +11,7 @@
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
 
   // Imports from submodules
-  import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
+  import { SuperTableColumn } from "../../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
   const { getAction, ActionTypes } = getContext("sdk");
 
   export let tableOptions
