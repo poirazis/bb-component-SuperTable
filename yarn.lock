@@ -31,13 +31,13 @@
     regenerator-runtime "^0.13.11"
 
 "@budibase/backend-core@^2.0.13":
-  version "2.8.21"
-  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.8.21.tgz#301503dcc30a1543b2af6fc1ffba8cb8cd3a514f"
-  integrity sha512-WKoevaHc+r+Mc8UuVLq6/fiQWVZTC0kd7KrH+eNtZ5zwbyTGDH8Khg07suBhOXc2dNS5IFqdujmwjDuPawx44g==
+  version "2.8.27"
+  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.8.27.tgz#ac63a1a248aaf800f8dcc079a025257e1c4438ba"
+  integrity sha512-5yQUcOgAdQNi1ER6TOnL2L3bs4RpHVxPhOsAxX/wls+ObOIDoFyxkwiSyXKY0Z14YRlOq4Gqk4wLtogW5X6zHg==
   dependencies:
     "@budibase/nano" "10.1.2"
     "@budibase/pouchdb-replication-stream" "1.2.10"
-    "@budibase/types" "2.8.21"
+    "@budibase/types" "2.8.27"
     "@shopify/jest-koa-mocks" "5.0.1"
     "@techpass/passport-openidconnect" "0.3.2"
     aws-cloudfront-sign "2.2.0"
@@ -96,10 +96,17 @@
     pouchdb-promise "^6.0.4"
     through2 "^2.0.0"
 
-"@budibase/types@2.8.21":
-  version "2.8.21"
-  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.8.21.tgz#d88824c3089354d4060b734f0836d0c0d6badb90"
-  integrity sha512-aXDFlt7LOfepks9BHjWGM3IlkhbHU22eeGiL9/KEqYeeqbd7/qH1uCEko2CJomIZ67mPcYJm3gycVIEKgcGVPg==
+"@budibase/shared-core@^2.8.23":
+  version "2.8.27"
+  resolved "https://registry.yarnpkg.com/@budibase/shared-core/-/shared-core-2.8.27.tgz#a1e7eb145016c1affa220569423ca065c2b534ce"
+  integrity sha512-UNcFZZ1UsLN5CH6oAv7yzwsgAZHragIb1o22GjAJMIwIUQPgRzH8wI0FQZCs5zB3D94hOefsBNsZBmUznnrMWg==
+  dependencies:
+    "@budibase/types" "2.8.27"
+
+"@budibase/types@2.8.27":
+  version "2.8.27"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.8.27.tgz#e7fcfaa0d8551ba323bb01e0395c288db40a42ab"
+  integrity sha512-BZv7zGlkF/zE6h3RfwLKkuSR+EXKpEWz1mDGfXqEoWgzLuzBdF/BD9+2+ZTeXvUjwnqOFjf1Kr9EjURFZgSH+Q==
   dependencies:
     scim-patch "^0.7.0"
 
@@ -292,14 +299,14 @@
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
 "@spectrum-css/icon@^3.0.32":
-  version "3.0.49"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.49.tgz#17a32ba053ae2714120463203def2a0153fe5caf"
-  integrity sha512-CQAPZqn2l4/osbeSIUlB9DstA8dTipvitWeyXwLjEPO68CKkVgAu9Iq10HlxEKdAO3sdG6aET3S9BURdWvZO+w==
+  version "3.0.50"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.50.tgz#5e74c8a2fc69f90e0e1b1fd9dbc8a97da28c6807"
+  integrity sha512-n65ZnGF4LHlNTQHhH4lxEZ2PDmUJdhNFaUn69RrSBM1B334Bf9Ny8Uq65NUoB5UVwaHG7DKnpmdG1P/4oLmkHw==
 
 "@spectrum-css/table@^4.0.24":
-  version "4.0.61"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.61.tgz#58a3f85f2168402b7ed629532c23188b45ad7013"
-  integrity sha512-sruXTm/sNiENJUJ+tREgrvmI0tpIDu5HSWcWRCsNkLYL0gT9eNG7Ye9FPwzciyXB3CsE59Pj0Iz5k9necUtN8Q==
+  version "4.0.62"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.62.tgz#9fa82b23b17734f45c67bd36980556161b42303c"
+  integrity sha512-R7M9ptMLIbRmsuRhDqCehBvL260JLk/jbbm5lR16T5g6GHxw7gr0KJGIL0HY7UMu3EemUCRNCaUonSLCVlYqtQ==
 
 "@spectrum-css/vars@^8.0.3":
   version "8.0.5"
@@ -333,9 +340,9 @@
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
 "@types/node@*":
-  version "20.4.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.4.tgz#c79c7cc22c9d0e97a7944954c9e663bcbd92b0cb"
-  integrity sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==
+  version "20.4.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.5.tgz#9dc0a5cb1ccce4f7a731660935ab70b9c00a5d69"
+  integrity sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==
 
 "@types/resolve@1.17.1":
   version "1.17.1"
@@ -1157,9 +1164,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.431:
-  version "1.4.468"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.468.tgz#3cbf64ad67d9f12bfe69fefe5eb1935ec4f6ab7a"
-  integrity sha512-6M1qyhaJOt7rQtNti1lBA0GwclPH+oKCmsra/hkcWs5INLxfXXD/dtdnaKUYQu/pjOBP/8Osoe4mAcNvvzoFag==
+  version "1.4.471"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.471.tgz#14cb056d0ce4bfa99df57946d57fe46c2330dac3"
+  integrity sha512-GpmGRC1vTl60w/k6YpQ18pSiqnmr0j3un//5TV1idPi6aheNfkT1Ye71tMEabWyNDO6sBMgAR+95Eb0eUUr1tA==
 
 emitter-listener@1.1.2:
   version "1.1.2"

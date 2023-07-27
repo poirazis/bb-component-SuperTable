@@ -2,6 +2,7 @@
   import { getContext, setContext, createEventDispatcher } from "svelte";
   import { writable } from "svelte/store"
   import { LuceneUtils } from "../frontend-core"
+  import fsm from "svelte-fsm"; 
 
   import { createSuperTableDataStore, 
            createSuperTableFilterStore, 
@@ -18,6 +19,9 @@
   export let dataProvider
 
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection
+
+  // Create Super Table State Machine
+  const tableState = fsm( "idle", {} )
 
   // Create Stores
   const tableDataStore = createSuperTableDataStore()

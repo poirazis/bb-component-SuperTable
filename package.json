@@ -11,6 +11,7 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
+    "@budibase/shared-core": "^2.8.23",
     "@crownframework/svelte-error-boundary": "^1.0.3",
     "@spectrum-css/icon": "^3.0.32",
     "@spectrum-css/table": "^4.0.24",
