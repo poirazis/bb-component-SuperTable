@@ -13,15 +13,16 @@
 
   // Imports from submodules
   import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
+
+
   const { getAction, ActionTypes } = getContext("sdk");
 
   export let tableOptions
   export let dataProvider
 
-  let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection
+  let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, filtered = false
 
-  // Create Super Table State Machine
-  const tableState = fsm( "idle", {} )
+  // Create Super Table State Machine 
 
   // Create Stores
   const tableDataStore = createSuperTableDataStore()
@@ -37,7 +38,6 @@
   // Static Assignments
   $tableStateStore.loaded = true ; 
   $tableDataStore.loaded = true ; 
-
 
 	// Reactive Assignments
   $: superPowers = tableOptions.hasChildren;
@@ -77,8 +77,12 @@
     if (filters.length > 0) {
       const queryExtension = LuceneUtils.buildLuceneQuery($tableFilterStore?.filters);
       setFiltering?.(tableOptions.componentID, queryExtension);
-    } else {
+      filtered = true
+      console.log("Applying Filters")
+    } else if ( filtered ){
       unsetFiltering?.(tableOptions.componentID);
+      filtered = false;
+      console.log("Clearing Filters")
     } 
   }
   
