@@ -84,7 +84,8 @@
       {
         "type": "columns",
         "key" : "columnList",
-        "label" : "Classic Columns"
+        "label" : "Classic Columns",
+        "nested": "true"
       },
       {
         "type": "boolean",
@@ -127,6 +128,21 @@
         "key": "customize",
         "label": "Customize",
         "defaultValue": false
+      },
+      {
+        "section": true,
+        "name": "Operation Mode",
+        "dependsOn": "customize",
+        "settings": [
+          {
+            "type": "number",
+            "key": "debounce",
+            "label": "Debounce",
+            "min": 100,
+            "defaultValue": 500,
+            "info": "Debounce Delay (ms)"
+          }
+        ]
       },
       
       {

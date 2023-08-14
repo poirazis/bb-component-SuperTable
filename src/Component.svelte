@@ -17,6 +17,7 @@
   export let editable;
   export let superColumnsFirst;
   export let columnList = []
+  export let debounce = 500
 
   export let dividers, dividersColor;
   export let headerAlign, headerFontSize, headerFontColor, headerBackground;
@@ -52,6 +53,7 @@
     filtering: filtering,
     sorting: sorting,
     editable: editable,
+    debounce: debounce,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
     dividers: dividers,
@@ -61,8 +63,10 @@
     showFooter: showFooter,
     tableEvents: {
       onRowClick: onRowClick  
-    }
+    },
+    onDataChange: onDataChange
   };
+
 </script>
 
 <div use:styleable={$component.styles}>

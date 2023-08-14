@@ -2,6 +2,7 @@
   import { getContext, setContext, createEventDispatcher } from "svelte";
   import { writable } from "svelte/store"
   import { LuceneUtils } from "../frontend-core"
+  import { hotKeyAction } from "svelte-legos";
   import fsm from "svelte-fsm"; 
 
   import { createSuperTableDataStore, 
@@ -105,7 +106,8 @@
 
   function handleDataChange ( changes )
   {
-    let context = { dataChanges: changes }
+    console.log( " Cell Edited ! ")
+    let context = { rowID: "dummy" , dataChanges: changes }
     tableOptions.onDataChange?.( context )
   }
 
@@ -128,6 +130,7 @@
 
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div 
   class="st-master-wrapper"
   style:--super-table-body-height={maxBodyHeight + "px"}

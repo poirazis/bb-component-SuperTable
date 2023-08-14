@@ -1,10 +1,10 @@
 import commonjs from "@rollup/plugin-commonjs"
 import resolve from "@rollup/plugin-node-resolve"
 import svelte from "rollup-plugin-svelte"
-import { terser } from "rollup-plugin-terser"
+import terser from "@rollup/plugin-terser"
 import postcss from "rollup-plugin-postcss"
 import svg from "rollup-plugin-svg"
-import json from "rollup-plugin-json"
+import json from "@rollup/plugin-json"
 import nodePolyfills from "rollup-plugin-polyfill-node"
 import copy from "rollup-plugin-copy2"
 import tar from "tar"
@@ -18,6 +18,8 @@ const ignoredWarnings = [
   "css-unused-selector",
   "module-script-reactive-declaration",
   "a11y-no-onchange",
+  "a11y-click-events-have-key-events",
+  "a11y-no-noninteractive-tabindex"
 ]
 
 // Custom plugin to clean the dist folder before building
