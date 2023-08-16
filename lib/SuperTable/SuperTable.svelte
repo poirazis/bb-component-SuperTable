@@ -1,10 +1,7 @@
 <script>
   import { getContext, setContext, createEventDispatcher } from "svelte";
   import { writable } from "svelte/store"
-  import { LuceneUtils } from "../frontend-core"
-  import { hotKeyAction } from "svelte-legos";
-  import fsm from "svelte-fsm"; 
-
+  import { dataFilters } from "@budibase/shared-core/"
   import { createSuperTableDataStore, 
            createSuperTableFilterStore, 
            createSuperTableStateStore } from "./stores/superTableStores.js"
@@ -76,7 +73,7 @@
   // Component Function Definitions
   function setDataProviderFiltering( filters ) {
     if (filters.length > 0) {
-      const queryExtension = LuceneUtils.buildLuceneQuery($tableFilterStore?.filters);
+      const queryExtension = dataFilters.buildLuceneQuery($tableFilterStore?.filters);
       setFiltering?.(tableOptions.componentID, queryExtension);
       filtered = true
       console.log("Applying Filters")
@@ -101,7 +98,7 @@
       "rowID" : event.detail.rowID,
       "selectedRows": Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
     }
-    onRowSelect?.( context )
+    tableOptions.onRowSelect?.( context )
   }
 
   function handleDataChange ( changes )
@@ -127,7 +124,6 @@
   setContext("tableScrollPosition", tableScrollPosition)
   setContext("tableOptions", tableOptions)
   setContext("tableHoverStore", tableHoverStore)
-
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

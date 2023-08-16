@@ -64,7 +64,8 @@
     tableEvents: {
       onRowClick: onRowClick  
     },
-    onDataChange: onDataChange
+    onDataChange: onDataChange,
+    onRowSelect: onRowSelect
   };
 
 </script>

@@ -101,21 +101,23 @@
 
 <style>
   .spectrum-Table-headCell {
-    min-width: 2.5rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: unset !important;
+    height: 2.5rem;
+    padding: unset;
+    border-bottom: 1px solid var(--spectrum-alias-border-color-mid);
+    border-right: var(--super-table-vertical-dividers);
   }
 
   .spectrum-Table-row {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: unset;
     margin: unset;
+
   }
 
   .is-hovered {
@@ -127,20 +129,14 @@
 	}
 
   .spectrum-Table-body {
-    max-height: var(--super-table-body-height);
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
+    height: var(--super-table-body-height);
     border-radius: 0px;
     overflow-y: scroll !important;
     overflow-x: hidden;
     padding: 0px;
     margin: 0px;
-    border-left: unset;
-    border-top: unset;
-    border-bottom: unset;
-    border-right: var(--super-table-vertical-dividers);
-    scrollbar-width: none;   
+    border: none;
+    scrollbar-width: none;
   }
 
   .spectrum-Table-body::-webkit-scrollbar {

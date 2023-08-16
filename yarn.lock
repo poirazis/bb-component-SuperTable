@@ -76,17 +76,31 @@
     pouchdb-promise "^6.0.4"
     through2 "^2.0.0"
 
-"@budibase/shared-core@2.9.19", "@budibase/shared-core@^2.9.19":
+"@budibase/shared-core@2.9.19":
   version "2.9.19"
   resolved "https://registry.yarnpkg.com/@budibase/shared-core/-/shared-core-2.9.19.tgz#4637a5b6c76fc84d0af32c4f65c7812dd3b70fb4"
   integrity sha512-nqV5PSO7opcPgJ23M6CCCpBpf1lIy/QRLLeh6xHs7P/4dhctKEHRXVlmX/9cWXqrKlhMx0d/JiGBckpEHyQjSw==
   dependencies:
     "@budibase/types" "2.9.19"
 
+"@budibase/shared-core@^2.9.25":
+  version "2.9.25"
+  resolved "https://registry.yarnpkg.com/@budibase/shared-core/-/shared-core-2.9.25.tgz#ec11683cc1ac2b07b8ea2bb394fcddf57083f4ea"
+  integrity sha512-CBeUK73/E9jWRdDJ/FyJnQwkyQGVwHyMmRMkQVKT/6oih1BF9dHrZZ+6sJRIlBQLHMGKzGZJm1MM+KMlICbiJw==
+  dependencies:
+    "@budibase/types" "2.9.25"
+
 "@budibase/types@2.9.19":
   version "2.9.19"
   resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.9.19.tgz#c6e43c16e52b963cbb5505341ab27f7f6efa0251"
   integrity sha512-7xc41nT7exkYX88Dz/76/klQ94xwvBrPHQ+F6Y6WJF0hTd5r1Nz9HzZ9TtCGw4r1QvFznbwGqmgaaoYwQ3Qwpg==
+  dependencies:
+    scim-patch "^0.7.0"
+
+"@budibase/types@2.9.25":
+  version "2.9.25"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.9.25.tgz#ddd19fb7d53c7dd12883d277e036f3e3622812ce"
+  integrity sha512-ydpN8YHCzvJ2GzFAXrw3+WIet5kLB99YPKBi92IzgIltlkYSoCMbD0OjqN6xM+25lcAvxojxXeFDncb8ARP0lg==
   dependencies:
     scim-patch "^0.7.0"
 
@@ -288,21 +302,6 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
-
-"@spectrum-css/icon@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-4.0.0.tgz#058b3528a495f7f71d7b5522c337ba0f2d2b59e2"
-  integrity sha512-KOS8ysrOWCVdy6wj5Lf3EZrXSSDOjvEji9WgROIgyPbt5vGmmqiX0kqn5hLRqFdnf0U1QXS79QWkUXeqSfrzfA==
-
-"@spectrum-css/table@^4.0.24":
-  version "4.0.65"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.65.tgz#14383ef707b9a965eb4d897331ba895d9444d701"
-  integrity sha512-g83eugAxuoglKk0/U754NITGIzWQBEyFpR5QRKPETdGj9AkDM7gZ2UCBiTGsphQ2pgxphAUtpHF+n+Z7AAUauA==
-
-"@spectrum-css/vars@^9.0.3":
-  version "9.0.8"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
-  integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@techpass/passport-openidconnect@0.3.2":
   version "0.3.2"
