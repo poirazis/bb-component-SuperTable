@@ -31,6 +31,7 @@
   export let rowHeight 
 
   // Events
+  export let clickBehaviour
   export let onRowSelect;
   export let onDataChange;
   export let onRowClick;
@@ -71,12 +72,10 @@
 </script>
 
 <div use:styleable={$component.styles}>
-  {#key showFooter}
   <SuperTable 
     {tableOptions} 
     {dataProvider}
   >
     <slot />
   </SuperTable>
-  {/key}
 </div>

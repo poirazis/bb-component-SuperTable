@@ -346,11 +346,80 @@
       },
       {
       "section": true,
-      "name": "On Row Selection",
+      "name": "On Cell Click",
       "settings": [
         {
+          "label": "On Click",
+          "labelHidden": false,
+          "type": "radio",
+          "key": "clickBehaviour",
+          "sendEvents": true,
+          "defaultValue": "actions",
+          "options": [
+            {
+              "label": "Run actions",
+              "value": "actions"
+            },
+            {
+              "label": "Edit Cell",
+              "value": "edit"
+            },
+            {
+              "label": "Highlight Row",
+              "value": "highlight"
+            },
+            {
+              "label": "Select Row",
+              "value": "select"
+            }
+          ]
+        },
+        {
           "type": "event",
-          "key": "onRowSelect",
+          "key": "onClick",
+          "dependsOn": { "setting": "clickBehaviour", "value": "actions" },
+          "context": [
+            {
+              "label": "Triggered By",
+              "key": "rowID"
+            },
+            {
+              "label": "Selected Rows",
+              "key": "selectedRows",
+              "type": "array"
+            }
+          ]
+        },
+        {
+          "label": "On Double Click",
+          "labelHidden": false,
+          "type": "radio",
+          "key": "doubleClickBehaviour",
+          "sendEvents": true,
+          "defaultValue": "actions",
+          "options": [
+            {
+              "label": "Run actions",
+              "value": "actions"
+            },
+            {
+              "label": "Edit Cell",
+              "value": "edit"
+            },
+            {
+              "label": "Highlight Row",
+              "value": "highlight"
+            },
+            {
+              "label": "Select Row",
+              "value": "select"
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "key": "onDoubleClick",
+          "dependsOn": { "setting": "doubleClickBehaviour", "value": "actions" },
           "context": [
             {
               "label": "Triggered By",

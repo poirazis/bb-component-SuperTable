@@ -1,5 +1,5 @@
 <script>
-  import { getContext, setContext, createEventDispatcher } from "svelte";
+  import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store"
   import { dataFilters } from "@budibase/shared-core/"
   import { createSuperTableDataStore, 
@@ -12,15 +12,12 @@
   // Imports from submodules
   import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js"
 
-
   const { getAction, ActionTypes } = getContext("sdk");
 
   export let tableOptions
   export let dataProvider
 
   let setSorting, setFiltering, unsetFiltering, sortedColumn, sortedDirection, filtered = false
-
-  // Create Super Table State Machine 
 
   // Create Stores
   const tableDataStore = createSuperTableDataStore()
@@ -31,8 +28,6 @@
   const tableScrollPosition = new writable (0);
   const tableHoverStore = new writable (0);
 
-  const dispatch = createEventDispatcher();
-
   // Static Assignments
   $tableStateStore.loaded = true ; 
   $tableDataStore.loaded = true ; 
@@ -42,7 +37,7 @@
   $: $tableDataStore.data = dataProvider.rows
   $: $tableDataStore.dataSource = dataProvider.datasource
   $: $tableDataStore.schema = dataProvider.schema
-  $: $tableStateStore.rowCount = dataProvider.rows.length;
+  $: $tableStateStore.rowCount = dataProvider.rows.length ? dataProvider.rows.length : tableOptions.visibleRowCount;
 
   // Initialize Store with appropriate row heights to avoid flicker when they load
   $: tableStateStore.setRowMinHeight(tableOptions.rowHeight)
@@ -63,9 +58,9 @@
   );
 
   $: setDataProviderFiltering ( $tableFilterStore?.filters )
-  $: setDataProviderSorting ( $tableDataStore?.sortColumn, $tableDataStore?.sortDirection)
+  $: setDataProviderSorting ( $tableDataStore?.sortColumn, $tableDataStore?.sortDirection )
   $: handleDataChange ( $tableDataChangesStore )
-  $: handleRowClick( $tableStateStore.rowClicked )
+  $: handleRowClick ( $tableStateStore.rowClicked )
 
   $: $tableDataStore._parentID = tableOptions.componentID
   $: $tableDataStore.idColumn = tableOptions.idColumn
@@ -103,7 +98,6 @@
 
   function handleDataChange ( changes )
   {
-    console.log( " Cell Edited ! ")
     let context = { rowID: "dummy" , dataChanges: changes }
     tableOptions.onDataChange?.( context )
   }
