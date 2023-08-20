@@ -91,19 +91,31 @@
         "type": "boolean",
         "key": "editable",
         "label": "Editable",
-        "defaultValue": false
+        "defaultValue": false,
+        "showInBar": true,
+        "barStyle": "buttons",
+        "barIcon": "Edit",
+        "barTitle": "Editable"
       },
       {
         "type": "boolean",
         "key": "filtering",
         "label": "Filtering",
-        "defaultValue": true
+        "defaultValue": true,
+        "showInBar": true,
+        "barStyle": "buttons",
+        "barIcon": "FilterAdd",
+        "barTitle": "Filterable"
       },
       {
         "type": "boolean",
         "key": "sorting",
         "label": "Sorting",
-        "defaultValue": true
+        "defaultValue": true,
+        "showInBar": true,
+        "barStyle": "buttons",
+        "barIcon": "SortOrderDown",
+        "barTitle": "Sortable"
       },
       {
         "type": "boolean",
@@ -115,7 +127,11 @@
         "type": "boolean",
         "key": "rowSelection",
         "label": "Row Selection",
-        "defaultValue": false
+        "defaultValue": false,
+        "showInBar": true,
+        "barStyle": "buttons",
+        "barIcon": "Checkmark",
+        "barTitle": "Sortable"
       },
       {
         "type": "boolean",
