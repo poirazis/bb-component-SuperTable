@@ -78,7 +78,7 @@
         "type": "number",
         "key": "visibleRowCount",
         "label": "Visible Rows",
-        "defaultValue": 5,
+        "defaultValue": 8,
         "min": 1
       },
       {
@@ -170,7 +170,7 @@
             "type": "select",
             "label": "Header Align",
             "key": "headerAlign",
-            "showInBar": true,
+            "showInBar": false,
             "barStyle": "buttons",
             "options": [
               {
@@ -215,7 +215,7 @@
             "type": "select",
             "label": "Contents Horizontal Align",
             "key": "rowHorizontalAlign",
-            "showInBar": true,
+            "showInBar": false,
             "barStyle": "buttons",
             "options": [
               {
@@ -249,7 +249,7 @@
             "type": "select",
             "label": "Contents Vertical Align",
             "key": "rowVerticalAlign",
-            "showInBar": true,
+            "showInBar": false,
             "barStyle": "buttons",
             "options": [
               {
@@ -300,7 +300,7 @@
             "type": "select",
             "label": "Footer Align",
             "key": "footerAlign",
-            "showInBar": true,
+            "showInBar": false,
             "barStyle": "buttons",
             "options": [
               {

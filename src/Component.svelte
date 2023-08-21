@@ -36,6 +36,8 @@
   export let onDataChange;
   export let onRowClick;
 
+  let loading = false
+
   
   function getAllColumns( includeAuto ) {
     let allColumns
@@ -62,12 +64,11 @@
     cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
     rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
     showFooter: showFooter,
-    tableEvents: {
-      onRowClick: onRowClick  
-    },
+    onRowClick: onRowClick,
     onDataChange: onDataChange,
     onRowSelect: onRowSelect
   };
+
 
 </script>
 
@@ -75,6 +76,7 @@
   <SuperTable 
     {tableOptions} 
     {dataProvider}
+    {loading}
   >
     <slot />
   </SuperTable>

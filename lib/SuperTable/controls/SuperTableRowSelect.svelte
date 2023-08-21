@@ -1,5 +1,6 @@
 <script>
   import { getContext, createEventDispatcher, beforeUpdate } from "svelte"
+  import Checkbox from "../../../node_modules/@budibase/bbui/src/Form/Core/Checkbox.svelte"
 
   const tableDataStore = getContext("tableDataStore")
   const tableStateStore = getContext("tableStateStore")
@@ -13,7 +14,7 @@
   let bodyContainer
   let mouseOver = false
 
-  $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true)
+  $: selected_rows = Object.keys($tableSelectionStore).filter( v => $tableSelectionStore[v] == true) ?? []
 
   function handleScroll( e ) {
     if ( mouseOver ) {
@@ -38,6 +39,7 @@
 
   function handleSelection ( rowID ) {
     dispatch ("selectionChange", { "rowID": rowID} ) 
+    $tableSelectionStore[rowID] = !$tableSelectionStore[rowID]
   }
 
 </script>
@@ -45,25 +47,11 @@
 <div style:width={"2.5rem"} class="spectrum-Table" on:mouseenter={() => mouseOver = true } on:mouseleave={() => mouseOver = false }>
   <div class="spectrum-Table-head">
     <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
-      <label 
-        class="spectrum-Checkbox spectrum-Checkbox--sizeM"
-        class:is-indeterminate={selected_rows.length > 0 && selected_rows.length < $tableDataStore.data.length}>
-        <input 
-          on:click={() => ( toggleSelectAll() )} 
-          type="checkbox" 
-          class="spectrum-Checkbox-input" 
-          title="Select All"
-          checked={ (selected_rows.length == $tableDataStore.data.length) && ($tableDataStore.data.length > 0 ) }
-          >
-        <span class="spectrum-Checkbox-box">
-          <svg class="spectrum-Icon spectrum-UIIcon-Checkmark100 spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
-            <use xlink:href="#spectrum-css-icon-Checkmark100" />
-          </svg>
-          <svg class="spectrum-Icon spectrum-UIIcon-Dash50 spectrum-Checkbox-partialCheckmark" focusable="false" aria-hidden="true">
-            <use xlink:href="#spectrum-css-icon-Dash50" />
-          </svg>
-        </span>
-      </label>
+      <Checkbox
+        on:change={toggleSelectAll}
+        indeterminate={ selected_rows.length > 0 && (selected_rows.length !== $tableDataStore.data.length) }
+        value = { selected_rows.length > 0 && (selected_rows.length == $tableDataStore.data.length) }
+      />
     </div>
   </div>
 
@@ -76,20 +64,10 @@
       class:is-hovered={ $tableHoverStore === index }
       style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
       >
-        <label class="spectrum-Checkbox spectrum-Checkbox--sizeM">
-          <input 
-            bind:checked={$tableSelectionStore[row[$tableDataStore.idColumn]]}
-            value={row[$tableDataStore.idColumn]} 
-            on:change={ () => handleSelection (row[$tableDataStore.idColumn])}
-            type="checkbox" 
-            class="spectrum-Checkbox-input" 
-          >
-          <span class="spectrum-Checkbox-box">
-            <svg class="spectrum-Icon spectrum-UIIcon-Checkmark100 spectrum-Checkbox-checkmark" focusable="false" aria-hidden="true">
-              <use xlink:href="#spectrum-css-icon-Checkmark100" />
-            </svg>
-          </span>
-        </label>
+        <Checkbox 
+          value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
+          on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
+        />
       </div>
   {/each}
   </div>
