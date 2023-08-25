@@ -15,9 +15,10 @@
   export let filtering 
   export let sorting;
   export let editable;
-  export let superColumnsFirst;
+  export let superColumnsPos;
   export let columnList = []
-  export let debounce = 500
+  export let filteringMode = "debounced"
+  export let debounce = 750
 
   export let dividers, dividersColor;
   export let headerAlign, headerFontSize, headerFontColor, headerBackground;
@@ -52,8 +53,10 @@
     hasChildren: $component.children,
     columns: !$component.children && columnList?.length === 0 ? getAllColumns( false ) : columnList,
     idColumn: idColumn,
-    superColumnsFirst: superColumnsFirst,
+    superColumnsPos: superColumnsPos,
     filtering: filtering,
+    filteringMode: filteringMode,
+    debounce: debounce,
     sorting: sorting,
     editable: editable,
     debounce: debounce,

@@ -155,8 +155,9 @@
       <SuperTableRowSelect on:selectionChange={handleRowSelect} />
     {/if}
   </div>
+  
   <div class="st-master-columns">
-    {#if tableOptions.superColumnsFirst} <slot /> {/if}
+    {#if tableOptions.superColumnsPos == "first"} <slot /> {/if}
     {#each tableOptions.columns as column}
       <SuperTableColumn
         columnOptions={{
@@ -168,7 +169,7 @@
         }}
       />
     {/each}
-    {#if !tableOptions.superColumnsFirst} <slot /> {/if}
+    {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
   </div>
 
   {#if $tableDataStore.data.length > tableOptions.visibleRowCount}

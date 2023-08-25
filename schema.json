@@ -8,41 +8,35 @@
     "icon": "Table",
     "showEmptyState": false,
     "requiredAncestors": ["dataprovider"],
-    "styles": [
-      "padding",
-      "size",
-      "background",
-      "border",
-      "shadow"
-    ],
+    "styles": ["padding", "size", "background", "border", "shadow"],
     "hasChildren": true,
     "settings": [
-      { 
+      {
         "type": "dataProvider",
         "key": "dataProvider",
         "label": "Data Provider",
         "required": true
       },
-      { 
+      {
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
         "defaultValue": "_id",
         "required": true
       },
-      { 
+      {
         "type": "select",
         "key": "size",
         "label": "Size",
-        "options": [ 
-          { "label": "Extra Small", "value": "XS" }, 
-          { "label": "Small", "value": "S" }, 
+        "options": [
+          { "label": "Extra Small", "value": "XS" },
+          { "label": "Small", "value": "S" },
           { "label": "Medium", "value": "M" },
           { "label": "Large", "value": "L" },
           { "label": "Extra Large", "value": "XL" },
-          { "label": "Custom", "value": "custom"}
+          { "label": "Custom", "value": "custom" }
         ],
-        "defaultValue" : "M"
+        "defaultValue": "M"
       },
       {
         "section": true,
@@ -65,12 +59,12 @@
             "max": 32,
             "defaultValue": 16
           },
-          { 
+          {
             "type": "number",
             "key": "rowFontSize",
             "label": "Row Font Size",
             "min": 6,
-            "defaultValue" : 14
+            "defaultValue": 14
           }
         ]
       },
@@ -83,9 +77,31 @@
       },
       {
         "type": "columns",
-        "key" : "columnList",
-        "label" : "Classic Columns",
+        "key": "columnList",
+        "label": "Classic Columns",
         "nested": "true"
+      },
+      {
+        "type": "select",
+        "key": "superColumnsPos",
+        "label": "Super Columns",
+        "showInBar": true,
+        "barStyle": "buttons",
+        "options": [
+          {
+            "label": "First",
+            "value": "first",
+            "barIcon": "PaddingLeft",
+            "barTitle": "Super Columns First"
+          },
+          {
+            "label": "Last",
+            "value": "last",
+            "barIcon": "PaddingRight",
+            "barTitle": "Super Columns Last"
+          }
+        ],
+        "defaultValue": "first"
       },
       {
         "type": "boolean",
@@ -108,6 +124,27 @@
         "barTitle": "Filterable"
       },
       {
+        "type": "select",
+        "key": "filteringMode",
+        "label": "Filtering Mode",
+        "barStyle": "buttons",
+        "options": [
+          { "label": "Live Debounced", "value": "debounced" },
+          { "label": "On Enter", "value": "onentert" }
+        ],
+        "defaultValue": "debounced",
+        "dependsOn": "filtering"
+      },
+      {
+        "type": "number",
+        "key": "debounce",
+        "label": "Debounce",
+        "min": 100,
+        "defaultValue": 500,
+        "dependsOn": { "setting" : "filteringMode", "value" : "debounced" },
+        "info": "Debounce Delay (ms)"
+      },
+      {
         "type": "boolean",
         "key": "sorting",
         "label": "Sorting",
@@ -119,18 +156,12 @@
       },
       {
         "type": "boolean",
-        "key": "superColumnsFirst",
-        "label": "Super Columns First",
-        "defaultValue": true
-      },
-      {
-        "type": "boolean",
         "key": "rowSelection",
         "label": "Row Selection",
         "defaultValue": false,
         "showInBar": true,
         "barStyle": "buttons",
-        "barIcon": "Checkmark",
+        "barIcon": "SelectBox",
         "barTitle": "Sortable"
       },
       {
@@ -145,22 +176,6 @@
         "label": "Customize",
         "defaultValue": false
       },
-      {
-        "section": true,
-        "name": "Operation Mode",
-        "dependsOn": "customize",
-        "settings": [
-          {
-            "type": "number",
-            "key": "debounce",
-            "label": "Debounce",
-            "min": 100,
-            "defaultValue": 500,
-            "info": "Debounce Delay (ms)"
-          }
-        ]
-      },
-      
       {
         "section": true,
         "name": "Default Header Settings",
@@ -346,10 +361,10 @@
             "key": "dividers",
             "label": "Dividers",
             "options": [
-              { "label": "None" , "value": "none"},
-              { "label": "Horizontal" , "value": "horizontal"},
-              { "label": "Vertical" , "value": "vertical"},
-              { "label": "Both" , "value": "both"}
+              { "label": "None", "value": "none" },
+              { "label": "Horizontal", "value": "horizontal" },
+              { "label": "Vertical", "value": "vertical" },
+              { "label": "Both", "value": "both" }
             ],
             "defaultValue": "horizontal"
           },
@@ -361,132 +376,135 @@
         ]
       },
       {
-      "section": true,
-      "name": "On Cell Click",
-      "settings": [
-        {
-          "label": "On Click",
-          "labelHidden": false,
-          "type": "radio",
-          "key": "clickBehaviour",
-          "sendEvents": true,
-          "defaultValue": "actions",
-          "options": [
-            {
-              "label": "Run actions",
+        "section": true,
+        "name": "On Cell Click",
+        "settings": [
+          {
+            "label": "On Click",
+            "labelHidden": false,
+            "type": "radio",
+            "key": "clickBehaviour",
+            "sendEvents": true,
+            "defaultValue": "actions",
+            "options": [
+              {
+                "label": "Run actions",
+                "value": "actions"
+              },
+              {
+                "label": "Edit Cell",
+                "value": "edit"
+              },
+              {
+                "label": "Highlight Row",
+                "value": "highlight"
+              },
+              {
+                "label": "Select Row",
+                "value": "select"
+              }
+            ]
+          },
+          {
+            "type": "event",
+            "key": "onClick",
+            "dependsOn": { "setting": "clickBehaviour", "value": "actions" },
+            "context": [
+              {
+                "label": "Triggered By",
+                "key": "rowID"
+              },
+              {
+                "label": "Selected Rows",
+                "key": "selectedRows",
+                "type": "array"
+              }
+            ]
+          },
+          {
+            "label": "On Double Click",
+            "labelHidden": false,
+            "type": "radio",
+            "key": "doubleClickBehaviour",
+            "sendEvents": true,
+            "defaultValue": "actions",
+            "options": [
+              {
+                "label": "Run actions",
+                "value": "actions"
+              },
+              {
+                "label": "Edit Cell",
+                "value": "edit"
+              },
+              {
+                "label": "Highlight Row",
+                "value": "highlight"
+              },
+              {
+                "label": "Select Row",
+                "value": "select"
+              }
+            ]
+          },
+          {
+            "type": "event",
+            "key": "onDoubleClick",
+            "dependsOn": {
+              "setting": "doubleClickBehaviour",
               "value": "actions"
             },
-            {
-              "label": "Edit Cell",
-              "value": "edit"
-            },
-            {
-              "label": "Highlight Row",
-              "value": "highlight"
-            },
-            {
-              "label": "Select Row",
-              "value": "select"
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "key": "onClick",
-          "dependsOn": { "setting": "clickBehaviour", "value": "actions" },
-          "context": [
-            {
-              "label": "Triggered By",
-              "key": "rowID"
-            },
-            {
-              "label": "Selected Rows",
-              "key": "selectedRows",
-              "type": "array"
-            }
-          ]
-        },
-        {
-          "label": "On Double Click",
-          "labelHidden": false,
-          "type": "radio",
-          "key": "doubleClickBehaviour",
-          "sendEvents": true,
-          "defaultValue": "actions",
-          "options": [
-            {
-              "label": "Run actions",
-              "value": "actions"
-            },
-            {
-              "label": "Edit Cell",
-              "value": "edit"
-            },
-            {
-              "label": "Highlight Row",
-              "value": "highlight"
-            },
-            {
-              "label": "Select Row",
-              "value": "select"
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "key": "onDoubleClick",
-          "dependsOn": { "setting": "doubleClickBehaviour", "value": "actions" },
-          "context": [
-            {
-              "label": "Triggered By",
-              "key": "rowID"
-            },
-            {
-              "label": "Selected Rows",
-              "key": "selectedRows",
-              "type": "array"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section": true,
-      "name": "On Data Change",
-      "settings": [
-        {
-          "type": "event",
-          "key": "onDataChange",
-          "context": [
-            {
-              "label": "Triggered By",
-              "key": "rowID"
-            },
-            {
-              "label": "Data Changes",
-              "key": "dataChanges",
-              "type": "array"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section": true,
-      "name": "On Row Click",
-      "settings": [
-        {
-          "type": "event",
-          "key": "onRowClick",
-          "context": [
-            {
-              "label": "Row ID",
-              "key": "rowID"
-            }
-          ]
-        }
-      ]
-    }
+            "context": [
+              {
+                "label": "Triggered By",
+                "key": "rowID"
+              },
+              {
+                "label": "Selected Rows",
+                "key": "selectedRows",
+                "type": "array"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "On Data Change",
+        "settings": [
+          {
+            "type": "event",
+            "key": "onDataChange",
+            "context": [
+              {
+                "label": "Triggered By",
+                "key": "rowID"
+              },
+              {
+                "label": "Data Changes",
+                "key": "dataChanges",
+                "type": "array"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "On Row Click",
+        "settings": [
+          {
+            "type": "event",
+            "key": "onRowClick",
+            "context": [
+              {
+                "label": "Row ID",
+                "key": "rowID"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
 }

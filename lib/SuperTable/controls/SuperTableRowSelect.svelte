@@ -78,6 +78,7 @@
 </div>
 
 <style>
+
   .spectrum-Table-headCell {
     display: flex;
     flex-direction: row;
@@ -115,6 +116,7 @@
     margin: 0px;
     border: none;
     scrollbar-width: none;
+    border-right: var(--super-table-vertical-dividers);
   }
 
   .spectrum-Table-body::-webkit-scrollbar {

@@ -8,21 +8,21 @@
   integrity sha512-uVgekyBXnOVkxp+CUssjN/gefARtudZC8duEn1vm0lBQFwGRZFlDEzU1QC+aIRWCrD1Z8OgRpmBYlSZ7QS003w==
 
 "@babel/runtime@^7.15.4":
-  version "7.22.10"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.10.tgz#ae3e9631fd947cb7e3610d3e9d8fef5f76696682"
-  integrity sha512-21t/fkKLMZI4pqP2wlmsQAWnYW1PDyKyyUV4vCi+B25ydmdaYTKXPwCj0BzSUnZf4seIiYvSA3jcZ3gdsMFkLQ==
+  version "7.22.11"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.11.tgz#7a9ba3bbe406ad6f9e8dd4da2ece453eb23a77a4"
+  integrity sha512-ee7jVNlWN09+KftVOu9n7S8gQzD/Z6hN/I8VBRXW4P1+Xe7kJGXMwu8vds4aGIMHZnNbdpSWCfZZtinytpcAvA==
   dependencies:
     regenerator-runtime "^0.14.0"
 
 "@budibase/backend-core@^2.9.19":
-  version "2.9.30"
-  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.9.30.tgz#a1fff5fd84b2f87bae3364a65213db9cf90483d1"
-  integrity sha512-gLkrZJG5MDbPuwMISBQR1p8ebRdrT1NaE0DPQlDS0Dc/7G5e0UUiFPdRkQCSaLnbF4xvvKvybxvNiXuSMGTpeQ==
+  version "2.9.31"
+  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-2.9.31.tgz#28655361fdb30d3ef7d89ca5a2df6effa66ffb2b"
+  integrity sha512-9WbRZM5z3JoEJzYjWHfTklH+UhmnMsoG4KfGLI9oaiFnJxe11514GS+FHBmvmq2NMfJHb8RsBnXZ8ntzeewm0g==
   dependencies:
     "@budibase/nano" "10.1.2"
     "@budibase/pouchdb-replication-stream" "1.2.10"
-    "@budibase/shared-core" "2.9.30"
-    "@budibase/types" "2.9.30"
+    "@budibase/shared-core" "2.9.31"
+    "@budibase/types" "2.9.31"
     "@techpass/passport-openidconnect" "0.3.2"
     aws-cloudfront-sign "2.2.0"
     aws-sdk "2.1030.0"
@@ -57,13 +57,13 @@
     uuid "8.3.2"
 
 "@budibase/bbui@^2.9.30":
-  version "2.9.30"
-  resolved "https://registry.yarnpkg.com/@budibase/bbui/-/bbui-2.9.30.tgz#fd65d3aee272d26965c8487adf085f5097e319b7"
-  integrity sha512-OjrmG7OeKt/bJOz4jb5NI7PxJ5cl1n0EWv4NcxJZ9yNzy2t4MhSkwRwri3ZDbyTdhc4fZHM5CvoQ430jSyAkwg==
+  version "2.9.31"
+  resolved "https://registry.yarnpkg.com/@budibase/bbui/-/bbui-2.9.31.tgz#54906f94845e600236ce1ee7283b77008ef85ba8"
+  integrity sha512-kIxEP4tKX3cyLl6AapexjQ1k4RobpV8+4hvGut87mqzwbPfSgQbaoBXPZ+4oUR13X0MkhRRNX6BcYpxKcWgnDw==
   dependencies:
     "@adobe/spectrum-css-workflow-icons" "1.2.1"
-    "@budibase/shared-core" "2.9.30"
-    "@budibase/string-templates" "2.9.30"
+    "@budibase/shared-core" "2.9.31"
+    "@budibase/string-templates" "2.9.31"
     "@spectrum-css/accordion" "3.0.24"
     "@spectrum-css/actionbutton" "1.0.1"
     "@spectrum-css/actiongroup" "1.0.1"
@@ -159,17 +159,17 @@
     pouchdb-promise "^6.0.4"
     through2 "^2.0.0"
 
-"@budibase/shared-core@2.9.30", "@budibase/shared-core@^2.9.25":
-  version "2.9.30"
-  resolved "https://registry.yarnpkg.com/@budibase/shared-core/-/shared-core-2.9.30.tgz#4339d1d52334d3eed544faeb00ef3ea724ccbfdb"
-  integrity sha512-eRtCB8IU6jAt+4pvU2KrxQp1UiLQK+oIdUC845QznLZdQbW7E578a87pNfYhxnwoL4tYd/6KlgC+eSxy8dT24A==
+"@budibase/shared-core@2.9.31", "@budibase/shared-core@^2.9.25":
+  version "2.9.31"
+  resolved "https://registry.yarnpkg.com/@budibase/shared-core/-/shared-core-2.9.31.tgz#832ba2f6a6c26f8357f4d3a8f1bfe0fe741a5a15"
+  integrity sha512-gqvEUayzXpANC4Qu9zjS9HGRNII5qcUcXpEDEvswo7EUA3ZJ1i9XRtiTIozkZvlPwXDQpFI/S0BHNvI5QNWz8A==
   dependencies:
-    "@budibase/types" "2.9.30"
+    "@budibase/types" "2.9.31"
 
-"@budibase/string-templates@2.9.30":
-  version "2.9.30"
-  resolved "https://registry.yarnpkg.com/@budibase/string-templates/-/string-templates-2.9.30.tgz#e5e52376d64fb830c0f3418a3f055a364d40402d"
-  integrity sha512-2bTPIoNWKh3xUITIvJMscjmn+2aO3Z+SXbDs50WdADxsCKGX66uy8FAOvSqK8B1FmWepuVqr6Zh+PC/UwqiZCA==
+"@budibase/string-templates@2.9.31":
+  version "2.9.31"
+  resolved "https://registry.yarnpkg.com/@budibase/string-templates/-/string-templates-2.9.31.tgz#4c94377795d032923b71243010a1f825551931da"
+  integrity sha512-PwZ6Z4cXQi4oL8SW83UV7y/c8/j5EmCBhwHb8e/y0E7WjsLS/3vP/V4vidjLCkLWlx2nUE7ieGZNOLvcfUTeug==
   dependencies:
     "@budibase/handlebars-helpers" "^0.11.9"
     dayjs "^1.10.4"
@@ -178,10 +178,10 @@
     lodash "^4.17.20"
     vm2 "^3.9.15"
 
-"@budibase/types@2.9.30":
-  version "2.9.30"
-  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.9.30.tgz#63d97c7f01959bdea98edb0a2cc7cae587484c24"
-  integrity sha512-dOWnKEzV1YYRv0F+frFuMQs6KdFU5t2CYO+O1H36o+o0q5z3+WvpAwNpMmrhFL42BA6EHF0ycN4sFyQjjMg2DA==
+"@budibase/types@2.9.31":
+  version "2.9.31"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-2.9.31.tgz#1b49b2acf178b28979f72844ec63c0998c207ef1"
+  integrity sha512-QpyUzu8wqqhDBkkcQ5rL3SrmNsFnH/8zpx4RpaB1xxPngrI5+ybv9aUhnxOVAymJij8KbOH+RUGJl7F27kQcJQ==
   dependencies:
     scim-patch "^0.7.0"
 
@@ -321,9 +321,9 @@
     "@rollup/pluginutils" "^5.0.1"
 
 "@rollup/plugin-node-resolve@^15.0.0":
-  version "15.2.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.2.0.tgz#982053b237f81471aace570472e88a456d211621"
-  integrity sha512-mKur03xNGT8O9ODO6FtT43ITGqHWZbKPdVJHZb+iV9QYcdlhUUB0wgknvA4KCUmC5oHJF6O2W1EgmyOQyVUI4Q==
+  version "15.2.1"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-15.2.1.tgz#a15b14fb7969229e26a30feff2816d39eff503f0"
+  integrity sha512-nsbUg588+GDSu8/NS8T4UAshO6xeaOfINNuXeVHcKV02LJtoRaM1SiOacClw4kws1SFiNhdLGxlbMY9ga/zs/w==
   dependencies:
     "@rollup/pluginutils" "^5.0.1"
     "@types/resolve" "1.20.2"
@@ -618,9 +618,9 @@
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
 "@types/codemirror@^5.60.4":
-  version "5.60.8"
-  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-5.60.8.tgz#b647d04b470e8e1836dd84b2879988fc55c9de68"
-  integrity sha512-VjFgDF/eB+Aklcy15TtOTLQeMjTo07k7KAjql8OK5Dirr7a6sJY4T1uVBDuTVG9VEmn1uUsohOpYnVfgC6/jyw==
+  version "5.60.9"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-5.60.9.tgz#5dae1c2d3cd07c9c5dad624476892a9acdbc24e6"
+  integrity sha512-8RhLhlGo9bAkytFYKDzezorY2ojvGk+4xFEso/6Hc2oR1oE2P9lI+AEkbUW7cDlKcQAK5WJkJRBLTdjBE7xQPA==
   dependencies:
     "@types/tern" "*"
 
@@ -640,9 +640,9 @@
   integrity sha512-vSSbKZFbNktrQ15v7o1EaH78EbWV+sPQbPjHG+Cp8CaNcPFUEfjZ0Iml/V0bFDwsTlYe8o6XC5Hfdp91cqPV2g==
 
 "@types/node@^20.4.5":
-  version "20.5.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.1.tgz#178d58ee7e4834152b0e8b4d30cbfab578b9bb30"
-  integrity sha512-4tT2UrL5LBqDwoed9wZ6N3umC4Yhz3W3FloMmiiG4JwmUJWpie0c7lcnUNd4gtMKuDEO4wRVS8B6Xa0uMRsMKg==
+  version "20.5.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.6.tgz#5e9aaa86be03a09decafd61b128d6cec64a5fe40"
+  integrity sha512-Gi5wRGPbbyOTX+4Y2iULQ27oUPrefaB0PxGQJnfyWN3kvEDGM3mIB5M/gQLmitZf7A9FmLeaqxD3L1CXpm3VKQ==
 
 "@types/resolve@1.20.2":
   version "1.20.2"
@@ -878,9 +878,9 @@ aws4@^1.8.0:
   integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
 
 axios-retry@^3.1.9:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/axios-retry/-/axios-retry-3.6.0.tgz#3bf6edbce42e526a3f7ac70b1891b645adb4c301"
-  integrity sha512-jtH4qWTKZ2a17dH6tjq52Y1ssNV0lKge6/Z9Lw67s9Wt01nGTg4hg7/LJBGYfDci44NTANJQlCPHPOT/TSFm9w==
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/axios-retry/-/axios-retry-3.6.1.tgz#bf63f2dfba14ecc330c93939b1bfd880e2f3f9f2"
+  integrity sha512-PQw30ntfNKdY+iAxtjYA2BXNnVc9CZiA0Z0O3nx0I+xy5AuBmEX1hBLTm5YioWIyiAW7UwrX41oHzd+9YxSndQ==
   dependencies:
     "@babel/runtime" "^7.15.4"
     is-retry-allowed "^2.2.0"
@@ -1103,9 +1103,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001517:
-  version "1.0.30001522"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001522.tgz#44b87a406c901269adcdb834713e23582dd71856"
-  integrity sha512-TKiyTVZxJGhsTszLuzb+6vUZSjVOAhClszBr2Ta2k9IwtNBT/4dzmL6aywt0HCgEZlmwJzXJd8yNiob6HgwTRg==
+  version "1.0.30001523"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001523.tgz#b838f70b1a98c556776b998fafb47d2b64146d4f"
+  integrity sha512-I5q5cisATTPZ1mc588Z//pj/Ox80ERYDfR71YnvY7raS/NOk8xXlZcB0sF7JdqaV//kOaa6aus7lRfpdnt1eBA==
 
 canvas-confetti@^1.6.0:
   version "1.6.0"
@@ -1595,9 +1595,9 @@ ecdsa-sig-formatter@1.0.11:
     safe-buffer "^5.0.1"
 
 electron-to-chromium@^1.4.477:
-  version "1.4.496"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.496.tgz#a57534b70d2bdee7e1ad7dbd4c91e560cbd08db1"
-  integrity sha512-qeXC3Zbykq44RCrBa4kr8v/dWzYJA8rAwpyh9Qd+NKWoJfjG5vvJqy9XOJ9H4P/lqulZBCgUWAYi+FeK5AuJ8g==
+  version "1.4.502"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.502.tgz#531cda8774813d97d6cfa2fb9d8ee3e2c75851fa"
+  integrity sha512-xqeGw3Gr6o3uyHy/yKjdnDQHY2RQvXcGC2cfHjccK1IGkH6cX1WQBN8EeC/YpwPhGkBaikDTecJ8+ssxSVRQlw==
 
 emitter-listener@1.1.2:
   version "1.1.2"
@@ -1940,9 +1940,9 @@ fs.realpath@^1.0.0:
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
 fsevents@~2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
-  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
+  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 function-bind@^1.1.1:
   version "1.1.1"
@@ -2981,9 +2981,9 @@ ltgt@2.2.1, ltgt@^2.1.2:
   integrity sha512-AI2r85+4MquTw9ZYqabu4nMwy9Oftlfa/e/52t9IjtfG+mGBbTNdAoZ3RQKLHR6r0wQnwZnPIEh/Ya6XTWAKNA==
 
 luxon@^3.2.1:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.4.0.tgz#17cb754efecbf76994f05b2a3f1f91fad7ddfde7"
-  integrity sha512-7eDo4Pt7aGhoCheGFIuq4Xa2fJm4ZpmldpGhjTYBNUYNCN6TIEP6v7chwwwt3KRp7YR+rghbfvjyo3V5y9hgBw==
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.4.1.tgz#9147374b2c539e7893f906c420e9b080b59c5457"
+  integrity sha512-2USspxOCXWGIKHwuQ9XElxPPYrDOJHDQ5DQ870CoD+CxJbBnRDIBCfhioUJJjct7BKOy80Ia8cVstIcIMb/0+Q==
 
 magic-string@^0.25.7:
   version "0.25.9"
@@ -3236,9 +3236,9 @@ node-fetch@2.6.7:
     whatwg-url "^5.0.0"
 
 node-fetch@^2.6.7:
-  version "2.6.13"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.13.tgz#a20acbbec73c2e09f9007de5cda17104122e0010"
-  integrity sha512-StxNAxh15zr77QvvkmveSQ8uCQ4+v5FkvNTj0OESmiHu+VRi/gXArXtkWMElOsOUNLtUEvI4yS+rdtOHZTwlQA==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
+  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -4948,9 +4948,9 @@ supports-preserve-symlinks-flag@^1.0.0:
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
 svelte-dnd-action@^0.9.8:
-  version "0.9.25"
-  resolved "https://registry.yarnpkg.com/svelte-dnd-action/-/svelte-dnd-action-0.9.25.tgz#e6946dccee00911f9f575033063b0185baa35afd"
-  integrity sha512-6cW+5b+xYn2w1KaYdzdMiWOn4wzFq9KHpWMyYwixN4M+94RFw9Sn8GiRI0EPFoT5r6/RVD3d3lZ/OjllZlpYbg==
+  version "0.9.26"
+  resolved "https://registry.yarnpkg.com/svelte-dnd-action/-/svelte-dnd-action-0.9.26.tgz#b9a71096e8bea6d6de0a669d11f00b3bdda47348"
+  integrity sha512-tTRiURPX4SHM3NDcnHniMu3LeLVWhfajgODZLmukBuBWpMmMHskLlCjEZGc91bzqaHr95agWWuvcpoSMmLbbRg==
 
 svelte-flatpickr@3.2.3:
   version "3.2.3"
