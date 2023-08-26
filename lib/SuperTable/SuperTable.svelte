@@ -144,6 +144,7 @@
 <div
   class="st-master-wrapper"
   style:--super-table-body-height={maxBodyHeight + "px"}
+  style:--super-table-column-width={tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : null }
   style:--super-table-cell-padding={tableOptions.cellPadding + "px"}
   style:--super-table-vertical-dividers={tableOptions.dividers == "both" ||
   tableOptions.dividers == "vertical"
@@ -162,6 +163,8 @@
       <SuperTableColumn
         columnOptions={{
           ...column,
+          width: column.width ? column.width : tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : "auto",
+          maxWidth: tableOptions.columnSizing != "fixed" ? tableOptions.columnMaxWidth : null,
           hasChildren: false,
           filtering: tableOptions?.filtering,
           sorting: tableOptions?.sorting,

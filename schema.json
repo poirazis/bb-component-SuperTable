@@ -83,6 +83,41 @@
       },
       {
         "type": "select",
+        "key": "columnSizing",
+        "label": "Column Sizing",
+        "options" : [ 
+          { "label" : "Responsive", "value": "flex" }, 
+          { "label" : "Fixed", "value": "fixed"} 
+         ],
+        "defaultValue": "flex"
+      },
+      {
+        "type": "select",
+        "key": "columnMaxWidth",
+        "label": "Max Width",
+        "dependsOn": { "setting" : "columnSizing", "value" : "flex" },
+        "options" : [ 
+          { "label" : "Small", "value": "4rem" }, 
+          { "label" : "Normal", "value": "8rem" }, 
+          { "label" : "Large", "value": "16rem"}, 
+          { "label" : "Extra Large", "value": "32rem"} 
+         ],
+        "defaultValue": "16rem"
+      },
+      {
+        "type": "select",
+        "key": "columnWidth",
+        "label": "Column Width",
+        "dependsOn": { "setting" : "columnSizing", "value" : "fixed" },
+        "options" : [ 
+          { "label" : "Small", "value": "4rem" }, 
+          { "label" : "Normal", "value": "8rem" }, 
+          { "label" : "Large", "value": "12rem"} 
+         ],
+        "defaultValue": "8rem"
+      },
+      {
+        "type": "select",
         "key": "superColumnsPos",
         "label": "Super Columns",
         "showInBar": true,
@@ -136,15 +171,6 @@
         "dependsOn": "filtering"
       },
       {
-        "type": "number",
-        "key": "debounce",
-        "label": "Debounce",
-        "min": 100,
-        "defaultValue": 500,
-        "dependsOn": { "setting" : "filteringMode", "value" : "debounced" },
-        "info": "Debounce Delay (ms)"
-      },
-      {
         "type": "boolean",
         "key": "sorting",
         "label": "Sorting",
@@ -169,6 +195,20 @@
         "key": "showFooter",
         "label": "Column Footers",
         "defaultValue": false
+      },
+      {
+        "type": "boolean",
+        "key": "autoRefresh",
+        "label": "Auto Refresh",
+        "defaultValue": false
+      },
+      {
+        "type": "number",
+        "key": "autoRefreshRate",
+        "label": "Refresh Every",
+        "min" : 20,
+        "defaultValue": 60,
+        "dependsOn": "autoRefresh"
       },
       {
         "type": "boolean",
@@ -372,6 +412,15 @@
             "type": "color",
             "key": "dividersColor",
             "label": "Dividers Color"
+          },
+          {
+            "type": "number",
+            "key": "debounce",
+            "label": "Debounce",
+            "min": 100,
+            "defaultValue": 500,
+            "dependsOn": { "setting" : "filteringMode", "value" : "debounced" },
+            "info": "Debounce Delay (ms)"
           }
         ]
       },
@@ -382,7 +431,7 @@
           {
             "label": "On Click",
             "labelHidden": false,
-            "type": "radio",
+            "type": "select",
             "key": "clickBehaviour",
             "sendEvents": true,
             "defaultValue": "actions",
@@ -424,7 +473,7 @@
           {
             "label": "On Double Click",
             "labelHidden": false,
-            "type": "radio",
+            "type": "select",
             "key": "doubleClickBehaviour",
             "sendEvents": true,
             "defaultValue": "actions",

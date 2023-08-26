@@ -20,6 +20,10 @@
   export let filteringMode = "debounced"
   export let debounce = 750
 
+  export let columnWidth
+  export let columnMaxWidth
+  export let columnSizing
+
   export let dividers, dividersColor;
   export let headerAlign, headerFontSize, headerFontColor, headerBackground;
   export let rowVerticalAlign,
@@ -53,13 +57,15 @@
     hasChildren: $component.children,
     columns: !$component.children && columnList?.length === 0 ? getAllColumns( false ) : columnList,
     idColumn: idColumn,
+    columnSizing: columnSizing,
+    columnWidth: columnWidth,
+    columnMaxWidth: columnMaxWidth,
     superColumnsPos: superColumnsPos,
     filtering: filtering,
     filteringMode: filteringMode,
     debounce: debounce,
     sorting: sorting,
     editable: editable,
-    debounce: debounce,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
     dividers: dividers,
