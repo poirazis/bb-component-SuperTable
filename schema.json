@@ -159,18 +159,6 @@
         "barTitle": "Filterable"
       },
       {
-        "type": "select",
-        "key": "filteringMode",
-        "label": "Filtering Mode",
-        "barStyle": "buttons",
-        "options": [
-          { "label": "Live Debounced", "value": "debounced" },
-          { "label": "On Enter", "value": "onentert" }
-        ],
-        "defaultValue": "debounced",
-        "dependsOn": "filtering"
-      },
-      {
         "type": "boolean",
         "key": "sorting",
         "label": "Sorting",
@@ -209,7 +197,7 @@
       {
         "type": "number",
         "key": "autoRefreshRate",
-        "label": "Refresh Every",
+        "label": "Refresh Every (s)",
         "min" : 5,
         "defaultValue": 60,
         "dependsOn": "autoRefresh"
@@ -425,6 +413,18 @@
             "defaultValue": 500,
             "dependsOn": { "setting" : "filteringMode", "value" : "debounced" },
             "info": "Debounce Delay (ms)"
+          },
+          {
+            "type": "select",
+            "key": "filteringMode",
+            "label": "Filtering Mode",
+            "barStyle": "buttons",
+            "options": [
+              { "label": "Live Debounced", "value": "debounced" },
+              { "label": "On Enter", "value": "onentert" }
+            ],
+            "defaultValue": "debounced",
+            "dependsOn": "filtering"
           }
         ]
       },
