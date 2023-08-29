@@ -28,6 +28,10 @@
     sortedDirection,
     filtered = false;
 
+  let timer
+  let count = 0
+  let refreshing
+
   // Create Stores
   const tableDataStore = createSuperTableDataStore();
   const tableStateStore = createSuperTableStateStore();
@@ -72,6 +76,12 @@
     dataProvider?.id,
     ActionTypes.RemoveDataProviderQueryExtension
   );
+
+  $: refreshDP = getAction(dataProvider?.id, ActionTypes.RefreshDatasource )
+  $: if ( tableOptions.autoRefresh && !timer ) 
+    timer = setInterval ( () => ( refreshDataProvider() ), tableOptions.autoRefreshRate * 1000 )
+
+  $: if ( timer && !tableOptions.autoRefresh ) clearInterval(timer)
 
   $: setDataProviderFiltering($tableFilterStore?.filters);
   $: setDataProviderSorting(
@@ -129,6 +139,13 @@
     }
   }
 
+  function refreshDataProvider() {
+    $tableStateStore.refreshing = true;
+    refreshDP();
+    let timeout = setTimeout( () => ($tableStateStore.refreshing = false) , 1000 )
+    count++;
+  }
+
   setContext("tableDataStore", tableDataStore);
   setContext("tableDataChangesStore", tableDataChangesStore);
   setContext("tableStateStore", tableStateStore);
@@ -137,12 +154,12 @@
   setContext("tableScrollPosition", tableScrollPosition);
   setContext("tableOptions", tableOptions);
   setContext("tableHoverStore", tableHoverStore);
-
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
   class="st-master-wrapper"
+  class:refreshing={$tableStateStore.refreshing}
   style:--super-table-body-height={maxBodyHeight + "px"}
   style:--super-table-column-width={tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : null }
   style:--super-table-cell-padding={tableOptions.cellPadding + "px"}
@@ -186,8 +203,12 @@
     flex-direction: row;
     justify-content: stretch;
     align-items: stretch;
+    transition: all 1500ms ease-in-out;
   }
-
+  .refreshing {
+    border: 1px solid lime;
+    opacity: 0.5;
+  }
   .st-master-control {
     display: flex;
     flex-direction: row;

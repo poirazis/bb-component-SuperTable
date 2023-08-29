@@ -3,8 +3,8 @@
   "metadata": {},
   "schema": {
     "name": "bb-component-SuperTable",
-    "friendlyName": "Super Table",
-    "description": "A Fully Customizable Table Component with Superpowers !",
+    "friendlyName": "⚡️ Super Table",
+    "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "showEmptyState": false,
     "requiredAncestors": ["dataprovider"],
@@ -200,13 +200,17 @@
         "type": "boolean",
         "key": "autoRefresh",
         "label": "Auto Refresh",
-        "defaultValue": false
+        "defaultValue": false,
+        "showInBar": true,
+        "barIcon" : "Stopwatch",
+        "barStyle" : "buttons",
+        "barTitle" : "Auto Refresh"
       },
       {
         "type": "number",
         "key": "autoRefreshRate",
         "label": "Refresh Every",
-        "min" : 20,
+        "min" : 5,
         "defaultValue": 60,
         "dependsOn": "autoRefresh"
       },

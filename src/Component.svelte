@@ -3,7 +3,7 @@
   import { SuperTable } from "../lib/SuperTable";
   import { sizingMap } from "../lib/SuperTable/themes/superTableThemes";
 
-  const { styleable } = getContext("sdk");
+  const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
 
   export let dataProvider;
@@ -19,6 +19,8 @@
   export let columnList = []
   export let filteringMode = "debounced"
   export let debounce = 750
+  export let autoRefresh = false
+  export let autoRefreshRate = 60
 
   export let columnWidth
   export let columnMaxWidth
@@ -42,14 +44,28 @@
   export let onRowClick;
 
   let loading = false
+  let count = 0;
 
-  
   function getAllColumns( includeAuto ) {
-    let allColumns
+    let allColumns = []
     allColumns = Object.keys(dataProvider.schema)
-    .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
-    .map( v => { return { name: v, displayName: v } } )
+      .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
+      .map( v => { return { name: v, displayName: v } } )
+
     return allColumns
+  }
+
+  $: if ( dataProvider && columnList.length > 0 ) {
+      let newColumnList = []
+      let schemaFields = Object.keys(dataProvider.schema) ?? []
+      count++;
+
+      for (let column of columnList ) {
+        if ( schemaFields.includes (column.name) ) {
+          newColumnList.push( column )
+        }
+      }
+      columnList = newColumnList
   }
 
   $: tableOptions = {
@@ -64,6 +80,8 @@
     filtering: filtering,
     filteringMode: filteringMode,
     debounce: debounce,
+    autoRefresh: !$builderStore.inBuilder && autoRefresh,
+    autoRefreshRate: autoRefreshRate,
     sorting: sorting,
     editable: editable,
     visibleRowCount: visibleRowCount,
