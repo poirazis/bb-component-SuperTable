@@ -10,6 +10,15 @@
 
   import SuperTableVerticalScroller from "./controls/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
+  import SuperTableSelectionActionBar from "./controls/SuperTableSelectionActionBar.svelte";
+  import Popover from "../../node_modules/@budibase/bbui/src/Popover/Popover.svelte"
+  import ClearButton from "../../node_modules/@budibase/bbui/src/ClearButton/ClearButton.svelte";
+  import ActionButton from "../../node_modules/@budibase/bbui/src/ActionButton/ActionButton.svelte";
+  import ActionGroup from "../../node_modules/@budibase/bbui/src/ActionGroup/ActionGroup.svelte";
+
+  import "../../node_modules/@spectrum-css/actionbar/dist/index-vars.css"
+  import "../../node_modules/@spectrum-css/actionbar/dist/index.css"
+
   import fsm from "svelte-fsm";
 
   // Imports from submodules
@@ -126,9 +135,13 @@
     tableOptions.onRowSelect?.(context);
   }
 
-  function handleDataChange(changes) {
-    let context = { rowID: "dummy", dataChanges: changes };
-    tableOptions.onDataChange?.(context);
+  function handleDataChange (changes) {
+    console.log ( "Changes ! ", changes )
+
+    if ( changes.length > 0 ) {
+      let context = { ...changes[0] };
+      tableOptions.onDataChange?.(context);
+    }
   }
 
   function handleRowClick(rowKey) {
@@ -154,10 +167,14 @@
   setContext("tableScrollPosition", tableScrollPosition);
   setContext("tableOptions", tableOptions);
   setContext("tableHoverStore", tableHoverStore);
+
+  let anchor
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+  bind:this={anchor}
   class="st-master-wrapper"
   class:refreshing={$tableStateStore.refreshing}
   style:--super-table-body-height={maxBodyHeight + "px"}
@@ -168,13 +185,14 @@
     ? "1px solid var(--spectrum-table-border-color, var(--spectrum-alias-border-color-mid))"
     : "none"}
 >
-  <div class="st-master-control">
+  <div class="st-master-control" >
     {#if tableOptions.rowSelection}
       <SuperTableRowSelect on:selectionChange={handleRowSelect} />
     {/if}
   </div>
   
   <div class="st-master-columns">
+
     {#if tableOptions.superColumnsPos == "first"} <slot /> {/if}
     {#each tableOptions.columns as column}
       <SuperTableColumn
@@ -190,12 +208,25 @@
       />
     {/each}
     {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
+
   </div>
 
   {#if $tableDataStore.data.length > tableOptions.visibleRowCount}
     <div class="st-master-scroll"><SuperTableVerticalScroller /></div>
   {/if}
+
 </div>
+
+  <Popover {anchor} dismissible={false} align={"left"} open={ Object.keys($tableSelectionStore).length > 0 && tableOptions.canDelete }>
+    <div class="deleteMenu">
+        <ClearButton />  
+        <p class="spectrum-FieldLabel spectrum-FieldLabel--sizeS"> {Object.keys($tableSelectionStore).length} Selected </p>
+    
+        <ActionGroup>
+          <ActionButton name="Delete" icon="Delete" size="S" quiet emphasized/>
+        </ActionGroup>
+      </div>
+  </Popover>
 
 <style>
   .st-master-wrapper {
@@ -206,7 +237,7 @@
     transition: all 1500ms ease-in-out;
   }
   .refreshing {
-    border: 1px solid lime;
+    border: 1px solid rgb(11, 106, 11);
     opacity: 0.5;
   }
   .st-master-control {
@@ -227,4 +258,14 @@
   .st-master-scroll {
     opacity: 1;
   }
+
+  .deleteMenu {
+    width: 15rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+  
 </style>

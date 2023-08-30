@@ -14,6 +14,7 @@
     "@budibase/bbui": "^2.9.30",
     "@budibase/shared-core": "^2.9.25",
     "@crownframework/svelte-error-boundary": "^1.0.3",
+    "@spectrum-css/actionbar": "6.0.65",
     "svelte": "^3.49.0",
     "svelte-fsm": "^1.2.0",
     "svelte-legos": "^0.2.1"

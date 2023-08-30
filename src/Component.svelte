@@ -15,12 +15,16 @@
   export let filtering 
   export let sorting;
   export let editable;
+  export let canInsert;
+  export let canDelete;
   export let superColumnsPos;
   export let columnList = []
   export let filteringMode = "debounced"
   export let debounce = 750
   export let autoRefresh = false
   export let autoRefreshRate = 60
+
+  export let submitOn
 
   export let columnWidth
   export let columnMaxWidth
@@ -84,6 +88,9 @@
     autoRefreshRate: autoRefreshRate,
     sorting: sorting,
     editable: editable,
+    canDelete: canDelete,
+    canInsert: canInsert,
+    submitOn: submitOn,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
     dividers: dividers,

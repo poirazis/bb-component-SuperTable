@@ -39,7 +39,15 @@
 
   function handleSelection ( rowID ) {
     dispatch ("selectionChange", { "rowID": rowID} ) 
-    $tableSelectionStore[rowID] = !$tableSelectionStore[rowID]
+
+    let selected = Object.keys($tableSelectionStore)
+
+    if ( selected.includes ( rowID ) ) {
+      delete $tableSelectionStore[rowID] 
+      $tableSelectionStore = $tableSelectionStore
+    }
+    else
+      $tableSelectionStore[rowID] = true
   }
 
 </script>

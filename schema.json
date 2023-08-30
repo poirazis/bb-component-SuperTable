@@ -25,6 +25,12 @@
         "required": true
       },
       {
+        "type": "columns",
+        "key": "columnList",
+        "label": "Classic Columns",
+        "nested": "true"
+      },
+      {
         "type": "select",
         "key": "size",
         "label": "Size",
@@ -76,12 +82,6 @@
         "min": 1
       },
       {
-        "type": "columns",
-        "key": "columnList",
-        "label": "Classic Columns",
-        "nested": "true"
-      },
-      {
         "type": "select",
         "key": "columnSizing",
         "label": "Column Sizing",
@@ -120,7 +120,7 @@
         "type": "select",
         "key": "superColumnsPos",
         "label": "Super Columns",
-        "showInBar": true,
+        "showInBar": false,
         "barStyle": "buttons",
         "options": [
           {
@@ -140,6 +140,16 @@
       },
       {
         "type": "boolean",
+        "key": "canInsert",
+        "label": "Add New Row",
+        "defaultValue": false,
+        "showInBar": true,
+        "barStyle": "buttons",
+        "barIcon": "Add",
+        "barTitle": "Add New Row"
+      },
+      {
+        "type": "boolean",
         "key": "editable",
         "label": "Editable",
         "defaultValue": false,
@@ -147,6 +157,16 @@
         "barStyle": "buttons",
         "barIcon": "Edit",
         "barTitle": "Editable"
+      },
+      {
+        "type": "boolean",
+        "key": "canDelete",
+        "label": "Delete Rows",
+        "defaultValue": false,
+        "showInBar": true,
+        "barStyle": "buttons",
+        "barIcon": "Delete",
+        "barTitle": "Delete Rows"
       },
       {
         "type": "boolean",
@@ -425,6 +445,17 @@
             ],
             "defaultValue": "debounced",
             "dependsOn": "filtering"
+          },
+          {
+            "type": "select",
+            "key": "submitOn",
+            "label": "Submit Cell",
+            "options": [
+              { "label": "On Blur", "value": "onBlur" },
+              { "label": "On Enter", "value": "onEnter" }
+            ],
+            "defaultValue": "onBlur",
+            "dependsOn": "editable"
           }
         ]
       },
@@ -523,36 +554,28 @@
       },
       {
         "section": true,
-        "name": "On Data Change",
+        "name": "On Cell Change",
+        "dependsOn": "editable",
         "settings": [
           {
             "type": "event",
             "key": "onDataChange",
             "context": [
               {
-                "label": "Triggered By",
+                "label": "RowID",
                 "key": "rowID"
               },
               {
-                "label": "Data Changes",
-                "key": "dataChanges",
-                "type": "array"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "On Row Click",
-        "settings": [
-          {
-            "type": "event",
-            "key": "onRowClick",
-            "context": [
+                "label": "Field",
+                "key": "field"
+              },
               {
-                "label": "Row ID",
-                "key": "rowID"
+                "label": "Original Value",
+                "key": "originalValue"
+              },
+              {
+                "label": "New Value",
+                "key": "newValue"
               }
             ]
           }
