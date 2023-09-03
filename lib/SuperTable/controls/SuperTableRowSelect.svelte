@@ -52,7 +52,7 @@
 
 </script>
 
-<div style:width={"2.5rem"} class="spectrum-Table" on:mouseenter={() => mouseOver = true } on:mouseleave={() => mouseOver = false }>
+<div style:width={"2.5rem"} class="spectrum-Table" on:mouseleave={() => ($tableHoverStore = null)} >
   <div class="spectrum-Table-head">
     <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
       <Checkbox

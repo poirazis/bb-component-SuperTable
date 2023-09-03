@@ -52,30 +52,44 @@
 
   function getAllColumns( includeAuto ) {
     let allColumns = []
-    allColumns = Object.keys(dataProvider.schema)
-      .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
-      .map( v => { return { name: v, displayName: v } } )
+    if ( dataProvider?.schema ) 
+      allColumns = Object.keys(dataProvider.schema)
+        .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
+        .map( v => { return { name: v, displayName: v } } )
 
     return allColumns
   }
 
-  $: if ( dataProvider && columnList.length > 0 ) {
-      let newColumnList = []
-      let schemaFields = Object.keys(dataProvider.schema) ?? []
-      count++;
+  function saveSettings ( e ) {
+    if( !builderStore.inBuilder) return;
+    
+    if ( Array.isArray( e.detail) && e.detail.length > 0 )
+      builderStore.actions.updateProp( "columnList", e.detail )
 
-      for (let column of columnList ) {
-        if ( schemaFields.includes (column.name) ) {
-          newColumnList.push( column )
+    console.log("Saving Settings")
+  }
+
+  const getColumns = ( schema , selectedColumns ) => {
+    let newColumns = []
+    let schemaColumns = Object.keys(schema) || [];
+
+    if ( selectedColumns.length == 0 && !$component.children) {
+      newColumns = getAllColumns( false )
+    } else { 
+      for ( const column of selectedColumns ) {
+        if ( schemaColumns.includes ( column.name ) ) {
+          newColumns.push( column )
         }
       }
-      columnList = newColumnList
+    }
+    return newColumns;
   }
+  
 
   $: tableOptions = {
     componentID: $component.id,
     hasChildren: $component.children,
-    columns: !$component.children && columnList?.length === 0 ? getAllColumns( false ) : columnList,
+    columns: getColumns(dataProvider.schema, columnList),
     idColumn: idColumn,
     columnSizing: columnSizing,
     columnWidth: columnWidth,
@@ -103,11 +117,11 @@
     onRowSelect: onRowSelect
   };
 
-
 </script>
 
 <div use:styleable={$component.styles}>
   <SuperTable 
+    on:saveSettings={saveSettings}
     {tableOptions} 
     {dataProvider}
     {loading}

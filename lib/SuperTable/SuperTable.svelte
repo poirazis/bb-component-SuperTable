@@ -1,5 +1,5 @@
 <script>
-  import { getContext, setContext } from "svelte";
+  import { getContext, setContext, createEventDispatcher, onDestroy } from "svelte";
   import { writable } from "svelte/store";
   import { dataFilters } from "@budibase/shared-core/";
   import {
@@ -16,15 +16,14 @@
   import ActionButton from "../../node_modules/@budibase/bbui/src/ActionButton/ActionButton.svelte";
   import ActionGroup from "../../node_modules/@budibase/bbui/src/ActionGroup/ActionGroup.svelte";
 
-  import "../../node_modules/@spectrum-css/actionbar/dist/index-vars.css"
-  import "../../node_modules/@spectrum-css/actionbar/dist/index.css"
-
   import fsm from "svelte-fsm";
 
   // Imports from submodules
   import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js";
 
   const { getAction, ActionTypes } = getContext("sdk");
+
+  const dispatch = createEventDispatcher();
 
   export let tableOptions;
   export let dataProvider;
@@ -38,8 +37,6 @@
     filtered = false;
 
   let timer
-  let count = 0
-  let refreshing
 
   // Create Stores
   const tableDataStore = createSuperTableDataStore();
@@ -49,6 +46,9 @@
   const tableDataChangesStore = new writable([]);
   const tableScrollPosition = new writable(0);
   const tableHoverStore = new writable(0);
+  const tableOptionStore = new writable({});
+
+  $: $tableOptionStore = tableOptions
 
   const tableState = fsm("Loading", {});
 
@@ -59,9 +59,9 @@
   // Reactive Assignments
   $: superPowers = tableOptions.hasChildren;
 
-  $: $tableDataStore.data = dataProvider.rows;
-  $: $tableDataStore.dataSource = dataProvider.datasource;
-  $: $tableDataStore.schema = dataProvider.schema;
+  $: $tableDataStore.data = dataProvider?.rows ?? [];
+  $: $tableDataStore.dataSource = dataProvider?.datasource ?? {};
+  $: $tableDataStore.schema = dataProvider?.schema ?? {};
 
   $: $tableStateStore.rowCount = dataProvider.rows.length
     ? dataProvider.rows.length
@@ -69,8 +69,7 @@
 
   // Initialize Store with appropriate row heights to avoid flicker when they load
   $: tableStateStore.setRowMinHeight(tableOptions.rowHeight);
-  $: maxBodyHeight =
-    tableOptions.visibleRowCount * $tableStateStore.rowHeights[0];
+  $: maxBodyHeight = tableOptions.visibleRowCount * $tableStateStore.rowHeights[0];
 
   // Get dataProvider sorting / filtering functions
   $: setSorting = getAction(
@@ -136,8 +135,6 @@
   }
 
   function handleDataChange (changes) {
-    console.log ( "Changes ! ", changes )
-
     if ( changes.length > 0 ) {
       let context = { ...changes[0] };
       tableOptions.onDataChange?.(context);
@@ -155,8 +152,7 @@
   function refreshDataProvider() {
     $tableStateStore.refreshing = true;
     refreshDP();
-    let timeout = setTimeout( () => ($tableStateStore.refreshing = false) , 1000 )
-    count++;
+    setTimeout( () => ($tableStateStore.refreshing = false) , 750 )
   }
 
   setContext("tableDataStore", tableDataStore);
@@ -165,10 +161,11 @@
   setContext("tableFilterStore", tableFilterStore);
   setContext("tableSelectionStore", tableSelectionStore);
   setContext("tableScrollPosition", tableScrollPosition);
-  setContext("tableOptions", tableOptions);
+  setContext("tableOptionStore", tableOptionStore);
   setContext("tableHoverStore", tableHoverStore);
 
   let anchor
+
 
 </script>
 
@@ -191,22 +188,28 @@
     {/if}
   </div>
   
-  <div class="st-master-columns">
+  
+  <div class="st-master-columns" >
 
     {#if tableOptions.superColumnsPos == "first"} <slot /> {/if}
-    {#each tableOptions.columns as column}
+
+    {#each tableOptions?.columns as column }
       <SuperTableColumn
+        on:saveSettings
         columnOptions={{
           ...column,
-          width: column.width ? column.width : tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : "auto",
-          maxWidth: tableOptions.columnSizing != "fixed" ? tableOptions.columnMaxWidth : null,
+          sizing: column.width ? "fixed" : tableOptions.columnSizing,
+          width: column.width ? column.width : tableOptions.columnWidth,
+          maxWidth: tableOptions.columnMaxWidth,
+          showFooter: tableOptions.showFooter,
           hasChildren: false,
           filtering: tableOptions?.filtering,
           sorting: tableOptions?.sorting,
-          editable: tableOptions.editable,
+          editable: tableOptions?.editable
         }}
       />
     {/each}
+
     {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
 
   </div>
@@ -234,11 +237,12 @@
     flex-direction: row;
     justify-content: stretch;
     align-items: stretch;
-    transition: all 1500ms ease-in-out;
+    transition: opacity 750ms ease-in-out;
+    border: 1px solid var(--spectrum-global-color-gray-300);
   }
   .refreshing {
-    border: 1px solid rgb(11, 106, 11);
-    opacity: 0.5;
+    filter: blur(10);
+    opacity: 0.3;
   }
   .st-master-control {
     display: flex;
@@ -250,13 +254,17 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
-    justify-content: stretch;
     align-items: stretch;
+    justify-content: stretch;
     overflow-x: auto;
+    background-color: var(--spectrum-global-color-gray-50);
   }
 
   .st-master-scroll {
     opacity: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   .deleteMenu {

@@ -97,6 +97,7 @@
         "label": "Max Width",
         "dependsOn": { "setting" : "columnSizing", "value" : "flex" },
         "options" : [ 
+          { "label" : "No Limit", "value" : "none"},
           { "label" : "Small", "value": "4rem" }, 
           { "label" : "Normal", "value": "8rem" }, 
           { "label" : "Large", "value": "16rem"}, 
