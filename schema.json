@@ -6,10 +6,10 @@
     "friendlyName": "⚡️ Super Table",
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
-    "showEmptyState": false,
     "requiredAncestors": ["dataprovider"],
     "styles": ["padding", "size", "background", "border", "shadow"],
     "hasChildren": true,
+    "showEmptyState": false,
     "settings": [
       {
         "type": "dataProvider",
@@ -142,7 +142,7 @@
       {
         "type": "boolean",
         "key": "canInsert",
-        "label": "Add New Row",
+        "label": "Add Row",
         "defaultValue": false,
         "showInBar": true,
         "barStyle": "buttons",
@@ -151,8 +151,8 @@
       },
       {
         "type": "boolean",
-        "key": "editable",
-        "label": "Editable",
+        "key": "canEdit",
+        "label": "Edit",
         "defaultValue": false,
         "showInBar": true,
         "barStyle": "buttons",
@@ -171,8 +171,8 @@
       },
       {
         "type": "boolean",
-        "key": "filtering",
-        "label": "Filtering",
+        "key": "canFilter",
+        "label": "Filter",
         "defaultValue": true,
         "showInBar": true,
         "barStyle": "buttons",
@@ -181,8 +181,8 @@
       },
       {
         "type": "boolean",
-        "key": "sorting",
-        "label": "Sorting",
+        "key": "canSort",
+        "label": "Sort",
         "defaultValue": true,
         "showInBar": true,
         "barStyle": "buttons",

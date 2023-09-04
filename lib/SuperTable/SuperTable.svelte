@@ -10,7 +10,6 @@
 
   import SuperTableVerticalScroller from "./controls/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
-  import SuperTableSelectionActionBar from "./controls/SuperTableSelectionActionBar.svelte";
   import Popover from "../../node_modules/@budibase/bbui/src/Popover/Popover.svelte"
   import ClearButton from "../../node_modules/@budibase/bbui/src/ClearButton/ClearButton.svelte";
   import ActionButton from "../../node_modules/@budibase/bbui/src/ActionButton/ActionButton.svelte";
@@ -105,12 +104,14 @@
   // Component Function Definitions
   function setDataProviderFiltering(filters) {
     if (filters.length > 0) {
+      console.log("Setting Filters")
       const queryExtension = dataFilters.buildLuceneQuery(
         $tableFilterStore?.filters
       );
       setFiltering?.(tableOptions.componentID, queryExtension);
       filtered = true;
     } else if (filtered) {
+      console.log("Clearing Filters")
       unsetFiltering?.(tableOptions.componentID);
       filtered = false;
     }
@@ -203,21 +204,19 @@
           maxWidth: tableOptions.columnMaxWidth,
           showFooter: tableOptions.showFooter,
           hasChildren: false,
-          filtering: tableOptions?.filtering,
-          sorting: tableOptions?.sorting,
-          editable: tableOptions?.editable
+          canEdit: tableOptions.canEdit,
+          canEdit: tableOptions.canEdit,
+          canFilter: tableOptions.canFilter
         }}
       />
     {/each}
 
     {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
 
+    {#if $tableDataStore.data.length > tableOptions.visibleRowCount}
+      <div class="st-master-scroll"><SuperTableVerticalScroller /></div>
+    {/if}
   </div>
-
-  {#if $tableDataStore.data.length > tableOptions.visibleRowCount}
-    <div class="st-master-scroll"><SuperTableVerticalScroller /></div>
-  {/if}
-
 </div>
 
   <Popover {anchor} dismissible={false} align={"left"} open={ Object.keys($tableSelectionStore).length > 0 && tableOptions.canDelete }>
@@ -251,6 +250,7 @@
     align-items: stretch;
   }
   .st-master-columns {
+    position: relative;
     flex: 1 1 auto;
     display: flex;
     flex-direction: row;
@@ -261,10 +261,10 @@
   }
 
   .st-master-scroll {
-    opacity: 1;
+    opacity: 0.8;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 4;
   }
 
   .deleteMenu {

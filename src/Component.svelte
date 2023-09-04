@@ -12,11 +12,7 @@
   export let rowSelection;
   export let showFooter;
   export let size;
-  export let filtering 
-  export let sorting;
-  export let editable;
-  export let canInsert;
-  export let canDelete;
+  export let canInsert, canDelete, canEdit, canSort, canResize, canFilter
   export let superColumnsPos;
   export let columnList = []
   export let filteringMode = "debounced"
@@ -48,7 +44,6 @@
   export let onRowClick;
 
   let loading = false
-  let count = 0;
 
   function getAllColumns( includeAuto ) {
     let allColumns = []
@@ -61,7 +56,7 @@
   }
 
   function saveSettings ( e ) {
-    if( !builderStore.inBuilder) return;
+    if ( !$builderStore.inBuilder) return;
     
     if ( Array.isArray( e.detail) && e.detail.length > 0 )
       builderStore.actions.updateProp( "columnList", e.detail )
@@ -73,15 +68,17 @@
     let newColumns = []
     let schemaColumns = Object.keys(schema) || [];
 
-    if ( selectedColumns.length == 0 && !$component.children) {
-      newColumns = getAllColumns( false )
-    } else { 
-      for ( const column of selectedColumns ) {
-        if ( schemaColumns.includes ( column.name ) ) {
-          newColumns.push( column )
-        }
+    // Find Matching Columns
+    for ( const column of selectedColumns ) {
+      if ( schemaColumns.includes ( column.name ) ) {
+        newColumns.push( column )
       }
     }
+
+    if ( newColumns.length == 0 && !$component.children ) {
+      newColumns = getAllColumns ( false )
+    }
+
     return newColumns;
   }
   
@@ -91,19 +88,21 @@
     hasChildren: $component.children,
     columns: getColumns(dataProvider.schema, columnList),
     idColumn: idColumn,
+    superColumnsPos: superColumnsPos,
+    canFilter: canFilter,
+    canSort: canSort,
+    canEdit: canEdit,
+    canDelete: canDelete,
+    canInsert: canInsert,
+    canResize: canResize,
     columnSizing: columnSizing,
     columnWidth: columnWidth,
     columnMaxWidth: columnMaxWidth,
-    superColumnsPos: superColumnsPos,
-    filtering: filtering,
     filteringMode: filteringMode,
     debounce: debounce,
     autoRefresh: !$builderStore.inBuilder && autoRefresh,
     autoRefreshRate: autoRefreshRate,
-    sorting: sorting,
-    editable: editable,
-    canDelete: canDelete,
-    canInsert: canInsert,
+
     submitOn: submitOn,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
