@@ -17,14 +17,14 @@
     "svelte-legos": "^0.2.1"
   },
   "devDependencies": {
-    "@spectrum-css/actionbar": "6.0.65",
+    "@budibase/backend-core": "^2.9.19",
     "@budibase/bbui": "^2.9.30",
     "@budibase/shared-core": "^2.9.25",
-    "@budibase/backend-core": "^2.9.19",
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.3",
+    "@spectrum-css/actionbar": "6.0.65",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.10",
     "rollup": "^2.44.0",

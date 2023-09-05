@@ -194,7 +194,7 @@
 
     {#if tableOptions.superColumnsPos == "first"} <slot /> {/if}
 
-    {#each tableOptions?.columns as column }
+    {#each tableOptions?.columns as column (column.id) }
       <SuperTableColumn
         on:saveSettings
         columnOptions={{
@@ -212,11 +212,12 @@
     {/each}
 
     {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
-
-    {#if $tableDataStore.data.length > tableOptions.visibleRowCount}
-      <div class="st-master-scroll"><SuperTableVerticalScroller /></div>
-    {/if}
   </div>
+
+  {#if $tableDataStore.data.length > tableOptions.visibleRowCount}
+    <div class="st-master-scroll"><SuperTableVerticalScroller /></div>
+  {/if}
+
 </div>
 
   <Popover {anchor} dismissible={false} align={"left"} open={ Object.keys($tableSelectionStore).length > 0 && tableOptions.canDelete }>
@@ -262,9 +263,6 @@
 
   .st-master-scroll {
     opacity: 0.8;
-    position: absolute;
-    top: 0;
-    right: 4;
   }
 
   .deleteMenu {
