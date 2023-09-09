@@ -45,6 +45,17 @@
         "defaultValue": "M"
       },
       {
+        "type": "select",
+        "key": "theme",
+        "label": "Theme",
+        "options": [
+          { "label": "Budibase", "value": "budibase" },
+          { "label": "Polarized Night", "value": "polarized" },
+          { "label": "Custom", "value": "custom" }
+        ],
+        "defaultValue": "budibase"
+      },
+      {
         "section": true,
         "name": "Custom Sizing Settings",
         "dependsOn": { "setting": "size", "value": "custom" },
@@ -201,6 +212,12 @@
       },
       {
         "type": "boolean",
+        "key": "showHeader",
+        "label": "Column Headers",
+        "defaultValue": true
+      },
+      {
+        "type": "boolean",
         "key": "showFooter",
         "label": "Column Footers",
         "defaultValue": false
@@ -235,42 +252,14 @@
         "dependsOn": "customize",
         "settings": [
           {
-            "type": "select",
-            "label": "Header Align",
-            "key": "headerAlign",
-            "showInBar": false,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "Left",
-                "value": "left",
-                "barIcon": "TextAlignLeft",
-                "barTitle": "Text Align Left"
-              },
-              {
-                "label": "Center",
-                "value": "center",
-                "barIcon": "TextAlignCenter",
-                "barTitle": "Row layout"
-              },
-              {
-                "label": "Right",
-                "value": "right",
-                "barIcon": "TextAlignRight",
-                "barTitle": "Row layout"
-              }
-            ],
-            "defaultValue": "left"
+            "type": "color",
+            "key": "headerColor",
+            "label": "Text"
           },
           {
             "type": "color",
-            "key": "headerFontColor",
-            "label": "Text Color"
-          },
-          {
-            "type": "color",
-            "key": "headerBackground",
-            "label": "Background Color"
+            "key": "headerBgColor",
+            "label": "Background"
           }
         ]
       },
@@ -281,41 +270,7 @@
         "settings": [
           {
             "type": "select",
-            "label": "Contents Horizontal Align",
-            "key": "rowHorizontalAlign",
-            "showInBar": false,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "Left",
-                "value": "flex-start",
-                "barIcon": "AlignLeft",
-                "barTitle": "Align left"
-              },
-              {
-                "label": "Center",
-                "value": "center",
-                "barIcon": "AlignCenter",
-                "barTitle": "Align center"
-              },
-              {
-                "label": "Right",
-                "value": "flex-end",
-                "barIcon": "AlignRight",
-                "barTitle": "Align right"
-              },
-              {
-                "label": "Stretch",
-                "value": "stretch",
-                "barIcon": "MoveLeftRight",
-                "barTitle": "Align stretched horizontally"
-              }
-            ],
-            "defaultValue": "flex-start"
-          },
-          {
-            "type": "select",
-            "label": "Contents Vertical Align",
+            "label": "Vertical Align",
             "key": "rowVerticalAlign",
             "showInBar": false,
             "barStyle": "buttons",
@@ -350,12 +305,12 @@
           {
             "type": "color",
             "key": "rowFontColor",
-            "label": "Text Color"
+            "label": "Text"
           },
           {
             "type": "color",
             "key": "rowBackground",
-            "label": "Background Color"
+            "label": "Background"
           }
         ]
       },
@@ -365,42 +320,14 @@
         "dependsOn": "customize",
         "settings": [
           {
-            "type": "select",
-            "label": "Footer Align",
-            "key": "footerAlign",
-            "showInBar": false,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "Left",
-                "value": "flex-start",
-                "barIcon": "TextAlignLeft",
-                "barTitle": "Text Align Left"
-              },
-              {
-                "label": "Center",
-                "value": "center",
-                "barIcon": "TextAlignCenter",
-                "barTitle": "Row layout"
-              },
-              {
-                "label": "Right",
-                "value": "flex-end",
-                "barIcon": "TextAlignRight",
-                "barTitle": "Row layout"
-              }
-            ],
-            "defaultValue": "flex-start"
-          },
-          {
             "type": "color",
             "key": "footerFontColor",
-            "label": "Text Color"
+            "label": "Text"
           },
           {
             "type": "color",
             "key": "footerBackground",
-            "label": "Background Color"
+            "label": "Background"
           }
         ]
       },

@@ -1,7 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import { SuperTable } from "../lib/SuperTable";
-  import { sizingMap } from "../lib/SuperTable/themes/superTableThemes";
+  import { sizingMap, themeMap } from "../lib/SuperTable/themes/superTableThemes";
 
   const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
@@ -11,6 +11,7 @@
   export let visibleRowCount;
   export let rowSelection;
   export let showFooter;
+  export let showHeader;
   export let size;
   export let canInsert, canDelete, canEdit, canSort, canResize, canFilter
   export let superColumnsPos;
@@ -19,6 +20,7 @@
   export let debounce = 750
   export let autoRefresh = false
   export let autoRefreshRate = 60
+  export let theme = "budibase"
 
   export let submitOn
 
@@ -27,7 +29,8 @@
   export let columnSizing
 
   export let dividers, dividersColor;
-  export let headerAlign, headerFontSize, headerFontColor, headerBackground;
+  export let headerFontSize, headerColor, headerBgColor;
+
   export let rowVerticalAlign,
     rowHorizontalAlign,
     rowFontSize,
@@ -82,6 +85,7 @@
     return newColumns;
   }
   
+  $: tableTheme = themeMap[theme]
 
   $: tableOptions = {
     componentID: $component.id,
@@ -102,7 +106,6 @@
     debounce: debounce,
     autoRefresh: !$builderStore.inBuilder && autoRefresh,
     autoRefreshRate: autoRefreshRate,
-
     submitOn: submitOn,
     visibleRowCount: visibleRowCount,
     rowSelection: rowSelection,
@@ -111,6 +114,7 @@
     cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
     rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
     showFooter: showFooter,
+    showHeader: showHeader,
     onRowClick: onRowClick,
     onDataChange: onDataChange,
     onRowSelect: onRowSelect
@@ -122,8 +126,9 @@
   <SuperTable 
     on:saveSettings={saveSettings}
     {tableOptions} 
+    {tableTheme}
     {dataProvider}
-    {loading}
+    inBuilder = { $builderStore.inBuilder }
   >
     <slot />
   </SuperTable>

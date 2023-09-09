@@ -1,5 +1,5 @@
 <script>
-  import { getContext, setContext, createEventDispatcher, onDestroy } from "svelte";
+  import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
   import { dataFilters } from "@budibase/shared-core/";
   import {
@@ -10,23 +10,17 @@
 
   import SuperTableVerticalScroller from "./controls/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
-  import Popover from "../../node_modules/@budibase/bbui/src/Popover/Popover.svelte"
-  import ClearButton from "../../node_modules/@budibase/bbui/src/ClearButton/ClearButton.svelte";
-  import ActionButton from "../../node_modules/@budibase/bbui/src/ActionButton/ActionButton.svelte";
-  import ActionGroup from "../../node_modules/@budibase/bbui/src/ActionGroup/ActionGroup.svelte";
 
   import fsm from "svelte-fsm";
 
-  // Imports from submodules
   import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js";
 
   const { getAction, ActionTypes } = getContext("sdk");
 
-  const dispatch = createEventDispatcher();
-
   export let tableOptions;
+  export let tableTheme
   export let dataProvider;
-  export let loading = false;
+  export let inBuilder = false
 
   let setSorting,
     setFiltering,
@@ -36,6 +30,8 @@
     filtered = false;
 
   let timer
+  let anchor
+  let columnStates = [];
 
   // Create Stores
   const tableDataStore = createSuperTableDataStore();
@@ -49,14 +45,25 @@
 
   $: $tableOptionStore = tableOptions
 
-  const tableState = fsm("Loading", {});
+  const tableState = fsm("Loading", {
+    "*" : {
+      refresh() { return "Loading" }
+    },
+    Idle: { 
+      filtering: "Loading",
+     },
+    Loading: { 
+      _enter() { this.loaded.debounce(500) }, 
+      loaded: "Idle"
+    },
+    Filtered: { },
+    Sorted: { },
+    Empty: { }
+  });
 
   // Static Assignments
   $tableStateStore.loaded = true;
   $tableDataStore.loaded = true;
-
-  // Reactive Assignments
-  $: superPowers = tableOptions.hasChildren;
 
   $: $tableDataStore.data = dataProvider?.rows ?? [];
   $: $tableDataStore.dataSource = dataProvider?.datasource ?? {};
@@ -104,7 +111,7 @@
   // Component Function Definitions
   function setDataProviderFiltering(filters) {
     if (filters.length > 0) {
-      console.log("Setting Filters")
+
       const queryExtension = dataFilters.buildLuceneQuery(
         $tableFilterStore?.filters
       );
@@ -165,8 +172,7 @@
   setContext("tableOptionStore", tableOptionStore);
   setContext("tableHoverStore", tableHoverStore);
 
-  let anchor
-
+  $: console.log("T A B L E ", $tableState)
 
 </script>
 
@@ -175,7 +181,14 @@
   bind:this={anchor}
   class="st-master-wrapper"
   class:refreshing={$tableStateStore.refreshing}
+  style:--super-table-footer-height={"2.5rem"}
   style:--super-table-body-height={maxBodyHeight + "px"}
+  style:--super-table-header-color={tableTheme.headerColor}
+  style:--super-table-header-bg-color={tableTheme.headerBgColor}
+  style:--super-table-color={tableTheme.tableColor}
+  style:--super-table-bg-color={tableTheme.tableBgColor}
+  style:--super-table-footer-color={tableTheme.footerColor}
+  style:--super-table-footer-bg-color={tableTheme.footerBgColor}
   style:--super-table-column-width={tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : null }
   style:--super-table-cell-padding={tableOptions.cellPadding + "px"}
   style:--super-table-vertical-dividers={tableOptions.dividers == "both" ||
@@ -185,7 +198,7 @@
 >
   <div class="st-master-control" >
     {#if tableOptions.rowSelection}
-      <SuperTableRowSelect on:selectionChange={handleRowSelect} />
+      <SuperTableRowSelect {tableOptions} on:selectionChange={handleRowSelect} />
     {/if}
   </div>
   
@@ -194,42 +207,24 @@
 
     {#if tableOptions.superColumnsPos == "first"} <slot /> {/if}
 
-    {#each tableOptions?.columns as column (column.id) }
+    {#each tableOptions.columns as column, idx }
       <SuperTableColumn
         on:saveSettings
-        columnOptions={{
-          ...column,
-          sizing: column.width ? "fixed" : tableOptions.columnSizing,
-          width: column.width ? column.width : tableOptions.columnWidth,
-          maxWidth: tableOptions.columnMaxWidth,
-          showFooter: tableOptions.showFooter,
-          hasChildren: false,
-          canEdit: tableOptions.canEdit,
-          canEdit: tableOptions.canEdit,
-          canFilter: tableOptions.canFilter
-        }}
+        bind:columnState={ columnStates[idx] }
+        {tableState}
+        {tableOptions}
+        columnOptions={column}
       />
     {/each}
 
     {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
+
   </div>
 
   {#if $tableDataStore.data.length > tableOptions.visibleRowCount}
-    <div class="st-master-scroll"><SuperTableVerticalScroller /></div>
+    <div class="st-master-scroll"> <SuperTableVerticalScroller {tableOptions} /></div>
   {/if}
-
 </div>
-
-  <Popover {anchor} dismissible={false} align={"left"} open={ Object.keys($tableSelectionStore).length > 0 && tableOptions.canDelete }>
-    <div class="deleteMenu">
-        <ClearButton />  
-        <p class="spectrum-FieldLabel spectrum-FieldLabel--sizeS"> {Object.keys($tableSelectionStore).length} Selected </p>
-    
-        <ActionGroup>
-          <ActionButton name="Delete" icon="Delete" size="S" quiet emphasized/>
-        </ActionGroup>
-      </div>
-  </Popover>
 
 <style>
   .st-master-wrapper {
@@ -262,16 +257,11 @@
   }
 
   .st-master-scroll {
+    background-color: transparent;
     opacity: 0.8;
-  }
-
-  .deleteMenu {
-    width: 15rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
+    position: absolute;
+    top: 0;
+    right: 4px;
   }
   
 </style>
