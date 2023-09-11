@@ -46,8 +46,6 @@
   export let onDataChange;
   export let onRowClick;
 
-  let loading = false
-
   function getAllColumns( includeAuto ) {
     let allColumns = []
     if ( dataProvider?.schema ) 

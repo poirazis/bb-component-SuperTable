@@ -172,6 +172,8 @@
   setContext("tableOptionStore", tableOptionStore);
   setContext("tableHoverStore", tableHoverStore);
 
+  setContext("tableState", tableState);
+
   $: console.log("T A B L E ", $tableState)
 
 </script>
@@ -189,6 +191,8 @@
   style:--super-table-bg-color={tableTheme.tableBgColor}
   style:--super-table-footer-color={tableTheme.footerColor}
   style:--super-table-footer-bg-color={tableTheme.footerBgColor}
+  style:--super-table-relItem-color={tableTheme.relationshipItemColor}
+  style:--super-table-relItem-bg-color={tableTheme.relationshipItemBgColor}
   style:--super-table-column-width={tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : null }
   style:--super-table-cell-padding={tableOptions.cellPadding + "px"}
   style:--super-table-vertical-dividers={tableOptions.dividers == "both" ||

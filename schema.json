@@ -7,7 +7,7 @@
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "requiredAncestors": ["dataprovider"],
-    "styles": ["padding", "size", "background", "border", "shadow"],
+    "styles": ["size"],
     "hasChildren": true,
     "showEmptyState": false,
     "settings": [
@@ -31,29 +31,22 @@
         "nested": "true"
       },
       {
-        "type": "select",
-        "key": "size",
-        "label": "Size",
-        "options": [
-          { "label": "Extra Small", "value": "XS" },
-          { "label": "Small", "value": "S" },
-          { "label": "Medium", "value": "M" },
-          { "label": "Large", "value": "L" },
-          { "label": "Extra Large", "value": "XL" },
-          { "label": "Custom", "value": "custom" }
-        ],
-        "defaultValue": "M"
+        "type": "boolean",
+        "key": "autoRefresh",
+        "label": "Auto Refresh",
+        "defaultValue": false,
+        "showInBar": true,
+        "barIcon" : "Stopwatch",
+        "barStyle" : "buttons",
+        "barTitle" : "Auto Refresh"
       },
       {
-        "type": "select",
-        "key": "theme",
-        "label": "Theme",
-        "options": [
-          { "label": "Budibase", "value": "budibase" },
-          { "label": "Polarized Night", "value": "polarized" },
-          { "label": "Custom", "value": "custom" }
-        ],
-        "defaultValue": "budibase"
+        "type": "number",
+        "key": "autoRefreshRate",
+        "label": "Refresh Every (s)",
+        "min" : 5,
+        "defaultValue": 60,
+        "dependsOn": "autoRefresh"
       },
       {
         "section": true,
@@ -85,166 +78,186 @@
           }
         ]
       },
+
       {
-        "type": "number",
-        "key": "visibleRowCount",
-        "label": "Visible Rows",
-        "defaultValue": 8,
-        "min": 1
-      },
-      {
-        "type": "select",
-        "key": "columnSizing",
-        "label": "Column Sizing",
-        "options" : [ 
-          { "label" : "Responsive", "value": "flex" }, 
-          { "label" : "Fixed", "value": "fixed"} 
-         ],
-        "defaultValue": "flex"
-      },
-      {
-        "type": "select",
-        "key": "columnMaxWidth",
-        "label": "Max Width",
-        "dependsOn": { "setting" : "columnSizing", "value" : "flex" },
-        "options" : [ 
-          { "label" : "No Limit", "value" : "none"},
-          { "label" : "Small", "value": "4rem" }, 
-          { "label" : "Normal", "value": "8rem" }, 
-          { "label" : "Large", "value": "16rem"}, 
-          { "label" : "Extra Large", "value": "32rem"} 
-         ],
-        "defaultValue": "16rem"
-      },
-      {
-        "type": "select",
-        "key": "columnWidth",
-        "label": "Column Width",
-        "dependsOn": { "setting" : "columnSizing", "value" : "fixed" },
-        "options" : [ 
-          { "label" : "Small", "value": "4rem" }, 
-          { "label" : "Normal", "value": "8rem" }, 
-          { "label" : "Large", "value": "12rem"} 
-         ],
-        "defaultValue": "8rem"
-      },
-      {
-        "type": "select",
-        "key": "superColumnsPos",
-        "label": "Super Columns",
-        "showInBar": false,
-        "barStyle": "buttons",
-        "options": [
+        "section" : true,
+        "name": "Appearance",
+        "settings": [ 
           {
-            "label": "First",
-            "value": "first",
-            "barIcon": "PaddingLeft",
-            "barTitle": "Super Columns First"
+            "type": "select",
+            "key": "theme",
+            "label": "Theme",
+            "options": [
+              { "label": "Budibase", "value": "budibase" },
+              { "label": "Polarized Night", "value": "polarized" },
+              { "label": "Custom", "value": "custom" }
+            ],
+            "defaultValue": "budibase"
           },
           {
-            "label": "Last",
-            "value": "last",
-            "barIcon": "PaddingRight",
-            "barTitle": "Super Columns Last"
+            "type": "select",
+            "key": "size",
+            "label": "Size",
+            "options": [
+              { "label": "Extra Small", "value": "XS" },
+              { "label": "Small", "value": "S" },
+              { "label": "Medium", "value": "M" },
+              { "label": "Large", "value": "L" },
+              { "label": "Extra Large", "value": "XL" },
+              { "label": "Custom", "value": "custom" }
+            ],
+            "defaultValue": "M"
+          },
+          {
+            "type": "number",
+            "key": "visibleRowCount",
+            "label": "Visible Rows",
+            "defaultValue": 8,
+            "min": 1
+          },
+          {
+            "type": "select",
+            "key": "columnSizing",
+            "label": "Column Sizing",
+            "options" : [ 
+              { "label" : "Responsive", "value": "flex" }, 
+              { "label" : "Fixed", "value": "fixed"} 
+             ],
+            "defaultValue": "flex"
+          },
+          {
+            "type": "select",
+            "key": "columnMaxWidth",
+            "label": "Max Width",
+            "dependsOn": { "setting" : "columnSizing", "value" : "flex" },
+            "options" : [ 
+              { "label" : "No Limit", "value" : "none"},
+              { "label" : "Small", "value": "4rem" }, 
+              { "label" : "Normal", "value": "8rem" }, 
+              { "label" : "Large", "value": "16rem"}, 
+              { "label" : "Extra Large", "value": "32rem"} 
+             ],
+            "defaultValue": "16rem"
+          },
+          {
+            "type": "select",
+            "key": "columnWidth",
+            "label": "Column Width",
+            "dependsOn": { "setting" : "columnSizing", "value" : "fixed" },
+            "options" : [ 
+              { "label" : "Small", "value": "4rem" }, 
+              { "label" : "Normal", "value": "8rem" }, 
+              { "label" : "Large", "value": "12rem"} 
+             ],
+            "defaultValue": "8rem"
+          },
+          {
+            "type": "select",
+            "key": "superColumnsPos",
+            "label": "Super Columns",
+            "showInBar": false,
+            "barStyle": "buttons",
+            "options": [
+              {
+                "label": "First",
+                "value": "first",
+                "barIcon": "PaddingLeft",
+                "barTitle": "Super Columns First"
+              },
+              {
+                "label": "Last",
+                "value": "last",
+                "barIcon": "PaddingRight",
+                "barTitle": "Super Columns Last"
+              }
+            ],
+            "defaultValue": "first"
+          },
+          {
+            "type": "boolean",
+            "key": "customize",
+            "label": "Customize",
+            "defaultValue": false
           }
-        ],
-        "defaultValue": "first"
+        ]
       },
       {
-        "type": "boolean",
-        "key": "canInsert",
-        "label": "Add Row",
-        "defaultValue": false,
-        "showInBar": true,
-        "barStyle": "buttons",
-        "barIcon": "Add",
-        "barTitle": "Add New Row"
-      },
-      {
-        "type": "boolean",
-        "key": "canEdit",
-        "label": "Edit",
-        "defaultValue": false,
-        "showInBar": true,
-        "barStyle": "buttons",
-        "barIcon": "Edit",
-        "barTitle": "Editable"
-      },
-      {
-        "type": "boolean",
-        "key": "canDelete",
-        "label": "Delete Rows",
-        "defaultValue": false,
-        "showInBar": true,
-        "barStyle": "buttons",
-        "barIcon": "Delete",
-        "barTitle": "Delete Rows"
-      },
-      {
-        "type": "boolean",
-        "key": "canFilter",
-        "label": "Filter",
-        "defaultValue": true,
-        "showInBar": true,
-        "barStyle": "buttons",
-        "barIcon": "FilterAdd",
-        "barTitle": "Filterable"
-      },
-      {
-        "type": "boolean",
-        "key": "canSort",
-        "label": "Sort",
-        "defaultValue": true,
-        "showInBar": true,
-        "barStyle": "buttons",
-        "barIcon": "SortOrderDown",
-        "barTitle": "Sortable"
-      },
-      {
-        "type": "boolean",
-        "key": "rowSelection",
-        "label": "Row Selection",
-        "defaultValue": false,
-        "showInBar": true,
-        "barStyle": "buttons",
-        "barIcon": "SelectBox",
-        "barTitle": "Sortable"
-      },
-      {
-        "type": "boolean",
-        "key": "showHeader",
-        "label": "Column Headers",
-        "defaultValue": true
-      },
-      {
-        "type": "boolean",
-        "key": "showFooter",
-        "label": "Column Footers",
-        "defaultValue": false
-      },
-      {
-        "type": "boolean",
-        "key": "autoRefresh",
-        "label": "Auto Refresh",
-        "defaultValue": false,
-        "showInBar": true,
-        "barIcon" : "Stopwatch",
-        "barStyle" : "buttons",
-        "barTitle" : "Auto Refresh"
-      },
-      {
-        "type": "number",
-        "key": "autoRefreshRate",
-        "label": "Refresh Every (s)",
-        "min" : 5,
-        "defaultValue": 60,
-        "dependsOn": "autoRefresh"
-      },
-      {
-        "type": "boolean",
-        "key": "customize",
-        "label": "Customize",
-        "defaultValue": false
+        "section" : true,
+        "name": "Capabilities",
+        "settings": [
+          {
+            "type": "boolean",
+            "key": "canInsert",
+            "label": "Add Row",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Add",
+            "barTitle": "Add New Row"
+          },
+          {
+            "type": "boolean",
+            "key": "canEdit",
+            "label": "Edit",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Edit",
+            "barTitle": "Editable"
+          },
+          {
+            "type": "boolean",
+            "key": "canDelete",
+            "label": "Delete Rows",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Delete",
+            "barTitle": "Delete Rows"
+          },
+          {
+            "type": "boolean",
+            "key": "canFilter",
+            "label": "Filter",
+            "defaultValue": true,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "FilterAdd",
+            "barTitle": "Filterable"
+          },
+          {
+            "type": "boolean",
+            "key": "canSort",
+            "label": "Sort",
+            "defaultValue": true,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "SortOrderDown",
+            "barTitle": "Sortable"
+          },
+          {
+            "type": "boolean",
+            "key": "rowSelection",
+            "label": "Row Selection",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "SelectBox",
+            "barTitle": "Sortable"
+          },
+          {
+            "type": "boolean",
+            "key": "showHeader",
+            "label": "Column Headers",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "showFooter",
+            "label": "Column Footers",
+            "defaultValue": false
+          }
+        ]
       },
       {
         "section": true,
