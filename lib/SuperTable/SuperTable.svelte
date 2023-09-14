@@ -241,7 +241,7 @@
   }
   .refreshing {
     filter: blur(10);
-    opacity: 0.3;
+    opacity: 0.75;
   }
   .st-master-control {
     display: flex;
