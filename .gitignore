@@ -106,3 +106,4 @@ dist
 .idea/
 .vscode/settings.json
 bb-component-SuperTable.code-workspace
+bun.lockb

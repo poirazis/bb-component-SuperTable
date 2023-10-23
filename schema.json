@@ -3,7 +3,7 @@
   "metadata": {},
   "schema": {
     "name": "bb-component-SuperTable",
-    "friendlyName": "⚡️ Super Table",
+    "friendlyName": "Super Table",
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "requiredAncestors": ["dataprovider"],
@@ -27,7 +27,7 @@
       {
         "type": "columns",
         "key": "columnList",
-        "label": "Classic Columns",
+        "label": "Columns",
         "nested": "true"
       },
       {
@@ -49,37 +49,6 @@
         "dependsOn": "autoRefresh"
       },
       {
-        "section": true,
-        "name": "Custom Sizing Settings",
-        "dependsOn": { "setting": "size", "value": "custom" },
-        "settings": [
-          {
-            "type": "number",
-            "key": "rowHeight",
-            "label": "Row Height",
-            "min": 0,
-            "max": 400,
-            "defaultValue": 55
-          },
-          {
-            "type": "number",
-            "key": "cellPadding",
-            "label": "Cell Padding L/R",
-            "min": 0,
-            "max": 32,
-            "defaultValue": 16
-          },
-          {
-            "type": "number",
-            "key": "rowFontSize",
-            "label": "Row Font Size",
-            "min": 6,
-            "defaultValue": 14
-          }
-        ]
-      },
-
-      {
         "section" : true,
         "name": "Appearance",
         "settings": [ 
@@ -89,6 +58,7 @@
             "label": "Theme",
             "options": [
               { "label": "Budibase", "value": "budibase" },
+              { "label": "Over Background", "value": "overbg" },
               { "label": "Polarized Night", "value": "polarized" },
               { "label": "Custom", "value": "custom" }
             ],
@@ -120,36 +90,28 @@
             "key": "columnSizing",
             "label": "Column Sizing",
             "options" : [ 
-              { "label" : "Responsive", "value": "flex" }, 
+              { "label" : "Flexible", "value": "flexible" }, 
               { "label" : "Fixed", "value": "fixed"} 
              ],
-            "defaultValue": "flex"
+            "defaultValue": "flexible"
           },
           {
-            "type": "select",
-            "key": "columnMaxWidth",
-            "label": "Max Width",
-            "dependsOn": { "setting" : "columnSizing", "value" : "flex" },
-            "options" : [ 
-              { "label" : "No Limit", "value" : "none"},
-              { "label" : "Small", "value": "4rem" }, 
-              { "label" : "Normal", "value": "8rem" }, 
-              { "label" : "Large", "value": "16rem"}, 
-              { "label" : "Extra Large", "value": "32rem"} 
-             ],
-            "defaultValue": "16rem"
+            "type" : "text",
+            "key" : "columnMinWidth",
+            "label" : "Min Width",
+            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"}
           },
           {
-            "type": "select",
-            "key": "columnWidth",
-            "label": "Column Width",
-            "dependsOn": { "setting" : "columnSizing", "value" : "fixed" },
-            "options" : [ 
-              { "label" : "Small", "value": "4rem" }, 
-              { "label" : "Normal", "value": "8rem" }, 
-              { "label" : "Large", "value": "12rem"} 
-             ],
-            "defaultValue": "8rem"
+            "type" : "text",
+            "key" : "columnMaxWidth",
+            "label" : "Max Width",
+            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"}
+          },
+          {
+            "type" : "text",
+            "key" : "columnFixedWidth",
+            "label" : "Width",
+            "dependsOn" : { "setting" : "columnSizing", "value" : "fixed"}
           },
           {
             "type": "select",
@@ -178,6 +140,36 @@
             "key": "customize",
             "label": "Customize",
             "defaultValue": false
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Custom Sizing Settings",
+        "dependsOn": { "setting": "size", "value": "custom" },
+        "settings": [
+          {
+            "type": "number",
+            "key": "rowHeight",
+            "label": "Row Height",
+            "min": 0,
+            "max": 400,
+            "defaultValue": 55
+          },
+          {
+            "type": "number",
+            "key": "cellPadding",
+            "label": "Cell Padding L/R",
+            "min": 0,
+            "max": 32,
+            "defaultValue": 16
+          },
+          {
+            "type": "number",
+            "key": "rowFontSize",
+            "label": "Row Font Size",
+            "min": 6,
+            "defaultValue": 14
           }
         ]
       },

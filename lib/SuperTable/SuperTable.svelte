@@ -1,6 +1,7 @@
 <script>
   import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
+  import fsm from "svelte-fsm";
   import { dataFilters } from "@budibase/shared-core/";
   import {
     createSuperTableDataStore,
@@ -10,9 +11,6 @@
 
   import SuperTableVerticalScroller from "./controls/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
-
-  import fsm from "svelte-fsm";
-
   import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js";
 
   const { getAction, ActionTypes } = getContext("sdk");
@@ -45,9 +43,27 @@
 
   $: $tableOptionStore = tableOptions
 
-  const tableState = fsm("Loading", {
+  const tableState = fsm("Idle", {
     "*" : {
-      refresh() { return "Loading" }
+      refresh() { return "Loading" },
+      applyFilter( filterObj ) {
+        console.log(filterObj)
+        tableFilterStore?.setFilter(filterObj) 
+      },
+      setFilter( filterObj ) { 
+        this.applyFilter.debounce( 750, filterObj)
+      },
+      clearFilter() { return "Idle" },
+      setSorting() { return "Sorted" },
+      registerColumn() {},
+      unregisterColumn() {},
+      exportData() {},
+      deleteRow() {},
+      addRow() {},
+      selectRow() {},
+      unselectRow() {},
+      editCell() {},
+      setState( state ) { return state } 
     },
     Idle: { 
       filtering: "Loading",
@@ -174,8 +190,7 @@
 
   setContext("tableState", tableState);
 
-  $: console.log("T A B L E ", $tableState)
-
+  $: console.log("Super Table State :", $tableState)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -202,7 +217,7 @@
 >
   <div class="st-master-control" >
     {#if tableOptions.rowSelection}
-      <SuperTableRowSelect {tableOptions} on:selectionChange={handleRowSelect} />
+      <SuperTableRowSelect {tableState} {tableOptions} />
     {/if}
   </div>
   
@@ -221,7 +236,7 @@
       />
     {/each}
 
-    {#if !(tableOptions.superColumnsPos == "first")} <slot /> {/if}
+    {#if tableOptions.superColumnsPos != "first"} <slot /> {/if}
 
   </div>
 
@@ -257,15 +272,11 @@
     align-items: stretch;
     justify-content: stretch;
     overflow-x: auto;
-    background-color: var(--spectrum-global-color-gray-50);
+    background-color: transparent;
   }
 
   .st-master-scroll {
     background-color: transparent;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    right: 4px;
   }
   
 </style>

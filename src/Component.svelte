@@ -22,11 +22,12 @@
   export let autoRefreshRate = 60
   export let theme = "budibase"
 
-  export let submitOn
-
-  export let columnWidth
-  export let columnMaxWidth
   export let columnSizing
+  export let columnMinWidth
+  export let columnMaxWidth
+  export let columnFixedWidth
+
+  export let submitOn
 
   export let dividers, dividersColor;
   export let headerFontSize, headerColor, headerBgColor;
@@ -98,8 +99,9 @@
     canInsert: canInsert,
     canResize: canResize,
     columnSizing: columnSizing,
-    columnWidth: columnWidth,
     columnMaxWidth: columnMaxWidth,
+    columnMinWidth: columnMinWidth,
+    columnFixedWidth: columnFixedWidth,
     filteringMode: filteringMode,
     debounce: debounce,
     autoRefresh: !$builderStore.inBuilder && autoRefresh,
