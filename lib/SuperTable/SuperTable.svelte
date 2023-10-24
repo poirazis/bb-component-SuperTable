@@ -15,9 +15,10 @@
 
   const { getAction, ActionTypes } = getContext("sdk");
 
-  export let tableOptions;
-  export let tableTheme
-  export let dataProvider;
+  export let tableOptions = {}
+  export let tableColumns = []
+  export let tableTheme = {}
+  export let dataProvider = {};
   export let inBuilder = false
 
   let setSorting,
@@ -226,13 +227,13 @@
 
     {#if tableOptions.superColumnsPos == "first"} <slot /> {/if}
 
-    {#each tableOptions.columns as column, idx }
+    {#each tableColumns as columnOptions, idx }
       <SuperTableColumn
         on:saveSettings
         bind:columnState={ columnStates[idx] }
         {tableState}
         {tableOptions}
-        columnOptions={column}
+        {columnOptions}
       />
     {/each}
 

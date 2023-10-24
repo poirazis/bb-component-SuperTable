@@ -26,11 +26,11 @@
   export let columnMinWidth
   export let columnMaxWidth
   export let columnFixedWidth
+  export let headerFontSize, headerColor, headerBgColor, headerAlign;
 
   export let submitOn
 
   export let dividers, dividersColor;
-  export let headerFontSize, headerColor, headerBgColor;
 
   export let rowVerticalAlign,
     rowHorizontalAlign,
@@ -52,7 +52,23 @@
     if ( dataProvider?.schema ) 
       allColumns = Object.keys(dataProvider.schema)
         .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
-        .map( v => { return { name: v, displayName: v } } )
+        .map( v => { return { 
+          name: v, 
+          displayName: v,
+          hasChildren: false,
+          schema: dataProvider.schema[v],
+          hasChildren: false,
+          sizing: columnSizing,
+          fixedWidth: columnFixedWidth,
+          maxWidth: columnMaxWidth,
+          minWidth: columnMinWidth,
+          showFooter: showFooter,
+          showHeader: showHeader,
+          canEdit: canEdit,
+          canFilter: canFilter,
+          padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
+          headerAlign: "flex-start"
+        } } )
 
     return allColumns
   }
@@ -73,7 +89,7 @@
     // Find Matching Columns
     for ( const column of selectedColumns ) {
       if ( schemaColumns.includes ( column.name ) ) {
-        newColumns.push( column )
+        newColumns.push(makeSuperColumn (schema,column) )
       }
     }
 
@@ -83,13 +99,32 @@
 
     return newColumns;
   }
+
+  const makeSuperColumn = (schema, bbcolumn ) => {
+    let superColumn = {
+      ...bbcolumn,
+      hasChildren: false,
+      schema: schema[bbcolumn.name] ?? {},
+      sizing: bbcolumn.width ? "fixed" : columnSizing,
+      fixedWidth: bbcolumn.width ? bbcolumn.width : columnFixedWidth,
+      maxWidth: columnMaxWidth,
+      minWidth: columnMinWidth,
+      showFooter: showFooter,
+      showHeader: showHeader,
+      canEdit: canEdit,
+      canFilter: canFilter,
+      padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
+      headerAlign: bbcolumn.align ? bbcolumn.align : "flex-start"
+    }
+    return superColumn
+  }
   
   $: tableTheme = themeMap[theme]
+  $: tableColumns = getColumns(dataProvider.schema, columnList)
 
   $: tableOptions = {
     componentID: $component.id,
     hasChildren: $component.children,
-    columns: getColumns(dataProvider.schema, columnList),
     idColumn: idColumn,
     superColumnsPos: superColumnsPos,
     canFilter: canFilter,
@@ -117,15 +152,28 @@
     showHeader: showHeader,
     onRowClick: onRowClick,
     onDataChange: onDataChange,
-    onRowSelect: onRowSelect
+    onRowSelect: onRowSelect,
+    theme: {},
+    defaultColumnOptions: {
+      header : {
+        color : headerColor,
+        bgColor : headerBgColor,
+        align : headerAlign
+      },
+      row : { },
+      cell : { },
+      footer : { }
+    },
+    superOptions: {},
+    events:{}
   };
-
 </script>
 
 <div use:styleable={$component.styles}>
   <SuperTable 
     on:saveSettings={saveSettings}
     {tableOptions} 
+    {tableColumns}
     {tableTheme}
     {dataProvider}
     inBuilder = { $builderStore.inBuilder }
