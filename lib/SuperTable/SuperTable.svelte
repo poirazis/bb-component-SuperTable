@@ -65,11 +65,24 @@
       unselectRow() {},
       editCell() {},
       rowClicked( context ) { 
-        if (!tableOptions.rowSelection) {
-          $tableSelectionStore = {};
-          $tableSelectionStore[context.rowID] = true;
-        }
+        // Invoke attached Events
         tableOptions.onRowClick?.( context );
+
+        if (tableOptions.rowSelectMode == "single") {
+          if ( $tableSelectionStore[context.rowID] ) {
+            $tableSelectionStore = {}
+          } else { 
+            $tableSelectionStore = {}
+            $tableSelectionStore[context.rowID] = true;
+          }
+        } else if (tableOptions.rowSelectMode == "multi") {
+          if ( $tableSelectionStore[context.rowID] ) {
+            delete $tableSelectionStore[context.rowID] 
+            $tableSelectionStore = $tableSelectionStore
+          } else {
+            $tableSelectionStore[context.rowID] = true;
+          }
+        }
        },
       setState( state ) { return state } 
     },
@@ -224,7 +237,7 @@
     : "none"}
 >
   <div class="st-master-control" >
-    {#if tableOptions.rowSelection}
+    {#if tableOptions.rowSelectMode == "multi"}
       <SuperTableRowSelect {tableState} {tableOptions} />
     {/if}
   </div>

@@ -230,14 +230,18 @@
             "barTitle": "Sortable"
           },
           {
-            "type": "boolean",
-            "key": "rowSelection",
-            "label": "Row Selection",
-            "defaultValue": false,
+            "type": "select",
+            "key": "rowSelectMode",
+            "label" : "Row Selection",
             "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "SelectBox",
-            "barTitle": "Sortable"
+            "barStyle": "select",
+            "barTitle": "Row Selection",
+            "options" : [
+              { "label": "Off", "value" : "off" },
+              { "label": "Single", "value" : "single" },
+              { "label": "Multiple", "value" : "multi" }
+            ],
+            "defaultValue": "single"
           },
           {
             "type": "boolean",
