@@ -51,6 +51,7 @@
       {
         "section" : true,
         "name": "Appearance",
+        "collapsed" : true,
         "settings": [ 
           {
             "type": "select",
@@ -176,6 +177,7 @@
       {
         "section" : true,
         "name": "Capabilities",
+        "collapsed" : true,
         "settings": [
           {
             "type": "boolean",
@@ -394,10 +396,22 @@
       },
       {
         "section": true,
-        "name": "On Cell Click",
+        "name": "Events",
+        "collapsed" : true,
         "settings": [
           {
-            "label": "On Click",
+            "type": "event",
+            "label": "On Row Click",
+            "key" : "onRowClick",
+            "context": [
+              {
+                "label": "Row ID",
+                "key": "rowID"
+              }
+            ]
+          },
+          {
+            "label": "On Cell Click",
             "labelHidden": false,
             "type": "select",
             "key": "clickBehaviour",

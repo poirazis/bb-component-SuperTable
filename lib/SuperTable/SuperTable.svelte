@@ -44,7 +44,7 @@
 
   $: $tableOptionStore = tableOptions
 
-  const tableState = fsm("Idle", {
+  const tableState = fsm("Loading", {
     "*" : {
       refresh() { return "Loading" },
       applyFilter( filterObj ) {
@@ -64,6 +64,13 @@
       selectRow() {},
       unselectRow() {},
       editCell() {},
+      rowClicked( context ) { 
+        if (!tableOptions.rowSelection) {
+          $tableSelectionStore = {};
+          $tableSelectionStore[context.rowID] = true;
+        }
+        tableOptions.onRowClick?.( context );
+       },
       setState( state ) { return state } 
     },
     Idle: { 
