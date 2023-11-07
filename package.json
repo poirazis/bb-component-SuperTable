@@ -1,7 +1,7 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "2.0.0-alpha",
-  "description": "A Fully Customizable Budibase Table Component with Superpowers !",
+  "version": "2.0.1-alpha",
+  "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
   "svelte": "index.js",
