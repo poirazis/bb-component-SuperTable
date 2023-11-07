@@ -9,7 +9,6 @@
   export let dataProvider;
   export let idColumn;
   export let visibleRowCount;
-  export let rowSelection;
   export let showFooter;
   export let showHeader;
   export let size;
@@ -21,6 +20,8 @@
   export let autoRefresh = false
   export let autoRefreshRate = 60
   export let theme = "budibase"
+
+  export let rowSelectMode = "off"
 
   export let columnSizing
   export let columnMinWidth
@@ -143,7 +144,7 @@
     autoRefreshRate: autoRefreshRate,
     submitOn: submitOn,
     visibleRowCount: visibleRowCount,
-    rowSelection: rowSelection,
+    rowSelectMode: rowSelectMode,
     dividers: dividers,
     dividersColor: dividersColor,
     cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
