@@ -44,7 +44,7 @@
 
   $: $tableOptionStore = tableOptions
 
-  const tableState = fsm("Loading", {
+  const tableState = fsm("Idle", {
     "*" : {
       refresh() { return "Loading" },
       applyFilter( filterObj ) {
@@ -55,7 +55,9 @@
         this.applyFilter.debounce( 750, filterObj)
       },
       clearFilter() { return "Idle" },
-      setSorting() { return "Sorted" },
+      sortBy( column, direction ) {  
+        setDataProviderSorting( column , direction )
+      },
       registerColumn() {},
       unregisterColumn() {},
       exportData() {},
@@ -67,20 +69,21 @@
       rowClicked( context ) { 
         // Invoke attached Events
         tableOptions.onRowClick?.( context );
-
-        if (tableOptions.rowSelectMode == "single") {
-          if ( $tableSelectionStore[context.rowID] ) {
-            $tableSelectionStore = {}
-          } else { 
-            $tableSelectionStore = {}
-            $tableSelectionStore[context.rowID] = true;
-          }
-        } else if (tableOptions.rowSelectMode == "multi") {
-          if ( $tableSelectionStore[context.rowID] ) {
-            delete $tableSelectionStore[context.rowID] 
-            $tableSelectionStore = $tableSelectionStore
-          } else {
-            $tableSelectionStore[context.rowID] = true;
+        if ( !tableOptions.canEdit ) {
+         if (tableOptions.rowSelectMode == "single") {
+            if ( $tableSelectionStore[context.rowID] ) {
+              $tableSelectionStore = {}
+            } else { 
+              $tableSelectionStore = {}
+              $tableSelectionStore[context.rowID] = true;
+            }
+          } else if (tableOptions.rowSelectMode == "multi") {
+           if ( $tableSelectionStore[context.rowID] ) {
+             delete $tableSelectionStore[context.rowID] 
+              $tableSelectionStore = $tableSelectionStore
+            } else {
+             $tableSelectionStore[context.rowID] = true;
+            }
           }
         }
        },
@@ -135,10 +138,6 @@
   $: if ( timer && !tableOptions.autoRefresh ) clearInterval(timer)
 
   $: setDataProviderFiltering($tableFilterStore?.filters);
-  $: setDataProviderSorting(
-    $tableDataStore?.sortColumn,
-    $tableDataStore?.sortDirection
-  );
   $: handleDataChange($tableDataChangesStore);
   $: handleRowClick($tableStateStore.rowClicked);
 
@@ -211,7 +210,6 @@
 
   setContext("tableState", tableState);
 
-  $: console.log("Super Table State :", $tableState)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -237,9 +235,7 @@
     : "none"}
 >
   <div class="st-master-control" >
-    {#if tableOptions.rowSelectMode == "multi"}
-      <SuperTableRowSelect {tableState} {tableOptions} />
-    {/if}
+    <SuperTableRowSelect {tableState} {tableOptions} />
   </div>
   
   

@@ -1,5 +1,6 @@
 <script>
   import { getContext } from "svelte";
+  import { dataFilters } from '@budibase/shared-core';
   import { SuperTable } from "../lib/SuperTable";
   import { sizingMap, themeMap } from "../lib/SuperTable/themes/superTableThemes";
 
@@ -48,6 +49,17 @@
   export let onDataChange;
   export let onRowClick;
 
+  const defaultOperatorMap = {
+		 "string" : "fuzzy",
+		 "formula" : "fuzzy",
+		 "array" : "contains",
+		 "options" : "equal",
+		 "datetime" : "rangeLow",
+     "boolean" : "equal",
+     "number" : "equal",
+     "bigint" : "equal",
+	}
+
   function getAllColumns( includeAuto ) {
     let allColumns = []
     if ( dataProvider?.schema ) 
@@ -67,6 +79,8 @@
           showHeader: showHeader,
           canEdit: canEdit,
           canFilter: canFilter,
+          filteringOperators: dataFilters.getValidOperatorsForType( { type: dataProvider?.schema[v].type } ),
+          defaultFilteringOperator: defaultOperatorMap[dataProvider?.schema[v].type],
           padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
           headerAlign: "flex-start"
         } } )
@@ -114,6 +128,8 @@
       showHeader: showHeader,
       canEdit: canEdit,
       canFilter: canFilter,
+      filteringOperators: dataFilters.getValidOperatorsForType( { type: schema[bbcolumn.name].type } ),
+      defaultFilteringOperator: defaultOperatorMap[schema[bbcolumn.name].type],
       padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
       headerAlign: bbcolumn.align ? bbcolumn.align : "flex-start"
     }

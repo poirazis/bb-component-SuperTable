@@ -48,44 +48,53 @@
 
 </script>
 
-<div style:width={"2.5rem"} class="spectrum-Table" on:mouseleave={() => ($tableHoverStore = null)} >
-  {#if tableOptions.showHeader}
-      <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
-        <Checkbox
-          on:change={toggleSelectAll}
-          indeterminate={ selected_rows.length > 0 && (selected_rows.length !== $tableDataStore.data.length) }
-          value = { selected_rows.length > 0 && (selected_rows.length == $tableDataStore.data.length) }
-        />
-      </div>
-  {/if}
-
-  <div 
-    bind:this={bodyContainer} 
-    class="spectrum-Table-body"
-    on:scroll={handleScroll} 
-    on:mouseenter={ () => mouseover = true } 
-    on:mouseleave={ () => mouseover = false } 
-  >
-    {#each $tableDataStore.data as row, index }
-      <div 
-        class="spectrum-Table-row" 
-        on:mouseenter={ () => $tableHoverStore = index }
-        class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
-        class:is-hovered={ $tableHoverStore === index }
-        style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
-        >
-          <Checkbox 
-            value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
-            on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
+{#if tableOptions.rowSelectMode != "off"}
+  <div style:width={"2.5rem"} class="spectrum-Table" on:mouseleave={() => ($tableHoverStore = null)} >
+    {#if tableOptions.showHeader}
+        <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
+          <Checkbox
+            on:change={toggleSelectAll}
+            indeterminate={ selected_rows.length > 0 && (selected_rows.length !== $tableDataStore.data.length) }
+            value = { selected_rows.length > 0 && (selected_rows.length == $tableDataStore.data.length) }
           />
         </div>
-    {/each}
-  </div>
+    {/if}
 
-  {#if tableOptions.showFooter}
-    <div class="spectrum-Table-footer"></div>
-  {/if}
-</div>
+    <div 
+      bind:this={bodyContainer} 
+      class="spectrum-Table-body"
+      on:scroll={handleScroll} 
+      on:mouseenter={ () => mouseover = true } 
+      on:mouseleave={ () => mouseover = false } 
+    >
+      {#each $tableDataStore.data as row, index }
+        <div 
+          class="spectrum-Table-row" 
+          on:mouseenter={ () => $tableHoverStore = index }
+          class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
+          class:is-hovered={ $tableHoverStore === index }
+          style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
+          >
+            {#if tableOptions.rowSelectMode == "multi"}
+              <Checkbox 
+                value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
+                on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
+              />
+            {:else}
+              <div class="spectrum-Radio spectrum-Radio--sizeS">
+                <input type="radio" name="pets" class="spectrum-Radio-input" checked={ $tableSelectionStore[row[$tableDataStore.idColumn]] } >
+                <span class="spectrum-Radio-button spectrum-Radio-button--sizeS"></span>
+              </div>
+            {/if}
+        </div>
+      {/each}
+    </div>
+
+    {#if tableOptions.showFooter}
+      <div class="spectrum-Table-footer"></div>
+    {/if}
+  </div>
+{/if}
 
 <style>
   
