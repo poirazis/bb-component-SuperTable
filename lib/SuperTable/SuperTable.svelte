@@ -22,10 +22,10 @@
   export let inBuilder = false
 
   let setSorting,
-    setFiltering,
-    unsetFiltering,
     sortedColumn,
     sortedDirection,
+    setFiltering,
+    unsetFiltering,
     filtered = false;
 
   let timer
@@ -42,9 +42,6 @@
   const tableHoverStore = new writable(0);
   const tableOptionStore = new writable({});
   
-
-  $: $tableOptionStore = tableOptions
-
   const tableState = fsm("Idle", {
     "*" : {
       refresh() { return "Loading" },
@@ -57,9 +54,11 @@
       },
       clearFilter() { return "Idle" },
       sortBy( column, direction ) {  
-        setDataProviderSorting( column , direction );
-        tableOptions.sortedColumn = column;
-        tableOptions.sortedDirection = direction
+        if (column != sortedColumn || direction != sortedDirection) {
+          setSorting?.({ column: column, order: direction });
+          sortedColumn = column;
+          sortedDirection = direction
+        }
       },
       registerColumn() {},
       unregisterColumn() {},
@@ -145,7 +144,6 @@
 
   $: setDataProviderFiltering($tableFilterStore?.filters);
   $: handleDataChange($tableDataChangesStore);
-  $: handleRowClick($tableStateStore.rowClicked);
 
   $: $tableDataStore._parentID = tableOptions.componentID;
   $: $tableDataStore.idColumn = tableOptions.idColumn;
@@ -163,14 +161,6 @@
       console.log("Clearing Filters")
       unsetFiltering?.(tableOptions.componentID);
       filtered = false;
-    }
-  }
-
-  function setDataProviderSorting(column, direction) {
-    if (column != sortedColumn || direction != sortedDirection) {
-      setSorting?.({ column: column, order: direction });
-      sortedColumn = column;
-      sortedDirection = direction;
     }
   }
 
@@ -215,7 +205,6 @@
   setContext("tableHoverStore", tableHoverStore);
 
   setContext("tableState", tableState);
-
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -230,7 +219,7 @@
   style:--super-table-color={tableTheme.tableColor}
   style:--super-table-bg-color={tableTheme.tableBgColor}
   style:--super-table-footer-color={tableTheme.footerColor}
-  style:--super-table-footer-bg-color={tableTheme.footerBgColor}
+  style:--super-table-footer-bg-color={tableTheme.footerBgCoßlor}
   style:--super-table-relItem-color={tableTheme.relationshipItemColor}
   style:--super-table-relItem-bg-color={tableTheme.relationshipItemBgColor}
   style:--super-table-column-width={tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : null }
@@ -254,7 +243,7 @@
         bind:columnState={ columnStates[idx] }
         {tableState}
         {tableOptions}
-        {columnOptions}
+        columnOptions={{...columnOptions, isSorted: sortedColumn == columnOptions.name ? sortedDirection : false }}
       />
     {/each}
 
