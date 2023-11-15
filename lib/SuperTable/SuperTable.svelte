@@ -22,8 +22,6 @@
   export let inBuilder = false
 
   let setSorting,
-    sortedColumn,
-    sortedDirection,
     setFiltering,
     unsetFiltering,
     filtered = false;
@@ -54,10 +52,10 @@
       },
       clearFilter() { return "Idle" },
       sortBy( column, direction ) {  
-        if (column != sortedColumn || direction != sortedDirection) {
+        if (column != $tableStateStore.sortedColumn || direction != $tableStateStore.sortedDirection) {
           setSorting?.({ column: column, order: direction });
-          sortedColumn = column;
-          sortedDirection = direction
+          $tableStateStore.sortedColumn = column
+          $tableStateStore.sortedDirection = direction
         }
       },
       registerColumn() {},
@@ -205,6 +203,9 @@
   setContext("tableHoverStore", tableHoverStore);
 
   setContext("tableState", tableState);
+
+
+  $: console.log(tableOptions)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -243,7 +244,7 @@
         bind:columnState={ columnStates[idx] }
         {tableState}
         {tableOptions}
-        columnOptions={{...columnOptions, isSorted: sortedColumn == columnOptions.name ? sortedDirection : false }}
+        {columnOptions}
       />
     {/each}
 
