@@ -50,14 +50,46 @@
   export let onRowClick;
 
   const defaultOperatorMap = {
-		 "string" : "fuzzy",
-		 "formula" : "fuzzy",
-		 "array" : "contains",
-		 "options" : "equal",
-		 "datetime" : "rangeLow",
-     "boolean" : "equal",
-     "number" : "equal",
-     "bigint" : "equal",
+    "string" : "fuzzy",
+    "formula" : "fuzzy",
+    "array" : "contains",
+    "options" : "equal",
+    "datetime" : "rangeLow",
+    "boolean" : "equal",
+    "number" : "equal",
+    "bigint" : "equal",
+	}
+
+  const supportFilteringMap = {
+    "string" : true,
+    "array" : true,
+    "options" : true,
+    "datetime" : true,
+    "boolean" : true,
+    "number" : true,
+    "bigint" : true,
+	}
+
+  const supportSortingMap = {
+    "string" : true,
+    "formula" : true,
+    "array" : true,
+    "options" : true,
+    "datetime" : true,
+    "boolean" : true,
+    "number" : true,
+    "bigint" : true,
+	}
+
+  const supportEditingMap = {
+		 "string" : true,
+		 "array" : true,
+     "link" : true,
+		 "options" : true,
+		 "datetime" : true,
+     "boolean" : true,
+     "number" : true,
+     "bigint" : true,
 	}
 
   function getAllColumns( includeAuto ) {
@@ -77,8 +109,9 @@
           minWidth: columnMinWidth,
           showFooter: showFooter,
           showHeader: showHeader,
-          canEdit: canEdit,
-          canFilter: canFilter,
+          canEdit: canEdit && supportEditingMap[dataProvider?.schema[v].type],
+          canFilter: canFilter && supportFilteringMap[dataProvider?.schema[v].type],
+          canSort: canSort && supportSortingMap[dataProvider?.schema[v].type],
           filteringOperators: dataFilters.getValidOperatorsForType( { type: dataProvider?.schema[v].type } ),
           defaultFilteringOperator: defaultOperatorMap[dataProvider?.schema[v].type],
           padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
@@ -126,8 +159,9 @@
       minWidth: columnMinWidth,
       showFooter: showFooter,
       showHeader: showHeader,
-      canEdit: canEdit,
-      canFilter: canFilter,
+      canEdit: canEdit && supportEditingMap[dataProvider?.schema[bbcolumn.name].type],
+      canFilter: canFilter && supportFilteringMap[dataProvider?.schema[bbcolumn.name].type],
+      canSort: canSort && supportSortingMap[dataProvider?.schema[bbcolumn.name].type],
       filteringOperators: dataFilters.getValidOperatorsForType( { type: schema[bbcolumn.name].type } ),
       defaultFilteringOperator: defaultOperatorMap[schema[bbcolumn.name].type],
       padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,

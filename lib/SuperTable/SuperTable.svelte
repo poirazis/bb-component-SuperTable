@@ -41,6 +41,7 @@
   const tableScrollPosition = new writable(0);
   const tableHoverStore = new writable(0);
   const tableOptionStore = new writable({});
+  
 
   $: $tableOptionStore = tableOptions
 
@@ -52,20 +53,25 @@
         tableFilterStore?.setFilter(filterObj) 
       },
       setFilter( filterObj ) { 
-        this.applyFilter.debounce( 750, filterObj)
+        this.applyFilter.debounce( 50, filterObj)
       },
       clearFilter() { return "Idle" },
       sortBy( column, direction ) {  
-        setDataProviderSorting( column , direction )
+        setDataProviderSorting( column , direction );
+        tableOptions.sortedColumn = column;
+        tableOptions.sortedDirection = direction
       },
       registerColumn() {},
       unregisterColumn() {},
       exportData() {},
       deleteRow() {},
       addRow() {},
-      selectRow() {},
+      toggleSelectRow( rowID ) { 
+         
+      },
       unselectRow() {},
       editCell() {},
+      cellClicked( columnID, rowID ) { },
       rowClicked( context ) { 
         // Invoke attached Events
         tableOptions.onRowClick?.( context );
@@ -245,7 +251,6 @@
 
     {#each tableColumns as columnOptions, idx }
       <SuperTableColumn
-        on:saveSettings
         bind:columnState={ columnStates[idx] }
         {tableState}
         {tableOptions}

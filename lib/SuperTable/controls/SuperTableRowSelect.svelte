@@ -24,15 +24,19 @@
   beforeUpdate( () => { if ( bodyContainer ) bodyContainer.scrollTop = $tableScrollPosition } )
 
   function toggleSelectAll ( ) {
-    // if all are slected, uselect all else select all
-    if (selected_rows.length == $tableDataStore.data.length) {
-      $tableSelectionStore = {}
-    } else {
-      $tableDataStore.data.forEach(element => {
-        $tableSelectionStore[element[$tableDataStore.idColumn]] = true
-      });
-    }
 
+    if ( tableOptions.rowSelectMode == "multi" ) {
+      // if all are slected, uselect all else select all
+      if (selected_rows.length == $tableDataStore.data.length) {
+        $tableSelectionStore = {}
+      } else {
+        $tableDataStore.data.forEach(element => {
+          $tableSelectionStore[element[$tableDataStore.idColumn]] = true
+        });
+      }
+    } else {
+      $tableSelectionStore = {}
+    }
     dispatch ("selectionChange", { "rowID": -1} ) 
   }
 
@@ -54,6 +58,7 @@
         <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
           <Checkbox
             on:change={toggleSelectAll}
+            disabled = { tableOptions.rowSelectMode != "multi" }
             indeterminate={ selected_rows.length > 0 && (selected_rows.length !== $tableDataStore.data.length) }
             value = { selected_rows.length > 0 && (selected_rows.length == $tableDataStore.data.length) }
           />
@@ -75,17 +80,10 @@
           class:is-hovered={ $tableHoverStore === index }
           style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
           >
-            {#if tableOptions.rowSelectMode == "multi"}
-              <Checkbox 
-                value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
-                on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
-              />
-            {:else}
-              <div class="spectrum-Radio spectrum-Radio--sizeS">
-                <input type="radio" name="pets" class="spectrum-Radio-input" checked={ $tableSelectionStore[row[$tableDataStore.idColumn]] } >
-                <span class="spectrum-Radio-button spectrum-Radio-button--sizeS"></span>
-              </div>
-            {/if}
+            <Checkbox 
+              value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
+              on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
+            />
         </div>
       {/each}
     </div>
