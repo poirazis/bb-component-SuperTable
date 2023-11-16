@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "2.0.1-alpha",
+  "version": "2.0.2-alpha",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@crownframework/svelte-error-boundary": "^1.0.3",
-    "svelte": "^3.49.0",
+    "svelte": "^3.59.0",
     "svelte-fsm": "^1.2.0",
     "svelte-legos": "^0.2.1"
   },

@@ -24,15 +24,19 @@
   beforeUpdate( () => { if ( bodyContainer ) bodyContainer.scrollTop = $tableScrollPosition } )
 
   function toggleSelectAll ( ) {
-    // if all are slected, uselect all else select all
-    if (selected_rows.length == $tableDataStore.data.length) {
-      $tableSelectionStore = {}
-    } else {
-      $tableDataStore.data.forEach(element => {
-        $tableSelectionStore[element[$tableDataStore.idColumn]] = true
-      });
-    }
 
+    if ( tableOptions.rowSelectMode == "multi" ) {
+      // if all are slected, uselect all else select all
+      if (selected_rows.length == $tableDataStore.data.length) {
+        $tableSelectionStore = {}
+      } else {
+        $tableDataStore.data.forEach(element => {
+          $tableSelectionStore[element[$tableDataStore.idColumn]] = true
+        });
+      }
+    } else {
+      $tableSelectionStore = {}
+    }
     dispatch ("selectionChange", { "rowID": -1} ) 
   }
 
@@ -48,44 +52,47 @@
 
 </script>
 
-<div style:width={"2.5rem"} class="spectrum-Table" on:mouseleave={() => ($tableHoverStore = null)} >
-  {#if tableOptions.showHeader}
-      <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
-        <Checkbox
-          on:change={toggleSelectAll}
-          indeterminate={ selected_rows.length > 0 && (selected_rows.length !== $tableDataStore.data.length) }
-          value = { selected_rows.length > 0 && (selected_rows.length == $tableDataStore.data.length) }
-        />
-      </div>
-  {/if}
-
-  <div 
-    bind:this={bodyContainer} 
-    class="spectrum-Table-body"
-    on:scroll={handleScroll} 
-    on:mouseenter={ () => mouseover = true } 
-    on:mouseleave={ () => mouseover = false } 
-  >
-    {#each $tableDataStore.data as row, index }
-      <div 
-        class="spectrum-Table-row" 
-        on:mouseenter={ () => $tableHoverStore = index }
-        class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
-        class:is-hovered={ $tableHoverStore === index }
-        style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
-        >
-          <Checkbox 
-            value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
-            on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
+{#if tableOptions.rowSelectMode != "off"}
+  <div style:width={"2.5rem"} class="spectrum-Table" on:mouseleave={() => ($tableHoverStore = null)} >
+    {#if tableOptions.showHeader}
+        <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
+          <Checkbox
+            on:change={toggleSelectAll}
+            disabled = { tableOptions.rowSelectMode != "multi" }
+            indeterminate={ selected_rows.length > 0 && (selected_rows.length !== $tableDataStore.data.length) }
+            value = { selected_rows.length > 0 && (selected_rows.length == $tableDataStore.data.length) }
           />
         </div>
-    {/each}
-  </div>
+    {/if}
 
-  {#if tableOptions.showFooter}
-    <div class="spectrum-Table-footer"></div>
-  {/if}
-</div>
+    <div 
+      bind:this={bodyContainer} 
+      class="spectrum-Table-body"
+      on:scroll={handleScroll} 
+      on:mouseenter={ () => mouseover = true } 
+      on:mouseleave={ () => mouseover = false } 
+    >
+      {#each $tableDataStore.data as row, index }
+        <div 
+          class="spectrum-Table-row" 
+          on:mouseenter={ () => $tableHoverStore = index }
+          class:is-selected={ $tableSelectionStore[row[$tableDataStore.idColumn]] } 
+          class:is-hovered={ $tableHoverStore === index }
+          style:min-height={ ($tableStateStore.rowHeights[index] || $tableStateStore.minRowHeight) + "px"  }
+          >
+            <Checkbox 
+              value = {$tableSelectionStore[row[$tableDataStore.idColumn]]}
+              on:change={ (e) => handleSelection( row[$tableDataStore.idColumn] ) }
+            />
+        </div>
+      {/each}
+    </div>
+
+    {#if tableOptions.showFooter}
+      <div class="spectrum-Table-footer"></div>
+    {/if}
+  </div>
+{/if}
 
 <style>
   

@@ -24,8 +24,6 @@
   let setSorting,
     setFiltering,
     unsetFiltering,
-    sortedColumn,
-    sortedDirection,
     filtered = false;
 
   let timer
@@ -41,10 +39,8 @@
   const tableScrollPosition = new writable(0);
   const tableHoverStore = new writable(0);
   const tableOptionStore = new writable({});
-
-  $: $tableOptionStore = tableOptions
-
-  const tableState = fsm("Loading", {
+  
+  const tableState = fsm("Idle", {
     "*" : {
       refresh() { return "Loading" },
       applyFilter( filterObj ) {
@@ -52,35 +48,45 @@
         tableFilterStore?.setFilter(filterObj) 
       },
       setFilter( filterObj ) { 
-        this.applyFilter.debounce( 750, filterObj)
+        this.applyFilter.debounce( 50, filterObj)
       },
       clearFilter() { return "Idle" },
-      setSorting() { return "Sorted" },
+      sortBy( column, direction ) {  
+        if (column != $tableStateStore.sortedColumn || direction != $tableStateStore.sortedDirection) {
+          setSorting?.({ column: column, order: direction });
+          $tableStateStore.sortedColumn = column
+          $tableStateStore.sortedDirection = direction
+        }
+      },
       registerColumn() {},
       unregisterColumn() {},
       exportData() {},
       deleteRow() {},
       addRow() {},
-      selectRow() {},
+      toggleSelectRow( rowID ) { 
+         
+      },
       unselectRow() {},
       editCell() {},
+      cellClicked( columnID, rowID ) { },
       rowClicked( context ) { 
         // Invoke attached Events
         tableOptions.onRowClick?.( context );
-
-        if (tableOptions.rowSelectMode == "single") {
-          if ( $tableSelectionStore[context.rowID] ) {
-            $tableSelectionStore = {}
-          } else { 
-            $tableSelectionStore = {}
-            $tableSelectionStore[context.rowID] = true;
-          }
-        } else if (tableOptions.rowSelectMode == "multi") {
-          if ( $tableSelectionStore[context.rowID] ) {
-            delete $tableSelectionStore[context.rowID] 
-            $tableSelectionStore = $tableSelectionStore
-          } else {
-            $tableSelectionStore[context.rowID] = true;
+        if ( !tableOptions.canEdit ) {
+         if (tableOptions.rowSelectMode == "single") {
+            if ( $tableSelectionStore[context.rowID] ) {
+              $tableSelectionStore = {}
+            } else { 
+              $tableSelectionStore = {}
+              $tableSelectionStore[context.rowID] = true;
+            }
+          } else if (tableOptions.rowSelectMode == "multi") {
+           if ( $tableSelectionStore[context.rowID] ) {
+             delete $tableSelectionStore[context.rowID] 
+              $tableSelectionStore = $tableSelectionStore
+            } else {
+             $tableSelectionStore[context.rowID] = true;
+            }
           }
         }
        },
@@ -135,12 +141,7 @@
   $: if ( timer && !tableOptions.autoRefresh ) clearInterval(timer)
 
   $: setDataProviderFiltering($tableFilterStore?.filters);
-  $: setDataProviderSorting(
-    $tableDataStore?.sortColumn,
-    $tableDataStore?.sortDirection
-  );
   $: handleDataChange($tableDataChangesStore);
-  $: handleRowClick($tableStateStore.rowClicked);
 
   $: $tableDataStore._parentID = tableOptions.componentID;
   $: $tableDataStore.idColumn = tableOptions.idColumn;
@@ -158,14 +159,6 @@
       console.log("Clearing Filters")
       unsetFiltering?.(tableOptions.componentID);
       filtered = false;
-    }
-  }
-
-  function setDataProviderSorting(column, direction) {
-    if (column != sortedColumn || direction != sortedDirection) {
-      setSorting?.({ column: column, order: direction });
-      sortedColumn = column;
-      sortedDirection = direction;
     }
   }
 
@@ -208,10 +201,7 @@
   setContext("tableScrollPosition", tableScrollPosition);
   setContext("tableOptionStore", tableOptionStore);
   setContext("tableHoverStore", tableHoverStore);
-
   setContext("tableState", tableState);
-
-  $: console.log("Super Table State :", $tableState)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -226,7 +216,7 @@
   style:--super-table-color={tableTheme.tableColor}
   style:--super-table-bg-color={tableTheme.tableBgColor}
   style:--super-table-footer-color={tableTheme.footerColor}
-  style:--super-table-footer-bg-color={tableTheme.footerBgColor}
+  style:--super-table-footer-bg-color={tableTheme.footerBgCoßlor}
   style:--super-table-relItem-color={tableTheme.relationshipItemColor}
   style:--super-table-relItem-bg-color={tableTheme.relationshipItemBgColor}
   style:--super-table-column-width={tableOptions.columnSizing == "fixed" ? tableOptions.columnWidth : null }
@@ -237,9 +227,7 @@
     : "none"}
 >
   <div class="st-master-control" >
-    {#if tableOptions.rowSelectMode == "multi"}
-      <SuperTableRowSelect {tableState} {tableOptions} />
-    {/if}
+    <SuperTableRowSelect {tableState} {tableOptions} />
   </div>
   
   
@@ -249,7 +237,6 @@
 
     {#each tableColumns as columnOptions, idx }
       <SuperTableColumn
-        on:saveSettings
         bind:columnState={ columnStates[idx] }
         {tableState}
         {tableOptions}
