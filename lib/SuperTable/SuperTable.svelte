@@ -38,7 +38,7 @@
   const tableDataChangesStore = new writable([]);
   const tableScrollPosition = new writable(0);
   const tableHoverStore = new writable(0);
-  const tableOptionStore = new writable({});
+  const tableOptionStore = new writable(tableOptions);
   
   const tableState = fsm("Idle", {
     "*" : {
@@ -69,6 +69,9 @@
       unselectRow() {},
       editCell() {},
       cellClicked( columnID, rowID ) { },
+      rowDblClicked ( context ) { 
+        tableOptions.onRowDblClick?.( context )
+      },
       rowClicked( context ) { 
         // Invoke attached Events
         tableOptions.onRowClick?.( context );

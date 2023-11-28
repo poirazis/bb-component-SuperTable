@@ -47,7 +47,9 @@
   export let clickBehaviour
   export let onRowSelect;
   export let onDataChange;
+
   export let onRowClick;
+  export let onRowDblClick;
 
   const defaultOperatorMap = {
     "string" : "fuzzy",
@@ -202,6 +204,7 @@
     showFooter: showFooter,
     showHeader: showHeader,
     onRowClick: onRowClick,
+    onRowDblClick: onRowDblClick,
     onDataChange: onDataChange,
     onRowSelect: onRowSelect,
     theme: {},
@@ -218,17 +221,19 @@
     superOptions: {},
     events:{}
   };
+
+  $: console.log(idColumn)
 </script>
 
 <div use:styleable={$component.styles}>
-  <SuperTable 
-    on:saveSettings={saveSettings}
-    {tableOptions} 
-    {tableColumns}
-    {tableTheme}
-    {dataProvider}
-    inBuilder = { $builderStore.inBuilder }
-  >
-    <slot />
-  </SuperTable>
+    <SuperTable 
+      on:saveSettings={saveSettings}
+      {tableOptions} 
+      {tableColumns}
+      {tableTheme}
+      {dataProvider}
+      inBuilder = { $builderStore.inBuilder }
+    >
+      <slot />
+    </SuperTable>
 </div>
