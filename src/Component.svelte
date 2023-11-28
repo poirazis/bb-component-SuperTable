@@ -221,8 +221,6 @@
     superOptions: {},
     events:{}
   };
-
-  $: console.log(idColumn)
 </script>
 
 <div use:styleable={$component.styles}>
