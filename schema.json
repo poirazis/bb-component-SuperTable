@@ -22,11 +22,13 @@
         "key": "idColumn",
         "label": "ID Column",
         "defaultValue": "_id",
+        "resetsOn" : "dataProvider",
         "required": true
       },
       {
         "type": "columns",
         "key": "columnList",
+        "resetsOn" : "dataProvider",
         "label": "Columns",
         "nested": "true"
       },
@@ -106,7 +108,9 @@
             "type" : "text",
             "key" : "columnMaxWidth",
             "label" : "Max Width",
-            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"}
+            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
+            "defaultValue" : "12rem",
+            "resetsOn" : "columnSizing"
           },
           {
             "type" : "text",
@@ -242,6 +246,13 @@
               { "label": "Multiple", "value" : "multi" }
             ],
             "defaultValue": "single"
+          },
+          {
+            "type": "boolean",
+            "key": "hideSelectionControl",
+            "label": "Hide Sel. Column",
+            "defaultValue": false,
+            "dependsOm" : { "setting" : "canEdit", "value" : false }
           },
           {
             "type": "boolean",
@@ -415,102 +426,44 @@
             ]
           },
           {
-            "label": "On Cell Click",
-            "labelHidden": false,
-            "type": "select",
-            "key": "clickBehaviour",
-            "sendEvents": true,
-            "defaultValue": "actions",
-            "options": [
+            "type": "event",
+            "label": "On Row Dbl Click",
+            "key" : "onRowDblClick",
+            "context": [
               {
-                "label": "Run actions",
-                "value": "actions"
-              },
-              {
-                "label": "Edit Cell",
-                "value": "edit"
-              },
-              {
-                "label": "Highlight Row",
-                "value": "highlight"
-              },
-              {
-                "label": "Select Row",
-                "value": "select"
+                "label": "Row ID",
+                "key": "rowID"
               }
             ]
           },
           {
             "type": "event",
-            "key": "onClick",
-            "dependsOn": { "setting": "clickBehaviour", "value": "actions" },
+            "label": "On Row Select",
+            "key": "onSelectionChange",
             "context": [
               {
-                "label": "Triggered By",
+                "label": "RowID",
                 "key": "rowID"
               },
               {
-                "label": "Selected Rows",
-                "key": "selectedRows",
-                "type": "array"
+                "label": "Field",
+                "key": "field"
+              },
+              {
+                "label": "Original Value",
+                "key": "originalValue"
+              },
+              {
+                "label": "New Value",
+                "key": "newValue"
               }
             ]
           },
-          {
-            "label": "On Double Click",
-            "labelHidden": false,
-            "type": "select",
-            "key": "doubleClickBehaviour",
-            "sendEvents": true,
-            "defaultValue": "actions",
-            "options": [
-              {
-                "label": "Run actions",
-                "value": "actions"
-              },
-              {
-                "label": "Edit Cell",
-                "value": "edit"
-              },
-              {
-                "label": "Highlight Row",
-                "value": "highlight"
-              },
-              {
-                "label": "Select Row",
-                "value": "select"
-              }
-            ]
-          },
-          {
-            "type": "event",
-            "key": "onDoubleClick",
-            "dependsOn": {
-              "setting": "doubleClickBehaviour",
-              "value": "actions"
-            },
-            "context": [
-              {
-                "label": "Triggered By",
-                "key": "rowID"
-              },
-              {
-                "label": "Selected Rows",
-                "key": "selectedRows",
-                "type": "array"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "On Cell Change",
-        "dependsOn": "editable",
-        "settings": [
           {
             "type": "event",
             "key": "onDataChange",
+            "label" : "On Cell Edit",
+            "dependsOn": "canEdit",
             "context": [
               {
                 "label": "RowID",

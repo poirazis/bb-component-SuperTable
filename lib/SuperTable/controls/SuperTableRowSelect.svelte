@@ -42,17 +42,22 @@
 
   function handleSelection ( rowID ) {
     dispatch ("selectionChange", { "rowID": rowID} ) 
+
     if ( $tableSelectionStore[rowID] ) {
       delete $tableSelectionStore[rowID] 
       $tableSelectionStore = $tableSelectionStore
     }
-    else
+    else if ( tableOptions.rowSelectMode == "single") {
+      $tableSelectionStore = []
+      $tableSelectionStore[rowID] = true
+    }
+    else 
       $tableSelectionStore[rowID] = true
   }
 
 </script>
 
-{#if tableOptions.rowSelectMode != "off"}
+{#if tableOptions.rowSelectMode != "off" && tableOptions.canEdit }
   <div style:width={"2.5rem"} class="spectrum-Table" on:mouseleave={() => ($tableHoverStore = null)} >
     {#if tableOptions.showHeader}
         <div style:min-height={"2.5rem"} class="spectrum-Table-headCell">
