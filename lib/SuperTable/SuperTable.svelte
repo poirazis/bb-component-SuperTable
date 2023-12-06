@@ -11,7 +11,7 @@
 
   import SuperTableVerticalScroller from "./controls/SuperTableVerticalScroller.svelte";
   import SuperTableRowSelect from "./controls/SuperTableRowSelect.svelte";
-  import { SuperTableColumn } from "../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js";
+  import { SuperTableColumn } from "../../../bb-component-SuperTableColumn/lib/SuperTableColumn/index.js";
 
   const { getAction, ActionTypes } = getContext("sdk");
 
