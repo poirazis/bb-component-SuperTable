@@ -21,7 +21,6 @@
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
-        "defaultValue": "_id",
         "resetsOn" : "dataProvider",
         "required": true
       },
@@ -72,11 +71,9 @@
             "key": "size",
             "label": "Size",
             "options": [
-              { "label": "Extra Small", "value": "XS" },
               { "label": "Small", "value": "S" },
               { "label": "Medium", "value": "M" },
               { "label": "Large", "value": "L" },
-              { "label": "Extra Large", "value": "XL" },
               { "label": "Custom", "value": "custom" }
             ],
             "defaultValue": "M"

@@ -217,6 +217,7 @@
   style:--super-table-header-color={tableTheme.headerColor}
   style:--super-table-header-bg-color={tableTheme.headerBgColor}
   style:--super-table-color={tableTheme.tableColor}
+  style:--super-table-base-font-size={tableOptions.baseFontSize}
   style:--super-table-bg-color={tableTheme.tableBgColor}
   style:--super-table-footer-color={tableTheme.footerColor}
   style:--super-table-footer-bg-color={tableTheme.footerBgCoßlor}
@@ -243,7 +244,7 @@
         bind:columnState={ columnStates[idx] }
         {tableState}
         {tableOptions}
-        {columnOptions}
+        columnOptions = {{...columnOptions, canEdit: inBuilder ? false : columnOptions.canEdit}}
       />
     {/each}
 
