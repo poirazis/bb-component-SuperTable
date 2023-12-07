@@ -1,8 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import { dataFilters } from '@budibase/shared-core';
-  import { SuperTable } from "../lib/SuperTable";
-  import { sizingMap, themeMap } from "../lib/SuperTable/themes/superTableThemes";
+  import { SuperTable , sizingMap, themeMap } from "../bb_super_components_shared/src/lib"
 
   const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
@@ -182,7 +181,7 @@
     superColumnsPos: superColumnsPos,
     canFilter: canFilter,
     canSort: canSort,
-    canEdit: canEdit,
+    canEdit: canEdit && !$builderStore.inBuilder,
     canDelete: canDelete,
     canInsert: canInsert,
     canResize: canResize,
@@ -200,6 +199,7 @@
     dividers: dividers,
     dividersColor: dividersColor,
     cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
+    baseFontSize: size != "custom" ? sizingMap[size].rowFontSize : rowFontSize,
     rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
     showFooter: showFooter,
     showHeader: showHeader,
