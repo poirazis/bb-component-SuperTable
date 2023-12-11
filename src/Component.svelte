@@ -1,7 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import { dataFilters } from '@budibase/shared-core';
-  import { SuperTable , sizingMap, themeMap } from "../bb_super_components_shared/src/lib"
+  import { SuperTable , sizingMap, themeMap } from "../../bb_super_components_shared/src/lib"
 
   const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
