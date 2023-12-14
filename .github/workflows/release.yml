@@ -14,12 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          path: ${{ GITHUB_WORKSPACE }}/bb-component-SuperTable
+          path: ${{ github.workspace }}/bb-component-SuperTable
 
       - uses: actions/checkout@v3
         with: 
           repository: poirazis/bb_super_components_shared
-          path: ${{ GITHUB_WORKSPACE }}/bb_super_components_shared
+          path: ${{ github.workspace }}/bb_super_components_shared
           ref: develop
       - uses: actions/setup-node@v1
         with:
