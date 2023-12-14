@@ -86,6 +86,7 @@
 		 "string" : true,
 		 "array" : true,
      "link" : true,
+     "bb_reference" : true,
 		 "options" : true,
 		 "datetime" : true,
      "boolean" : true,

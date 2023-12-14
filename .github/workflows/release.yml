@@ -13,16 +13,20 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: recursive
+
+      - uses: actions/checkout@v3
+        with: 
+          repository: poirazis/bb_super_components_shared
+          path: bb_super_components_shared
+          ref: develop
       - uses: actions/setup-node@v1
         with:
           node-version: 18
       - name: Make the production plugin bundle
         run: |
-          cd bb_super_components_shared
+          cd ../bb_super_components_shared
           yarn
-          cd ..
+          cd ../bb-component-SuperTable
           release_version=$(cat package.json | jq -r '.version')
           echo "RELEASE_VERSION=$release_version" >> $GITHUB_ENV
           yarn

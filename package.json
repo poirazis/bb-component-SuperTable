@@ -21,6 +21,7 @@
     "@budibase/bbui": "^2.9.30",
     "@budibase/shared-core": "^2.9.25",
     "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.3",
