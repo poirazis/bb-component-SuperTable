@@ -50,9 +50,10 @@
         "dependsOn": "autoRefresh"
       },
       {
+        "tag" : "style",
         "section" : true,
         "name": "Appearance",
-        "collapsed" : true,
+        "collapsed" : false,
         "settings": [ 
           {
             "type": "select",
@@ -178,7 +179,7 @@
       {
         "section" : true,
         "name": "Capabilities",
-        "collapsed" : true,
+        "collapsed" : false,
         "settings": [
           {
             "type": "boolean",
