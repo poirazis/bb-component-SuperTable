@@ -1,14 +1,16 @@
 <script>
   import { getContext } from "svelte";
-  import { dataFilters } from '@budibase/shared-core';
-  import { SuperTable , sizingMap, themeMap } from "../../bb_super_components_shared/src/lib"
+  import { SuperTable , sizingMap } from "../../bb_super_components_shared/src/lib"
 
-  const { styleable, builderStore } = getContext("sdk");
+  const { styleable , fetchDatasourceSchema } = getContext("sdk");
   const component = getContext("component");
 
-  export let dataProvider;
+  export let datasource
   export let idColumn;
+  export let rowLimit = 50
+  export let paginate
   export let visibleRowCount;
+  export let filter = {}
   export let showFooter;
   export let showHeader;
   export let size;
@@ -20,6 +22,9 @@
   export let autoRefresh = false
   export let autoRefreshRate = 60
   export let theme = "budibase"
+  export let useOptionColors = true
+  export let optionsViewMode = "pills"
+  export let relViewMode = "pills"
 
   export let rowSelectMode = "off"
 
@@ -43,172 +48,46 @@
   export let rowHeight 
 
   // Events
-  export let clickBehaviour
   export let onRowSelect;
   export let onDataChange;
-
   export let onRowClick;
   export let onRowDblClick;
 
-  const defaultOperatorMap = {
-    "string" : "fuzzy",
-    "formula" : "fuzzy",
-    "array" : "contains",
-    "options" : "equal",
-    "datetime" : "rangeLow",
-    "boolean" : "equal",
-    "number" : "equal",
-    "bigint" : "equal",
-	}
+  let tableOptions
+  let loaded = false
+  let schema
+  let loadedDatasource
 
-  const supportFilteringMap = {
-    "string" : true,
-    "array" : true,
-    "options" : true,
-    "datetime" : true,
-    "boolean" : true,
-    "number" : true,
-    "bigint" : true,
-	}
-
-  const supportSortingMap = {
-    "string" : true,
-    "formula" : true,
-    "array" : true,
-    "options" : true,
-    "datetime" : true,
-    "boolean" : true,
-    "number" : true,
-    "bigint" : true,
-	}
-
-  const supportEditingMap = {
-		 "string" : true,
-		 "array" : true,
-     "link" : true,
-     "bb_reference" : true,
-		 "options" : true,
-		 "datetime" : true,
-     "boolean" : true,
-     "number" : true,
-     "bigint" : true,
-	}
-
-  function getAllColumns( includeAuto ) {
-    let allColumns = []
-    if ( dataProvider?.schema ) 
-      allColumns = Object.keys(dataProvider.schema)
-        .filter( v => dataProvider.schema[v].autocolumn !== !includeAuto)
-        .map( v => { return { 
-          name: v, 
-          displayName: v,
-          hasChildren: false,
-          schema: dataProvider.schema[v],
-          hasChildren: false,
-          sizing: columnSizing,
-          fixedWidth: columnFixedWidth,
-          maxWidth: columnMaxWidth,
-          minWidth: columnMinWidth,
-          showFooter: showFooter,
-          showHeader: showHeader,
-          canEdit: canEdit && supportEditingMap[dataProvider?.schema[v].type],
-          canFilter: canFilter && supportFilteringMap[dataProvider?.schema[v].type],
-          canSort: canSort && supportSortingMap[dataProvider?.schema[v].type],
-          filteringOperators: dataFilters.getValidOperatorsForType( { type: dataProvider?.schema[v].type } ),
-          defaultFilteringOperator: defaultOperatorMap[dataProvider?.schema[v].type],
-          padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
-          headerAlign: "flex-start"
-        } } )
-
-    return allColumns
-  }
-
-  function saveSettings ( e ) {
-    if ( !$builderStore.inBuilder) return;
-    
-    if ( Array.isArray( e.detail) && e.detail.length > 0 )
-      builderStore.actions.updateProp( "columnList", e.detail )
-
-    console.log("Saving Settings")
-  }
-
-  const getColumns = ( schema , selectedColumns ) => {
-    let newColumns = []
-    let schemaColumns = Object.keys(schema) || [];
-
-    // Find Matching Columns
-    for ( const column of selectedColumns ) {
-      if ( schemaColumns.includes ( column.name ) ) {
-        newColumns.push(makeSuperColumn (schema,column) )
-      }
-    }
-
-    if ( newColumns.length == 0 && !$component.children ) {
-      newColumns = getAllColumns ( false )
-    }
-
-    return newColumns;
-  }
-
-  const makeSuperColumn = (schema, bbcolumn ) => {
-    let superColumn = {
-      ...bbcolumn,
-      hasChildren: false,
-      schema: schema[bbcolumn.name] ?? {},
-      sizing: bbcolumn.width ? "fixed" : columnSizing,
-      fixedWidth: bbcolumn.width ? bbcolumn.width : columnFixedWidth,
-      maxWidth: columnMaxWidth,
-      minWidth: columnMinWidth,
-      showFooter: showFooter,
-      showHeader: showHeader,
-      canEdit: canEdit && supportEditingMap[dataProvider?.schema[bbcolumn.name].type],
-      canFilter: canFilter && supportFilteringMap[dataProvider?.schema[bbcolumn.name].type],
-      canSort: canSort && supportSortingMap[dataProvider?.schema[bbcolumn.name].type],
-      filteringOperators: dataFilters.getValidOperatorsForType( { type: schema[bbcolumn.name].type } ),
-      defaultFilteringOperator: defaultOperatorMap[schema[bbcolumn.name].type],
-      padding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
-      headerAlign: bbcolumn.align ? bbcolumn.align : "flex-start"
-    }
-    return superColumn
-  }
-  
-  $: tableTheme = themeMap[theme]
-  $: tableColumns = getColumns(dataProvider.schema, columnList)
+  $: if ( loadedDatasource != datasource ) loaded = false
+  $: fetchSchema(datasource)
 
   $: tableOptions = {
-    componentID: $component.id,
     hasChildren: $component.children,
-    idColumn: idColumn,
-    superColumnsPos: superColumnsPos,
-    canFilter: canFilter,
-    canSort: canSort,
-    canEdit: canEdit && !$builderStore.inBuilder,
-    canDelete: canDelete,
-    canInsert: canInsert,
-    canResize: canResize,
-    columnSizing: columnSizing,
-    columnMaxWidth: columnMaxWidth,
-    columnMinWidth: columnMinWidth,
-    columnFixedWidth: columnFixedWidth,
-    filteringMode: filteringMode,
-    debounce: debounce,
-    autoRefresh: !$builderStore.inBuilder && autoRefresh,
-    autoRefreshRate: autoRefreshRate,
-    submitOn: submitOn,
-    visibleRowCount: visibleRowCount,
-    rowSelectMode: rowSelectMode,
-    dividers: dividers,
-    dividersColor: dividersColor,
-    cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
+    idColumn,
+    superColumnsPos,
+    canFilter,
+    canSort,
+    canEdit,
+    canDelete,
+    canInsert,
+    canResize,
+    columnSizing,
+    columnMaxWidth,
+    columnMinWidth,
+    columnFixedWidth,
+    filteringMode,
+    debounce,
+    autoRefresh,
+    autoRefreshRate,
+    submitOn,
+    visibleRowCount,
+    rowSelectMode,
+    dividers,
+    dividersColor,
     baseFontSize: size != "custom" ? sizingMap[size].rowFontSize : rowFontSize,
     rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
-    showFooter: showFooter,
-    showHeader: showHeader,
-    onRowClick: onRowClick,
-    onRowDblClick: onRowDblClick,
-    onDataChange: onDataChange,
-    onRowSelect: onRowSelect,
-    theme: {},
+    showFooter,
+    showHeader,
     defaultColumnOptions: {
       header : {
         color : headerColor,
@@ -219,20 +98,47 @@
       cell : { },
       footer : { }
     },
-    superOptions: {},
-    events:{}
+    data: { 
+      datasource,
+      schema,
+      filter
+    },
+    columns: columnList,
+    appearance: {
+      theme,
+      size,
+      cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
+      useOptionColors,
+      optionsViewMode,
+      relViewMode
+    },
+    events:{
+      onRowClick,
+      onRowDblClick,
+      onDataChange,
+      onRowSelect,
+    }
   };
+
+  const fetchSchema = async datasource => {
+    if ( datasource == loadedDatasource ) return
+
+    const res = await fetchDatasourceSchema(datasource)
+    schema = res || {}
+    if (!loaded) {
+      loadedDatasource = datasource
+      loaded = true
+    }
+  }
+
 </script>
 
 <div use:styleable={$component.styles}>
+  {#if loaded}
     <SuperTable 
-      on:saveSettings={saveSettings}
-      {tableOptions} 
-      {tableColumns}
-      {tableTheme}
-      {dataProvider}
-      inBuilder = { $builderStore.inBuilder }
+      {tableOptions}
     >
       <slot />
     </SuperTable>
+  {/if}
 </div>
