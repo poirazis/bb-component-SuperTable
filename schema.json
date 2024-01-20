@@ -6,30 +6,69 @@
     "friendlyName": "Super Table",
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
-    "requiredAncestors": ["dataprovider"],
-    "styles": ["size"],
     "hasChildren": true,
     "showEmptyState": false,
     "settings": [
       {
-        "type": "dataProvider",
-        "key": "dataProvider",
-        "label": "Data Provider",
+        "type": "dataSource",
+        "key": "datasource",
+        "label": "Data Source",
         "required": true
       },
       {
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
-        "resetsOn" : "dataProvider",
-        "required": true
+        "defaultValue" : "_id"
+      },
+      {
+        "type": "field/sortable",
+        "key": "sortColumn",
+        "label": "Sort By",
+        "resetOn" : "datasource"
+      },
+      {
+        "type": "select",
+        "key": "sortOrder",
+        "label": "Sort Order",
+        "options": [
+          {"label": "Ascending" , "value": "asc"},
+          {"label": "Descending" , "value": "dsc"}
+        ]
+      },
+      {
+        "type" : "filter",
+        "key" : "filter",
+        "label" : "Filter"
       },
       {
         "type": "columns",
         "key": "columnList",
-        "resetsOn" : "dataProvider",
+        "resetOn" : "datasource",
         "label": "Columns",
         "nested": "true"
+      },
+      {
+        "type": "select",
+        "key": "superColumnsPos",
+        "label": "Super Columns",
+        "showInBar": true,
+        "barStyle": "buttons",
+        "options": [
+          {
+            "label": "First",
+            "value": "first",
+            "barIcon": "PaddingLeft",
+            "barTitle": "Super Columns First"
+          },
+          {
+            "label": "Last",
+            "value": "last",
+            "barIcon": "PaddingRight",
+            "barTitle": "Super Columns Last"
+          }
+        ],
+        "defaultValue": "first"
       },
       {
         "type": "boolean",
@@ -100,14 +139,15 @@
             "type" : "text",
             "key" : "columnMinWidth",
             "label" : "Min Width",
-            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"}
+            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
+            "resetsOn" : "columnSizing",
+            "placeholder" : "6rem"
           },
           {
             "type" : "text",
             "key" : "columnMaxWidth",
             "label" : "Max Width",
             "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
-            "defaultValue" : "12rem",
             "resetsOn" : "columnSizing"
           },
           {
@@ -118,25 +158,30 @@
           },
           {
             "type": "select",
-            "key": "superColumnsPos",
-            "label": "Super Columns",
-            "showInBar": false,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "First",
-                "value": "first",
-                "barIcon": "PaddingLeft",
-                "barTitle": "Super Columns First"
-              },
-              {
-                "label": "Last",
-                "value": "last",
-                "barIcon": "PaddingRight",
-                "barTitle": "Super Columns Last"
-              }
+            "key": "relViewMode",
+            "label": "Rel. Items",
+            "options" : [
+              { "label" : "Pills", "value" : "pills" },
+              { "label" : "Text", "value" : "text" }
             ],
-            "defaultValue": "first"
+            "defaultValue" : "pills"
+          },
+          {
+            "type": "select",
+            "key": "optionsViewMode",
+            "label": "Option Items",
+            "options" : [
+              { "label" : "Pills", "value" : "pills" },
+              { "label" : "Text", "value" : "text" }
+            ],
+            "defaultValue" : "pills"
+          },
+          {
+            "type": "boolean",
+            "key": "useOptionColors",
+            "label": "Option Colors",
+            "defaultValue": true,
+            "dependsOn" : { "setting": "optionsViewMode", "value" : "pills"}
           },
           {
             "type": "boolean",
@@ -150,6 +195,7 @@
         "section": true,
         "name": "Custom Sizing Settings",
         "dependsOn": { "setting": "size", "value": "custom" },
+        "tag" : "style",
         "settings": [
           {
             "type": "number",
@@ -181,6 +227,20 @@
         "name": "Capabilities",
         "collapsed" : false,
         "settings": [
+          {
+            "type": "select",
+            "key": "rowSelectMode",
+            "label" : "Row Selection",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Row Selection",
+            "options" : [
+              { "label": "Off", "value" : "off", "barIcon" : "Close" },
+              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
+              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
+            ],
+            "defaultValue": "single"
+          },
           {
             "type": "boolean",
             "key": "canInsert",
@@ -232,27 +292,6 @@
             "barTitle": "Sortable"
           },
           {
-            "type": "select",
-            "key": "rowSelectMode",
-            "label" : "Row Selection",
-            "showInBar": true,
-            "barStyle": "select",
-            "barTitle": "Row Selection",
-            "options" : [
-              { "label": "Off", "value" : "off" },
-              { "label": "Single", "value" : "single" },
-              { "label": "Multiple", "value" : "multi" }
-            ],
-            "defaultValue": "single"
-          },
-          {
-            "type": "boolean",
-            "key": "hideSelectionControl",
-            "label": "Hide Sel. Column",
-            "defaultValue": false,
-            "dependsOm" : { "setting" : "canEdit", "value" : false }
-          },
-          {
             "type": "boolean",
             "key": "showHeader",
             "label": "Column Headers",
@@ -270,6 +309,7 @@
         "section": true,
         "name": "Default Header Settings",
         "dependsOn": "customize",
+        "tag" : "style",
         "settings": [
           {
             "type": "color",
