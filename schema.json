@@ -139,14 +139,15 @@
             "type" : "text",
             "key" : "columnMinWidth",
             "label" : "Min Width",
-            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"}
+            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
+            "resetsOn" : "columnSizing",
+            "placeholder" : "6rem"
           },
           {
             "type" : "text",
             "key" : "columnMaxWidth",
             "label" : "Max Width",
             "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
-            "defaultValue" : "12rem",
             "resetsOn" : "columnSizing"
           },
           {
@@ -227,6 +228,20 @@
         "collapsed" : false,
         "settings": [
           {
+            "type": "select",
+            "key": "rowSelectMode",
+            "label" : "Row Selection",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Row Selection",
+            "options" : [
+              { "label": "Off", "value" : "off", "barIcon" : "Close" },
+              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
+              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
+            ],
+            "defaultValue": "single"
+          },
+          {
             "type": "boolean",
             "key": "canInsert",
             "label": "Add Row",
@@ -275,27 +290,6 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
-          },
-          {
-            "type": "select",
-            "key": "rowSelectMode",
-            "label" : "Row Selection",
-            "showInBar": true,
-            "barStyle": "select",
-            "barTitle": "Row Selection",
-            "options" : [
-              { "label": "Off", "value" : "off" },
-              { "label": "Single", "value" : "single" },
-              { "label": "Multiple", "value" : "multi" }
-            ],
-            "defaultValue": "single"
-          },
-          {
-            "type": "boolean",
-            "key": "hideSelectionControl",
-            "label": "Hide Sel. Column",
-            "defaultValue": false,
-            "dependsOm" : { "setting" : "canEdit", "value" : false }
           },
           {
             "type": "boolean",

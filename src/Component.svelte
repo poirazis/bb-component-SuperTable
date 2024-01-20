@@ -2,7 +2,7 @@
   import { getContext } from "svelte";
   import { SuperTable , sizingMap } from "../../bb_super_components_shared/src/lib"
 
-  const { styleable , fetchDatasourceSchema } = getContext("sdk");
+  const { styleable } = getContext("sdk");
   const component = getContext("component");
 
   export let datasource
@@ -25,11 +25,12 @@
   export let useOptionColors = true
   export let optionsViewMode = "pills"
   export let relViewMode = "pills"
+  export let scroll = true
 
   export let rowSelectMode = "off"
 
   export let columnSizing
-  export let columnMinWidth
+  export let columnMinWidth = "6rem"
   export let columnMaxWidth
   export let columnFixedWidth
   export let headerFontSize, headerColor, headerBgColor, headerAlign;
@@ -54,12 +55,6 @@
   export let onRowDblClick;
 
   let tableOptions
-  let loaded = false
-  let schema
-  let loadedDatasource
-
-  $: if ( loadedDatasource != datasource ) loaded = false
-  $: fetchSchema(datasource)
 
   $: tableOptions = {
     hasChildren: $component.children,
@@ -100,13 +95,14 @@
     },
     data: { 
       datasource,
-      schema,
-      filter
+      filter,
+      schema : {},
     },
     columns: columnList,
     appearance: {
       theme,
       size,
+      scroll,
       cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
       useOptionColors,
       optionsViewMode,
@@ -120,25 +116,10 @@
     }
   };
 
-  const fetchSchema = async datasource => {
-    if ( datasource == loadedDatasource ) return
-
-    const res = await fetchDatasourceSchema(datasource)
-    schema = res || {}
-    if (!loaded) {
-      loadedDatasource = datasource
-      loaded = true
-    }
-  }
-
 </script>
 
 <div use:styleable={$component.styles}>
-  {#if loaded}
-    <SuperTable 
-      {tableOptions}
-    >
-      <slot />
-    </SuperTable>
-  {/if}
+  <SuperTable {tableOptions}>
+    <slot />
+  </SuperTable>
 </div>

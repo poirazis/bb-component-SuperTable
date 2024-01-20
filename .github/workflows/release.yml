@@ -20,7 +20,7 @@ jobs:
         with: 
           repository: poirazis/bb_super_components_shared
           path: ${{ github.workspace }}/bb_super_components_shared
-          ref: main
+          ref: develop
       - uses: actions/setup-node@v1
         with:
           node-version: 18
