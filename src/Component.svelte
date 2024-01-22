@@ -7,7 +7,9 @@
 
   export let datasource
   export let idColumn;
-  export let rowLimit = 50
+  export let sortColumn
+  export let sortOrder
+  export let limit = 50
   export let paginate
   export let visibleRowCount;
   export let filter = {}
@@ -95,7 +97,12 @@
     },
     data: { 
       datasource,
+      idColumn,
       filter,
+      sortColumn,
+      sortOrder,
+      limit,
+      paginate,
       schema : {},
     },
     columns: columnList,
