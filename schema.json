@@ -32,14 +32,20 @@
         "key": "sortOrder",
         "label": "Sort Order",
         "options": [
-          {"label": "Ascending" , "value": "asc"},
-          {"label": "Descending" , "value": "dsc"}
+          {"label": "Ascending" , "value": "ascending"},
+          {"label": "Descending" , "value": "descending"}
         ]
       },
       {
         "type" : "filter",
         "key" : "filter",
         "label" : "Filter"
+      },
+      {
+        "type": "number",
+        "label": "Limit",
+        "key": "limit",
+        "defaultValue": 50
       },
       {
         "type": "columns",
