@@ -95,6 +95,111 @@
         "dependsOn": "autoRefresh"
       },
       {
+        "section" : true,
+        "name": "Capabilities",
+        "collapsed" : false,
+        "settings": [
+          {
+            "type": "boolean",
+            "key": "canInsert",
+            "label": "Insert",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Add",
+            "barTitle": "Add New Row"
+          },
+          {
+            "type": "boolean",
+            "key": "canEdit",
+            "label": "Edit",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Edit",
+            "barTitle": "Editable"
+          },
+          {
+            "type": "boolean",
+            "key": "canDelete",
+            "label": "Delete",
+            "defaultValue": false,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Delete",
+            "barTitle": "Delete Rows"
+          },
+          {
+            "type": "boolean",
+            "key": "canFilter",
+            "label": "Filter",
+            "defaultValue": true,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "FilterAdd",
+            "barTitle": "Filterable"
+          },
+          {
+            "type": "number",
+            "key": "debounce",
+            "label": "Debounce",
+            "min": 100,
+            "defaultValue": 500,
+            "dependsOn": "canFilter",
+            "info": "Debounce Delay (ms)"
+          },
+          {
+            "type": "boolean",
+            "key": "canSort",
+            "label": "Sort",
+            "defaultValue": true,
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "SortOrderDown",
+            "barTitle": "Sortable"
+          },
+          {
+            "type": "boolean",
+            "key": "showHeader",
+            "label": "Column Headers",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "showFooter",
+            "label": "Column Footers",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "canResize",
+            "label": "Resizable",
+            "defaultValue": true
+          },
+          {
+            "type": "select",
+            "key": "rowSelectMode",
+            "label" : "Row Selection",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Row Selection",
+            "options" : [
+              { "label": "Off", "value" : "off", "barIcon" : "Close" },
+              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
+              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
+            ],
+            "defaultValue": "single"
+          },
+          {
+            "type": "boolean",
+            "key": "selectionColumn",
+            "label": "Selection Column",
+            "defaultValue": true,
+            "dependsOn" : {"setting" : "canEdit", "value" : false}
+          }
+        ]
+      },
+      {
         "tag" : "style",
         "section" : true,
         "name": "Appearance",
@@ -165,7 +270,7 @@
           {
             "type": "select",
             "key": "relViewMode",
-            "label": "Rel. Items",
+            "label": "Relationships",
             "options" : [
               { "label" : "Pills", "value" : "pills" },
               { "label" : "Text", "value" : "text" }
@@ -175,7 +280,7 @@
           {
             "type": "select",
             "key": "optionsViewMode",
-            "label": "Option Items",
+            "label": "Options",
             "options" : [
               { "label" : "Pills", "value" : "pills" },
               { "label" : "Text", "value" : "text" }
@@ -186,8 +291,13 @@
             "type": "boolean",
             "key": "useOptionColors",
             "label": "Option Colors",
-            "defaultValue": true,
-            "dependsOn" : { "setting": "optionsViewMode", "value" : "pills"}
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "useOptionIcons",
+            "label": "Option Icons",
+            "defaultValue": true
           },
           {
             "type": "boolean",
@@ -229,91 +339,9 @@
         ]
       },
       {
-        "section" : true,
-        "name": "Capabilities",
-        "collapsed" : false,
-        "settings": [
-          {
-            "type": "select",
-            "key": "rowSelectMode",
-            "label" : "Row Selection",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Row Selection",
-            "options" : [
-              { "label": "Off", "value" : "off", "barIcon" : "Close" },
-              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
-              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
-            ],
-            "defaultValue": "single"
-          },
-          {
-            "type": "boolean",
-            "key": "canInsert",
-            "label": "Add Row",
-            "defaultValue": false,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Add",
-            "barTitle": "Add New Row"
-          },
-          {
-            "type": "boolean",
-            "key": "canEdit",
-            "label": "Edit",
-            "defaultValue": false,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Edit",
-            "barTitle": "Editable"
-          },
-          {
-            "type": "boolean",
-            "key": "canDelete",
-            "label": "Delete Rows",
-            "defaultValue": false,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Delete",
-            "barTitle": "Delete Rows"
-          },
-          {
-            "type": "boolean",
-            "key": "canFilter",
-            "label": "Filter",
-            "defaultValue": true,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "FilterAdd",
-            "barTitle": "Filterable"
-          },
-          {
-            "type": "boolean",
-            "key": "canSort",
-            "label": "Sort",
-            "defaultValue": true,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "SortOrderDown",
-            "barTitle": "Sortable"
-          },
-          {
-            "type": "boolean",
-            "key": "showHeader",
-            "label": "Column Headers",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "showFooter",
-            "label": "Column Footers",
-            "defaultValue": false
-          }
-        ]
-      },
-      {
         "section": true,
-        "name": "Default Header Settings",
+        "name": "Header Settings",
+        "collapsed" : true,
         "dependsOn": "customize",
         "tag" : "style",
         "settings": [
@@ -330,8 +358,10 @@
         ]
       },
       {
+        "tag" : "style",
         "section": true,
-        "name": "Default Row Settings",
+        "name": "Row Settings",
+        "collapsed" : true,
         "dependsOn": "customize",
         "settings": [
           {
@@ -381,8 +411,10 @@
         ]
       },
       {
+        "tag" : "style",
         "section": true,
-        "name": "Default Footer Settings",
+        "name": "Footer Settings",
+        "collapsed" : true,
         "dependsOn": "customize",
         "settings": [
           {
@@ -398,9 +430,11 @@
         ]
       },
       {
+        "tag" : "style",
         "section": true,
         "name": "Dividers Settings",
         "dependsOn": "customize",
+        "collapsed" : true,
         "settings": [
           {
             "type": "select",
@@ -418,27 +452,6 @@
             "type": "color",
             "key": "dividersColor",
             "label": "Dividers Color"
-          },
-          {
-            "type": "number",
-            "key": "debounce",
-            "label": "Debounce",
-            "min": 100,
-            "defaultValue": 500,
-            "dependsOn": { "setting" : "filteringMode", "value" : "debounced" },
-            "info": "Debounce Delay (ms)"
-          },
-          {
-            "type": "select",
-            "key": "filteringMode",
-            "label": "Filtering Mode",
-            "barStyle": "buttons",
-            "options": [
-              { "label": "Live Debounced", "value": "debounced" },
-              { "label": "On Enter", "value": "onentert" }
-            ],
-            "defaultValue": "debounced",
-            "dependsOn": "filtering"
           },
           {
             "type": "select",
@@ -483,30 +496,18 @@
           {
             "type": "event",
             "label": "On Row Select",
-            "key": "onSelectionChange",
+            "key": "onRowSelect",
             "context": [
               {
-                "label": "RowID",
-                "key": "rowID"
-              },
-              {
-                "label": "Field",
-                "key": "field"
-              },
-              {
-                "label": "Original Value",
-                "key": "originalValue"
-              },
-              {
-                "label": "New Value",
-                "key": "newValue"
+                "label": "Selected Rows",
+                "key": "rows"
               }
             ]
           },
           {
             "type": "event",
-            "key": "onDataChange",
-            "label" : "On Cell Edit",
+            "key": "onCellChange",
+            "label" : "On Cell Change",
             "dependsOn": "canEdit",
             "context": [
               {
@@ -518,12 +519,12 @@
                 "key": "field"
               },
               {
-                "label": "Original Value",
-                "key": "originalValue"
+                "label": "Previous Value",
+                "key": "previousValue"
               },
               {
                 "label": "New Value",
-                "key": "newValue"
+                "key": "value"
               }
             ]
           }

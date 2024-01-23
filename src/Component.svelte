@@ -29,7 +29,8 @@
   export let relViewMode = "pills"
   export let scroll = true
 
-  export let rowSelectMode = "off"
+  export let rowSelectMode
+  export let selectionColumn
 
   export let columnSizing
   export let columnMinWidth = "6rem"
@@ -52,14 +53,13 @@
 
   // Events
   export let onRowSelect;
-  export let onDataChange;
+  export let onCellChange;
   export let onRowClick;
   export let onRowDblClick;
 
   let tableOptions
 
   $: tableOptions = {
-    hasChildren: $component.children,
     idColumn,
     superColumnsPos,
     canFilter,
@@ -72,13 +72,11 @@
     columnMaxWidth,
     columnMinWidth,
     columnFixedWidth,
-    filteringMode,
     debounce,
-    autoRefresh,
-    autoRefreshRate,
     submitOn,
     visibleRowCount,
     rowSelectMode,
+    selectionColumn : rowSelectMode != "off" ? canEdit ? true  : selectionColumn : false,
     dividers,
     dividersColor,
     baseFontSize: size != "custom" ? sizingMap[size].rowFontSize : rowFontSize,
@@ -95,6 +93,13 @@
       cell : { },
       footer : { }
     },
+    features: {
+      canInsert,
+      canEdit,
+      canDelete,
+      canFilter,
+      canSort
+    },
     data: { 
       datasource,
       idColumn,
@@ -103,7 +108,8 @@
       sortOrder,
       limit,
       paginate,
-      schema : {},
+      autoRefresh,
+      autoRefreshRate
     },
     columns: columnList,
     appearance: {
@@ -115,10 +121,10 @@
       optionsViewMode,
       relViewMode
     },
-    events:{
+    events: {
       onRowClick,
       onRowDblClick,
-      onDataChange,
+      onCellChange,
       onRowSelect,
     }
   };
@@ -126,7 +132,9 @@
 </script>
 
 <div use:styleable={$component.styles}>
-  <SuperTable {tableOptions}>
-    <slot />
-  </SuperTable>
+  {#key datasource}
+    <SuperTable {tableOptions}>
+      <slot />
+    </SuperTable>
+  {/key}
 </div>
