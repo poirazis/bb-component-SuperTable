@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte";
-  import { SuperTable , sizingMap } from "../../bb_super_components_shared/src/lib"
+  import { SuperTable } from "../../bb_super_components_shared/src/lib"
 
   const { styleable } = getContext("sdk");
   const component = getContext("component");
@@ -10,6 +10,8 @@
   export let sortColumn
   export let sortOrder
   export let limit = 50
+  export let fetchOnScroll
+  export let fetchPageSize
   export let paginate
   export let visibleRowCount;
   export let filter = {}
@@ -19,7 +21,6 @@
   export let canInsert, canDelete, canEdit, canSort, canResize, canFilter
   export let superColumnsPos;
   export let columnList = []
-  export let filteringMode = "debounced"
   export let debounce = 750
   export let autoRefresh = false
   export let autoRefreshRate = 60
@@ -27,7 +28,6 @@
   export let useOptionColors = true
   export let optionsViewMode = "pills"
   export let relViewMode = "pills"
-  export let scroll = true
 
   export let rowSelectMode
   export let selectionColumn
@@ -36,10 +36,8 @@
   export let columnMinWidth = "6rem"
   export let columnMaxWidth
   export let columnFixedWidth
+
   export let headerFontSize, headerColor, headerBgColor, headerAlign;
-
-  export let submitOn
-
   export let dividers, dividersColor;
 
   export let rowVerticalAlign,
@@ -47,8 +45,9 @@
     rowFontSize,
     rowFontColor,
     rowBackground;
+
   export let footerAlign, footerFontSize, footerFontColor, footerBackground;
-  export let cellPadding;
+  export let cellPadding = 8
   export let rowHeight 
 
   // Events
@@ -56,8 +55,6 @@
   export let onCellChange;
   export let onRowClick;
   export let onRowDblClick;
-
-  let tableOptions
 
   $: tableOptions = {
     idColumn,
@@ -73,14 +70,13 @@
     columnMinWidth,
     columnFixedWidth,
     debounce,
-    submitOn,
     visibleRowCount,
     rowSelectMode,
-    selectionColumn : rowSelectMode != "off" ? canEdit ? true  : selectionColumn : false,
+    selectionColumn,
     dividers,
     dividersColor,
-    baseFontSize: size != "custom" ? sizingMap[size].rowFontSize : rowFontSize,
-    rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
+    baseFontSize: 14,
+    rowHeight: 38,
     showFooter,
     showHeader,
     defaultColumnOptions: {
@@ -109,14 +105,15 @@
       limit,
       paginate,
       autoRefresh,
-      autoRefreshRate
+      autoRefreshRate,
+      fetchOnScroll,
+      fetchPageSize
     },
     columns: columnList,
     appearance: {
       theme,
       size,
-      scroll,
-      cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
+      cellPadding,
       useOptionColors,
       optionsViewMode,
       relViewMode
@@ -132,9 +129,7 @@
 </script>
 
 <div use:styleable={$component.styles}>
-  {#key datasource}
-    <SuperTable {tableOptions}>
-      <slot />
-    </SuperTable>
-  {/key}
+  <SuperTable {tableOptions}>
+    <slot />
+  </SuperTable>
 </div>

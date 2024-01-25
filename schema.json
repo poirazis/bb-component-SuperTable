@@ -48,6 +48,21 @@
         "defaultValue": 50
       },
       {
+        "type": "boolean",
+        "key" : "fetchOnScroll",
+        "label": "Fetch on Scroll",
+        "defaultValue" : true
+      },
+      {
+        "type": "number",
+        "key" : "fetchPageSize",
+        "label": "Records to Fetch",
+        "dependsOn": "fetchOnScroll",
+        "min" : 10,
+        "max" : 100,
+        "defaultValue" : 25
+      },
+      {
         "type": "columns",
         "key": "columnList",
         "resetOn" : "datasource",
