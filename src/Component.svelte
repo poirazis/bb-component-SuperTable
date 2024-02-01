@@ -1,36 +1,36 @@
 <script>
   import { getContext } from "svelte";
-  import { SuperTable } from "../../bb_super_components_shared/src/lib"
+  import SuperTable from "../../bb_super_components_shared/src/lib/SuperTable/SuperTable.svelte";
 
   const { styleable } = getContext("sdk");
   const component = getContext("component");
 
+  // Data Related
   export let datasource
   export let idColumn;
   export let sortColumn
   export let sortOrder
-  export let limit = 50
+  export let limit
   export let fetchOnScroll
   export let fetchPageSize
+  export let autoRefresh
+  export let autoRefreshRate
   export let paginate
+  export let filter
+
   export let visibleRowCount;
-  export let filter = {}
   export let showFooter;
   export let showHeader;
   export let size;
   export let canInsert, canDelete, canEdit, canSort, canResize, canFilter
+  export let showFilterOperators
   export let superColumnsPos;
   export let columnList = []
   export let debounce = 750
-  export let autoRefresh = false
-  export let autoRefreshRate = 60
-  export let theme = "budibase"
-  export let useOptionColors = true
-  export let optionsViewMode = "pills"
-  export let relViewMode = "pills"
 
   export let rowSelectMode
   export let selectionColumn
+  export let selectionLimit
 
   export let columnSizing
   export let columnMinWidth = "6rem"
@@ -43,12 +43,20 @@
   export let rowVerticalAlign,
     rowHorizontalAlign,
     rowFontSize,
-    rowFontColor,
-    rowBackground;
+    rowColorTemplate,
+    rowBGColorTemplate;
 
-  export let footerAlign, footerFontSize, footerFontColor, footerBackground;
-  export let cellPadding = 8
-  export let rowHeight 
+  export let footerAlign, footerFontSize, footerColorTemplate, footerBGColorTemplate;
+
+  
+  export let customCellPadding
+  export let customBaseFont
+  export let customRowHeight
+  export let useOptionColors = true
+  export let optionsViewMode = "pills"
+  export let relViewMode = "pills"
+  export let zebraColors = false
+  export let highlighters 
 
   // Events
   export let onRowSelect;
@@ -57,14 +65,7 @@
   export let onRowDblClick;
 
   $: tableOptions = {
-    idColumn,
     superColumnsPos,
-    canFilter,
-    canSort,
-    canEdit,
-    canDelete,
-    canInsert,
-    canResize,
     columnSizing,
     columnMaxWidth,
     columnMinWidth,
@@ -72,29 +73,20 @@
     debounce,
     visibleRowCount,
     rowSelectMode,
+    selectionLimit,
     selectionColumn,
     dividers,
     dividersColor,
-    baseFontSize: 14,
-    rowHeight: 38,
     showFooter,
     showHeader,
-    defaultColumnOptions: {
-      header : {
-        color : headerColor,
-        bgColor : headerBgColor,
-        align : headerAlign
-      },
-      row : { },
-      cell : { },
-      footer : { }
-    },
     features: {
-      canInsert,
+      canFilter,
+      showFilterOperators,
+      canSort,
       canEdit,
       canDelete,
-      canFilter,
-      canSort
+      canInsert,
+      canResize,
     },
     data: { 
       datasource,
@@ -111,12 +103,20 @@
     },
     columns: columnList,
     appearance: {
-      theme,
       size,
-      cellPadding,
       useOptionColors,
       optionsViewMode,
-      relViewMode
+      relViewMode,
+      customCellPadding,
+      customRowHeight,
+      customBaseFont,
+      zebraColors,
+      dynamicColors: true,
+      highlighters,
+      rowColorTemplate,
+      rowBGColorTemplate,
+      footerColorTemplate,
+      footerBGColorTemplate
     },
     events: {
       onRowClick,
@@ -125,11 +125,11 @@
       onRowSelect,
     }
   };
-
 </script>
 
 <div use:styleable={$component.styles}>
-  <SuperTable {tableOptions}>
+  <SuperTable 
+    {tableOptions}>
     <slot />
   </SuperTable>
 </div>
