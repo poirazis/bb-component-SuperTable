@@ -7,7 +7,43 @@
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "hasChildren": true,
+    "actions": ["RefreshDatasource"],
     "showEmptyState": false,
+    "context": {
+      "type": "static",
+      "values": [
+        {
+          "label": "Rows",
+          "key": "rows",
+          "type": "array"
+        },
+        {
+          "label": "Selected Rows",
+          "key": "selectedRows",
+          "type": "array"
+        },
+        {
+          "label": "Extra Info",
+          "key": "info",
+          "type": "string"
+        },
+        {
+          "label": "Rows Length",
+          "key": "rowsLength",
+          "type": "number"
+        },
+        {
+          "label": "Schema",
+          "key": "schema",
+          "type": "object"
+        },
+        {
+          "label": "Page Number",
+          "key": "pageNumber",
+          "type": "number"
+        }
+      ]
+    },
     "settings": [
       {
         "type": "dataSource",
@@ -42,12 +78,6 @@
         "label" : "Filter"
       },
       {
-        "type": "number",
-        "label": "Limit",
-        "key": "limit",
-        "defaultValue": 50
-      },
-      {
         "type": "columns",
         "key": "columnList",
         "resetOn" : "datasource",
@@ -55,26 +85,25 @@
         "nested": "true"
       },
       {
-        "type": "select",
-        "key": "superColumnsPos",
-        "label": "Super Columns",
-        "showInBar": true,
-        "barStyle": "buttons",
-        "options": [
-          {
-            "label": "First",
-            "value": "first",
-            "barIcon": "PaddingLeft",
-            "barTitle": "Super Columns First"
-          },
-          {
-            "label": "Last",
-            "value": "last",
-            "barIcon": "PaddingRight",
-            "barTitle": "Super Columns Last"
-          }
-        ],
-        "defaultValue": "first"
+        "type": "number",
+        "label": "Limit",
+        "key": "limit",
+        "defaultValue": 50
+      },
+      {
+        "type": "boolean",
+        "key" : "fetchOnScroll",
+        "label": "Fetch on Scroll",
+        "defaultValue" : true
+      },
+      {
+        "type": "number",
+        "key" : "fetchPageSize",
+        "label": "Records to Fetch",
+        "dependsOn": "fetchOnScroll",
+        "min" : 10,
+        "max" : 500,
+        "defaultValue" : 100
       },
       {
         "type": "boolean",
@@ -96,9 +125,137 @@
       },
       {
         "section" : true,
+        "name": "Row Selection",
+        "collapsed" : false,
+        "settings": [
+          {
+            "type": "select",
+            "key": "rowSelectMode",
+            "label" : "Row Selection",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Row Selection",
+            "options" : [
+              { "label": "Off", "value" : "off", "barIcon" : "Close" },
+              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
+              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
+            ],
+            "defaultValue": "single"
+          },
+          {
+            "type" : "text",
+            "key" : "preselected",
+            "label": "Selected IDs",
+            "placeholder": "Expects Array",
+            "dependsOn": { "setting" : "rowSelectMode", "value" :"multi"}
+          },
+          {
+            "type" : "number",
+            "key" : "selectionLimit",
+            "label" : "Limit",
+            "min" : 0,
+            "defaultValue" : 0,
+            "dependsOn": { "setting" : "rowSelectMode", "value" :"multi"}
+          },
+          {
+            "type" : "text",
+            "key" : "preselectedID",
+            "label": "Selected ID",
+            "dependsOn": { "setting" : "rowSelectMode", "value" :"single"}
+          }
+        ]
+      },
+      {
+        "section" : true,
+        "name": "Filtering",
+        "collapsed" : false,
+        "settings": [
+          {
+            "type": "select",
+            "key": "canFilter",
+            "label" : "Filtering",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Filtering",
+            "options" : [
+              { "label": "Off", "value" : false, "barIcon" : "Close" },
+              { "label": "Simple", "value" : "simple", "barIcon" : "Filter" },
+              { "label": "Advanced", "value" : "advanced", "barIcon" : "FilterEdit" }
+            ],
+            "defaultValue": false
+          },
+          {
+            "type": "number",
+            "key": "debounce",
+            "label": "Filter Delay(ms)",
+            "min": 100,
+            "defaultValue": 750,
+            "dependsOn": "canFilter"
+          }
+        ]
+      },
+      {
+        "section" : true,
+        "name": "Editing",
+        "collapsed" : false,
+        "settings": [
+          {
+            "type": "select",
+            "key": "canEdit",
+            "label" : "Editing",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Editing",
+            "options" : [
+              { "label": "Off", "value" : false, "barIcon" : "Close" },
+              { "label": "Simple", "value" : "simple", "barIcon" : "Edit" },
+              { "label": "Advanced", "value" : "advanced", "barIcon" : "GearsEdit" }
+            ],
+            "defaultValue": false
+          },
+          {
+            "type": "select",
+            "key": "highlighters",
+            "label": "Highlighters",
+            "dependsOn" : "canEdit",
+            "options": [
+              { "label": "None", "value": "none" },
+              { "label": "Horizontal", "value": "horizontal" },
+              { "label": "Vertical", "value": "vertical" },
+              { "label": "Both", "value": "both" }
+            ],
+            "defaultValue": "horizontal"
+          }
+        ]
+      },
+      {
+        "section" : true,
         "name": "Capabilities",
         "collapsed" : false,
         "settings": [
+          {
+            "type": "select",
+            "key": "superColumnsPos",
+            "label": "Super Columns",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "options": [
+              { "label": "Off", "value" : "off", "barIcon" : "Close" },
+              {
+                "label": "First",
+                "value": "first",
+                "barIcon": "PaddingLeft",
+                "barTitle": "Super Columns First"
+              },
+              {
+                "label": "Last",
+                "value": "last",
+                "barIcon": "PaddingRight",
+                "barTitle": "Super Columns Last"
+              }
+            ],
+            "defaultValue": "first"
+          },
           {
             "type": "boolean",
             "key": "canInsert",
@@ -111,16 +268,6 @@
           },
           {
             "type": "boolean",
-            "key": "canEdit",
-            "label": "Edit",
-            "defaultValue": false,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Edit",
-            "barTitle": "Editable"
-          },
-          {
-            "type": "boolean",
             "key": "canDelete",
             "label": "Delete",
             "defaultValue": false,
@@ -128,25 +275,6 @@
             "barStyle": "buttons",
             "barIcon": "Delete",
             "barTitle": "Delete Rows"
-          },
-          {
-            "type": "boolean",
-            "key": "canFilter",
-            "label": "Filter",
-            "defaultValue": true,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "FilterAdd",
-            "barTitle": "Filterable"
-          },
-          {
-            "type": "number",
-            "key": "debounce",
-            "label": "Debounce",
-            "min": 100,
-            "defaultValue": 500,
-            "dependsOn": "canFilter",
-            "info": "Debounce Delay (ms)"
           },
           {
             "type": "boolean",
@@ -173,29 +301,15 @@
           {
             "type": "boolean",
             "key": "canResize",
-            "label": "Resizable",
+            "label": "Resize Columns",
             "defaultValue": true
-          },
-          {
-            "type": "select",
-            "key": "rowSelectMode",
-            "label" : "Row Selection",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Row Selection",
-            "options" : [
-              { "label": "Off", "value" : "off", "barIcon" : "Close" },
-              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
-              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
-            ],
-            "defaultValue": "single"
           },
           {
             "type": "boolean",
             "key": "selectionColumn",
             "label": "Selection Column",
-            "defaultValue": true,
-            "dependsOn" : {"setting" : "canEdit", "value" : false}
+            "resetOn" : "rowSelectMode",
+            "defaultValue": true
           }
         ]
       },
@@ -205,18 +319,6 @@
         "name": "Appearance",
         "collapsed" : false,
         "settings": [ 
-          {
-            "type": "select",
-            "key": "theme",
-            "label": "Theme",
-            "options": [
-              { "label": "Budibase", "value": "budibase" },
-              { "label": "Over Background", "value": "overbg" },
-              { "label": "Polarized Night", "value": "polarized" },
-              { "label": "Custom", "value": "custom" }
-            ],
-            "defaultValue": "budibase"
-          },
           {
             "type": "select",
             "key": "size",
@@ -233,7 +335,7 @@
             "type": "number",
             "key": "visibleRowCount",
             "label": "Visible Rows",
-            "defaultValue": 8,
+            "defaultValue": 10,
             "min": 1
           },
           {
@@ -251,7 +353,6 @@
             "key" : "columnMinWidth",
             "label" : "Min Width",
             "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
-            "resetsOn" : "columnSizing",
             "placeholder" : "6rem"
           },
           {
@@ -259,12 +360,14 @@
             "key" : "columnMaxWidth",
             "label" : "Max Width",
             "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
-            "resetsOn" : "columnSizing"
+            "placeholder" : "16rem"
           },
           {
             "type" : "text",
             "key" : "columnFixedWidth",
             "label" : "Width",
+            "placeholder": "8rem",
+            "resetOn" : "columnSizing",
             "dependsOn" : { "setting" : "columnSizing", "value" : "fixed"}
           },
           {
@@ -295,14 +398,8 @@
           },
           {
             "type": "boolean",
-            "key": "useOptionIcons",
-            "label": "Option Icons",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "customize",
-            "label": "Customize",
+            "key": "zebraColors",
+            "label": "Zebra Colors",
             "defaultValue": false
           }
         ]
@@ -315,23 +412,23 @@
         "settings": [
           {
             "type": "number",
-            "key": "rowHeight",
+            "key": "customRowHeight",
             "label": "Row Height",
             "min": 0,
             "max": 400,
-            "defaultValue": 55
+            "defaultValue": 36
           },
           {
             "type": "number",
-            "key": "cellPadding",
+            "key": "customCellPadding",
             "label": "Cell Padding L/R",
             "min": 0,
             "max": 32,
-            "defaultValue": 16
+            "defaultValue": 8
           },
           {
             "type": "number",
-            "key": "rowFontSize",
+            "key": "customBaseFont",
             "label": "Row Font Size",
             "min": 6,
             "defaultValue": 14
@@ -339,93 +436,23 @@
         ]
       },
       {
-        "section": true,
-        "name": "Header Settings",
-        "collapsed" : true,
-        "dependsOn": "customize",
-        "tag" : "style",
-        "settings": [
-          {
-            "type": "color",
-            "key": "headerColor",
-            "label": "Text"
-          },
-          {
-            "type": "color",
-            "key": "headerBgColor",
-            "label": "Background"
-          }
-        ]
-      },
-      {
         "tag" : "style",
         "section": true,
-        "name": "Row Settings",
-        "collapsed" : true,
-        "dependsOn": "customize",
+        "name": "Dynamic Row Colors",
         "settings": [
           {
-            "type": "select",
-            "label": "Vertical Align",
-            "key": "rowVerticalAlign",
-            "showInBar": false,
-            "barStyle": "buttons",
-            "options": [
-              {
-                "label": "Top",
-                "value": "flex-start",
-                "barIcon": "AlignTop",
-                "barTitle": "Align top"
-              },
-              {
-                "label": "Middle",
-                "value": "center",
-                "barIcon": "AlignMiddle",
-                "barTitle": "Align middle"
-              },
-              {
-                "label": "Bottom",
-                "value": "flex-end",
-                "barIcon": "AlignBottom",
-                "barTitle": "Align bottom"
-              },
-              {
-                "label": "Stretch",
-                "value": "stretch",
-                "barIcon": "MoveUpDown",
-                "barTitle": "Align stretched vertically"
-              }
-            ],
-            "defaultValue": "flex-start"
+            "type": "text",
+            "key": "rowColorTemplate",
+            "placeholder" : "{{ Row }}",
+            "label": "Text",
+            "nested": true
           },
           {
-            "type": "color",
-            "key": "rowFontColor",
-            "label": "Text"
-          },
-          {
-            "type": "color",
-            "key": "rowBackground",
-            "label": "Background"
-          }
-        ]
-      },
-      {
-        "tag" : "style",
-        "section": true,
-        "name": "Footer Settings",
-        "collapsed" : true,
-        "dependsOn": "customize",
-        "settings": [
-          {
-            "type": "color",
-            "key": "footerFontColor",
-            "label": "Text"
-          },
-          {
-            "type": "color",
-            "key": "footerBackground",
-            "label": "Background"
+            "type": "text",
+            "key": "rowBGColorTemplate",
+            "label": "Background",
+            "placeholder" : "{{ Row }}",
+            "nested" : true
           }
         ]
       },
@@ -433,8 +460,6 @@
         "tag" : "style",
         "section": true,
         "name": "Dividers Settings",
-        "dependsOn": "customize",
-        "collapsed" : true,
         "settings": [
           {
             "type": "select",

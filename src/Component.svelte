@@ -1,55 +1,62 @@
 <script>
   import { getContext } from "svelte";
-  import { SuperTable , sizingMap } from "../../bb_super_components_shared/src/lib"
+  import SuperTable from "../../bb_super_components_shared/src/lib/SuperTable/SuperTable.svelte";
 
   const { styleable } = getContext("sdk");
   const component = getContext("component");
 
+  // Data Related
   export let datasource
   export let idColumn;
   export let sortColumn
   export let sortOrder
-  export let limit = 50
+  export let limit
+  export let fetchOnScroll
+  export let fetchPageSize
+  export let autoRefresh
+  export let autoRefreshRate
   export let paginate
+  export let filter
+
   export let visibleRowCount;
-  export let filter = {}
   export let showFooter;
   export let showHeader;
   export let size;
   export let canInsert, canDelete, canEdit, canSort, canResize, canFilter
+  export let showFilterOperators
   export let superColumnsPos;
   export let columnList = []
-  export let filteringMode = "debounced"
   export let debounce = 750
-  export let autoRefresh = false
-  export let autoRefreshRate = 60
-  export let theme = "budibase"
-  export let useOptionColors = true
-  export let optionsViewMode = "pills"
-  export let relViewMode = "pills"
-  export let scroll = true
 
   export let rowSelectMode
   export let selectionColumn
+  export let selectionLimit
 
   export let columnSizing
   export let columnMinWidth = "6rem"
   export let columnMaxWidth
   export let columnFixedWidth
+
   export let headerFontSize, headerColor, headerBgColor, headerAlign;
-
-  export let submitOn
-
   export let dividers, dividersColor;
 
   export let rowVerticalAlign,
     rowHorizontalAlign,
     rowFontSize,
-    rowFontColor,
-    rowBackground;
-  export let footerAlign, footerFontSize, footerFontColor, footerBackground;
-  export let cellPadding;
-  export let rowHeight 
+    rowColorTemplate,
+    rowBGColorTemplate;
+
+  export let footerAlign, footerFontSize, footerColorTemplate, footerBGColorTemplate;
+
+  
+  export let customCellPadding
+  export let customBaseFont
+  export let customRowHeight
+  export let useOptionColors = true
+  export let optionsViewMode = "pills"
+  export let relViewMode = "pills"
+  export let zebraColors = false
+  export let highlighters 
 
   // Events
   export let onRowSelect;
@@ -57,48 +64,29 @@
   export let onRowClick;
   export let onRowDblClick;
 
-  let tableOptions
-
   $: tableOptions = {
-    idColumn,
     superColumnsPos,
-    canFilter,
-    canSort,
-    canEdit,
-    canDelete,
-    canInsert,
-    canResize,
     columnSizing,
     columnMaxWidth,
     columnMinWidth,
     columnFixedWidth,
     debounce,
-    submitOn,
     visibleRowCount,
     rowSelectMode,
-    selectionColumn : rowSelectMode != "off" ? canEdit ? true  : selectionColumn : false,
+    selectionLimit,
+    selectionColumn,
     dividers,
     dividersColor,
-    baseFontSize: size != "custom" ? sizingMap[size].rowFontSize : rowFontSize,
-    rowHeight: size != "custom" ? sizingMap[size].rowHeight : rowHeight,
     showFooter,
     showHeader,
-    defaultColumnOptions: {
-      header : {
-        color : headerColor,
-        bgColor : headerBgColor,
-        align : headerAlign
-      },
-      row : { },
-      cell : { },
-      footer : { }
-    },
     features: {
-      canInsert,
+      canFilter,
+      showFilterOperators,
+      canSort,
       canEdit,
       canDelete,
-      canFilter,
-      canSort
+      canInsert,
+      canResize,
     },
     data: { 
       datasource,
@@ -109,17 +97,26 @@
       limit,
       paginate,
       autoRefresh,
-      autoRefreshRate
+      autoRefreshRate,
+      fetchOnScroll,
+      fetchPageSize
     },
     columns: columnList,
     appearance: {
-      theme,
       size,
-      scroll,
-      cellPadding: size != "custom" ? sizingMap[size].cellPadding : cellPadding,
       useOptionColors,
       optionsViewMode,
-      relViewMode
+      relViewMode,
+      customCellPadding,
+      customRowHeight,
+      customBaseFont,
+      zebraColors,
+      dynamicColors: true,
+      highlighters,
+      rowColorTemplate,
+      rowBGColorTemplate,
+      footerColorTemplate,
+      footerBGColorTemplate
     },
     events: {
       onRowClick,
@@ -128,13 +125,11 @@
       onRowSelect,
     }
   };
-
 </script>
 
 <div use:styleable={$component.styles}>
-  {#key datasource}
-    <SuperTable {tableOptions}>
-      <slot />
-    </SuperTable>
-  {/key}
+  <SuperTable 
+    {tableOptions}>
+    <slot />
+  </SuperTable>
 </div>
