@@ -17,6 +17,8 @@
   export let autoRefreshRate
   export let paginate
   export let filter
+  export let columnList = []
+  export let autocolumns 
 
   export let visibleRowCount;
   export let showFooter;
@@ -25,7 +27,7 @@
   export let canInsert, canDelete, canEdit, canSort, canResize, canFilter
   export let showFilterOperators
   export let superColumnsPos;
-  export let columnList = []
+
   export let debounce = 750
 
   export let rowSelectMode
@@ -102,6 +104,7 @@
       fetchPageSize
     },
     columns: columnList,
+    autocolumns,
     appearance: {
       size,
       useOptionColors,

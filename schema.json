@@ -55,34 +55,27 @@
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
-        "defaultValue" : "_id"
+        "defaultValue": "_id"
       },
       {
         "type": "field/sortable",
         "key": "sortColumn",
         "label": "Sort By",
-        "resetOn" : "datasource"
+        "resetOn": "datasource"
       },
       {
         "type": "select",
         "key": "sortOrder",
         "label": "Sort Order",
         "options": [
-          {"label": "Ascending" , "value": "ascending"},
-          {"label": "Descending" , "value": "descending"}
+          { "label": "Ascending", "value": "ascending" },
+          { "label": "Descending", "value": "descending" }
         ]
       },
       {
-        "type" : "filter",
-        "key" : "filter",
-        "label" : "Filter"
-      },
-      {
-        "type": "columns",
-        "key": "columnList",
-        "resetOn" : "datasource",
-        "label": "Columns",
-        "nested": "true"
+        "type": "filter",
+        "key": "filter",
+        "label": "Filter"
       },
       {
         "type": "number",
@@ -92,18 +85,18 @@
       },
       {
         "type": "boolean",
-        "key" : "fetchOnScroll",
+        "key": "fetchOnScroll",
         "label": "Fetch on Scroll",
-        "defaultValue" : true
+        "defaultValue": false
       },
       {
         "type": "number",
-        "key" : "fetchPageSize",
+        "key": "fetchPageSize",
         "label": "Records to Fetch",
         "dependsOn": "fetchOnScroll",
-        "min" : 10,
-        "max" : 500,
-        "defaultValue" : 100
+        "min": 10,
+        "max": 500,
+        "defaultValue": 100
       },
       {
         "type": "boolean",
@@ -111,128 +104,35 @@
         "label": "Auto Refresh",
         "defaultValue": false,
         "showInBar": true,
-        "barIcon" : "Stopwatch",
-        "barStyle" : "buttons",
-        "barTitle" : "Auto Refresh"
+        "barIcon": "Stopwatch",
+        "barStyle": "buttons",
+        "barTitle": "Auto Refresh"
       },
       {
         "type": "number",
         "key": "autoRefreshRate",
         "label": "Refresh Every (s)",
-        "min" : 5,
+        "min": 5,
         "defaultValue": 60,
         "dependsOn": "autoRefresh"
       },
       {
         "section" : true,
-        "name": "Row Selection",
-        "collapsed" : false,
-        "settings": [
+        "name" : "Column Settings",
+        "settings" : [
           {
-            "type": "select",
-            "key": "rowSelectMode",
-            "label" : "Row Selection",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Row Selection",
-            "options" : [
-              { "label": "Off", "value" : "off", "barIcon" : "Close" },
-              { "label": "Single", "value" : "single", "barIcon" : "Checkmark" },
-              { "label": "Multiple", "value" : "multi", "barIcon" : "MultipleCheck" }
-            ],
-            "defaultValue": "single"
+            "type": "columns",
+            "key": "columnList",
+            "resetOn": "datasource",
+            "label": "Columns",
+            "nested": "true"
           },
           {
-            "type" : "text",
-            "key" : "preselected",
-            "label": "Selected IDs",
-            "placeholder": "Expects Array",
-            "dependsOn": { "setting" : "rowSelectMode", "value" :"multi"}
+            "type" : "boolean",
+            "key" : "autocolumns",
+            "label" : "Auto Columns",
+            "defaultValue" : false
           },
-          {
-            "type" : "number",
-            "key" : "selectionLimit",
-            "label" : "Limit",
-            "min" : 0,
-            "defaultValue" : 0,
-            "dependsOn": { "setting" : "rowSelectMode", "value" :"multi"}
-          },
-          {
-            "type" : "text",
-            "key" : "preselectedID",
-            "label": "Selected ID",
-            "dependsOn": { "setting" : "rowSelectMode", "value" :"single"}
-          }
-        ]
-      },
-      {
-        "section" : true,
-        "name": "Filtering",
-        "collapsed" : false,
-        "settings": [
-          {
-            "type": "select",
-            "key": "canFilter",
-            "label" : "Filtering",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Filtering",
-            "options" : [
-              { "label": "Off", "value" : false, "barIcon" : "Close" },
-              { "label": "Simple", "value" : "simple", "barIcon" : "Filter" },
-              { "label": "Advanced", "value" : "advanced", "barIcon" : "FilterEdit" }
-            ],
-            "defaultValue": false
-          },
-          {
-            "type": "number",
-            "key": "debounce",
-            "label": "Filter Delay(ms)",
-            "min": 100,
-            "defaultValue": 750,
-            "dependsOn": "canFilter"
-          }
-        ]
-      },
-      {
-        "section" : true,
-        "name": "Editing",
-        "collapsed" : false,
-        "settings": [
-          {
-            "type": "select",
-            "key": "canEdit",
-            "label" : "Editing",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Editing",
-            "options" : [
-              { "label": "Off", "value" : false, "barIcon" : "Close" },
-              { "label": "Simple", "value" : "simple", "barIcon" : "Edit" },
-              { "label": "Advanced", "value" : "advanced", "barIcon" : "GearsEdit" }
-            ],
-            "defaultValue": false
-          },
-          {
-            "type": "select",
-            "key": "highlighters",
-            "label": "Highlighters",
-            "dependsOn" : "canEdit",
-            "options": [
-              { "label": "None", "value": "none" },
-              { "label": "Horizontal", "value": "horizontal" },
-              { "label": "Vertical", "value": "vertical" },
-              { "label": "Both", "value": "both" }
-            ],
-            "defaultValue": "horizontal"
-          }
-        ]
-      },
-      {
-        "section" : true,
-        "name": "Capabilities",
-        "collapsed" : false,
-        "settings": [
           {
             "type": "select",
             "key": "superColumnsPos",
@@ -240,7 +140,7 @@
             "showInBar": true,
             "barStyle": "buttons",
             "options": [
-              { "label": "Off", "value" : "off", "barIcon" : "Close" },
+              { "label": "Off", "value": "off", "barIcon": "Close" },
               {
                 "label": "First",
                 "value": "first",
@@ -256,6 +156,122 @@
             ],
             "defaultValue": "first"
           },
+          {
+            "type": "boolean",
+            "key": "showHeader",
+            "label": "Column Headers",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "showFooter",
+            "label": "Column Footers",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "canResize",
+            "label": "Resize Columns",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "selectionColumn",
+            "label": "Selection Column",
+            "resetOn": "rowSelectMode",
+            "defaultValue": true
+          }
+        ]
+      },
+      {
+        "section" : true,
+        "name" : "Table Settings",
+        "settings" : [
+          {
+            "type": "select",
+            "key": "rowSelectMode",
+            "label": "Row Selection",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Row Selection",
+            "options": [
+              { "label": "Off", "value": "off", "barIcon": "Close" },
+              { "label": "Single", "value": "single", "barIcon": "Checkmark" },
+              { "label": "Multiple", "value": "multi", "barIcon": "MultipleCheck" }
+            ],
+            "defaultValue": "single"
+          },
+          {
+            "type": "text",
+            "key": "preselected",
+            "label": "Selected IDs",
+            "placeholder": "Expects Array",
+            "dependsOn": { "setting": "rowSelectMode", "value": "multi" }
+          },
+          {
+            "type": "number",
+            "key": "selectionLimit",
+            "label": "Limit",
+            "min": 0,
+            "defaultValue": 0,
+            "dependsOn": { "setting": "rowSelectMode", "value": "multi" }
+          },
+          {
+            "type": "text",
+            "key": "preselectedID",
+            "label": "Selected ID",
+            "dependsOn": { "setting": "rowSelectMode", "value": "single" }
+          },
+          {
+            "type": "select",
+            "key": "canFilter",
+            "label": "Filtering",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Filtering",
+            "options": [
+              { "label": "Off", "value": false, "barIcon": "Close" },
+              { "label": "Simple", "value": "simple", "barIcon": "Filter" },
+              { "label": "Advanced", "value": "advanced", "barIcon": "FilterEdit" }
+            ],
+            "defaultValue": false
+          },
+          {
+            "type": "number",
+            "key": "debounce",
+            "label": "Filter Delay(ms)",
+            "min": 100,
+            "defaultValue": 750,
+            "dependsOn": "canFilter"
+          },
+          {
+            "type": "select",
+            "key": "canEdit",
+            "label": "Editing",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Editing",
+            "options": [
+              { "label": "Off", "value": false, "barIcon": "Close" },
+              { "label": "Simple", "value": "simple", "barIcon": "Edit" },
+              { "label": "Advanced", "value": "advanced", "barIcon": "GearsEdit" }
+            ],
+            "defaultValue": false
+          },
+          {
+            "type": "select",
+            "key": "highlighters",
+            "label": "Highlighters",
+            "dependsOn": "canEdit",
+            "options": [
+              { "label": "None", "value": "none" },
+              { "label": "Horizontal", "value": "horizontal" },
+              { "label": "Vertical", "value": "vertical" },
+              { "label": "Both", "value": "both" }
+            ],
+            "defaultValue": "horizontal"
+          },
+    
           {
             "type": "boolean",
             "key": "canInsert",
@@ -285,40 +301,16 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
-          },
-          {
-            "type": "boolean",
-            "key": "showHeader",
-            "label": "Column Headers",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "showFooter",
-            "label": "Column Footers",
-            "defaultValue": false
-          },
-          {
-            "type": "boolean",
-            "key": "canResize",
-            "label": "Resize Columns",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "selectionColumn",
-            "label": "Selection Column",
-            "resetOn" : "rowSelectMode",
-            "defaultValue": true
           }
+
         ]
       },
       {
-        "tag" : "style",
-        "section" : true,
+        "tag": "style",
+        "section": true,
         "name": "Appearance",
-        "collapsed" : false,
-        "settings": [ 
+        "collapsed": false,
+        "settings": [
           {
             "type": "select",
             "key": "size",
@@ -342,53 +334,53 @@
             "type": "select",
             "key": "columnSizing",
             "label": "Column Sizing",
-            "options" : [ 
-              { "label" : "Flexible", "value": "flexible" }, 
-              { "label" : "Fixed", "value": "fixed"} 
-             ],
+            "options": [
+              { "label": "Flexible", "value": "flexible" },
+              { "label": "Fixed", "value": "fixed" }
+            ],
             "defaultValue": "flexible"
           },
           {
-            "type" : "text",
-            "key" : "columnMinWidth",
-            "label" : "Min Width",
-            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
-            "placeholder" : "6rem"
+            "type": "text",
+            "key": "columnMinWidth",
+            "label": "Min Width",
+            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
+            "placeholder": "6rem"
           },
           {
-            "type" : "text",
-            "key" : "columnMaxWidth",
-            "label" : "Max Width",
-            "dependsOn" : { "setting" : "columnSizing", "value" : "flexible"},
-            "placeholder" : "16rem"
+            "type": "text",
+            "key": "columnMaxWidth",
+            "label": "Max Width",
+            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
+            "placeholder": "16rem"
           },
           {
-            "type" : "text",
-            "key" : "columnFixedWidth",
-            "label" : "Width",
+            "type": "text",
+            "key": "columnFixedWidth",
+            "label": "Width",
             "placeholder": "8rem",
-            "resetOn" : "columnSizing",
-            "dependsOn" : { "setting" : "columnSizing", "value" : "fixed"}
+            "resetOn": "columnSizing",
+            "dependsOn": { "setting": "columnSizing", "value": "fixed" }
           },
           {
             "type": "select",
             "key": "relViewMode",
             "label": "Relationships",
-            "options" : [
-              { "label" : "Pills", "value" : "pills" },
-              { "label" : "Text", "value" : "text" }
+            "options": [
+              { "label": "Pills", "value": "pills" },
+              { "label": "Text", "value": "text" }
             ],
-            "defaultValue" : "pills"
+            "defaultValue": "pills"
           },
           {
             "type": "select",
             "key": "optionsViewMode",
             "label": "Options",
-            "options" : [
-              { "label" : "Pills", "value" : "pills" },
-              { "label" : "Text", "value" : "text" }
+            "options": [
+              { "label": "Pills", "value": "pills" },
+              { "label": "Text", "value": "text" }
             ],
-            "defaultValue" : "pills"
+            "defaultValue": "pills"
           },
           {
             "type": "boolean",
@@ -408,7 +400,7 @@
         "section": true,
         "name": "Custom Sizing Settings",
         "dependsOn": { "setting": "size", "value": "custom" },
-        "tag" : "style",
+        "tag": "style",
         "settings": [
           {
             "type": "number",
@@ -436,14 +428,14 @@
         ]
       },
       {
-        "tag" : "style",
+        "tag": "style",
         "section": true,
         "name": "Dynamic Row Colors",
         "settings": [
           {
             "type": "text",
             "key": "rowColorTemplate",
-            "placeholder" : "{{ Row }}",
+            "placeholder": "{{ Row }}",
             "label": "Text",
             "nested": true
           },
@@ -451,13 +443,13 @@
             "type": "text",
             "key": "rowBGColorTemplate",
             "label": "Background",
-            "placeholder" : "{{ Row }}",
-            "nested" : true
+            "placeholder": "{{ Row }}",
+            "nested": true
           }
         ]
       },
       {
-        "tag" : "style",
+        "tag": "style",
         "section": true,
         "name": "Dividers Settings",
         "settings": [
@@ -494,12 +486,12 @@
       {
         "section": true,
         "name": "Events",
-        "collapsed" : true,
+        "collapsed": true,
         "settings": [
           {
             "type": "event",
             "label": "On Row Click",
-            "key" : "onRowClick",
+            "key": "onRowClick",
             "context": [
               {
                 "label": "Row ID",
@@ -510,7 +502,7 @@
           {
             "type": "event",
             "label": "On Row Dbl Click",
-            "key" : "onRowDblClick",
+            "key": "onRowDblClick",
             "context": [
               {
                 "label": "Row ID",
@@ -532,7 +524,7 @@
           {
             "type": "event",
             "key": "onCellChange",
-            "label" : "On Cell Change",
+            "label": "On Cell Change",
             "dependsOn": "canEdit",
             "context": [
               {
