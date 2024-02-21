@@ -65,74 +65,10 @@
   export let onCellChange;
   export let onRowClick;
   export let onRowDblClick;
-
-  $: tableOptions = {
-    superColumnsPos,
-    columnSizing,
-    columnMaxWidth,
-    columnMinWidth,
-    columnFixedWidth,
-    debounce,
-    visibleRowCount,
-    rowSelectMode,
-    selectionLimit,
-    selectionColumn,
-    dividers,
-    dividersColor,
-    showFooter,
-    showHeader,
-    features: {
-      canFilter,
-      showFilterOperators,
-      canSort,
-      canEdit,
-      canDelete,
-      canInsert,
-      canResize,
-    },
-    data: { 
-      datasource,
-      idColumn,
-      filter,
-      sortColumn,
-      sortOrder,
-      limit,
-      paginate,
-      autoRefresh,
-      autoRefreshRate,
-      fetchOnScroll,
-      fetchPageSize
-    },
-    columns: columnList,
-    autocolumns,
-    appearance: {
-      size,
-      useOptionColors,
-      optionsViewMode,
-      relViewMode,
-      customCellPadding,
-      customRowHeight,
-      customBaseFont,
-      zebraColors,
-      dynamicColors: true,
-      highlighters,
-      rowColorTemplate,
-      rowBGColorTemplate,
-      footerColorTemplate,
-      footerBGColorTemplate
-    },
-    events: {
-      onRowClick,
-      onRowDblClick,
-      onCellChange,
-      onRowSelect,
-    }
-  };
 </script>
 
 <div use:styleable={$component.styles}>
-  <SuperTable 
-    {tableOptions}>
+  <SuperTable {...$$props}>
     <slot />
   </SuperTable>
 </div>
