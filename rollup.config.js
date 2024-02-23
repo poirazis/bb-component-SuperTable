@@ -89,7 +89,7 @@ export default {
     name: "plugin",
     globals: {
       svelte: "svelte",
-      "svelte/internal": "svelte_internal",
+      "svelte/internal": "svelte_internal", 
     },
   },
   external: ["svelte", "svelte/internal"],
