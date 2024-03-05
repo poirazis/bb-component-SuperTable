@@ -7,7 +7,7 @@
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "hasChildren": true,
-    "actions": ["RefreshDatasource"],
+    "actions": [ { "type" : "RefreshDatasource" }, { "type": "ClearRowSelection" } ],
     "showEmptyState": false,
     "context": {
       "type": "static",
@@ -20,6 +20,11 @@
         {
           "label": "Selected Rows",
           "key": "selectedRows",
+          "type": "array"
+        },
+        {
+          "label": "Selected IDs",
+          "key": "selectedIds",
           "type": "array"
         },
         {
@@ -55,7 +60,8 @@
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
-        "defaultValue": "_id"
+        "required": true,
+        "resetOn" : "datasource"
       },
       {
         "type": "field/sortable",
@@ -203,9 +209,9 @@
           },
           {
             "type": "text",
-            "key": "preselected",
+            "key": "preselectedIds",
             "label": "Selected IDs",
-            "placeholder": "Expects Array",
+            "placeholder": "Comma Seperated Values",
             "dependsOn": { "setting": "rowSelectMode", "value": "multi" }
           },
           {
@@ -218,7 +224,7 @@
           },
           {
             "type": "text",
-            "key": "preselectedID",
+            "key": "preselectedId",
             "label": "Selected ID",
             "dependsOn": { "setting": "rowSelectMode", "value": "single" }
           },
@@ -517,7 +523,11 @@
             "context": [
               {
                 "label": "Selected Rows",
-                "key": "rows"
+                "key": "selectedRows"
+              },
+              {
+                "label": "Selected IDs",
+                "key": "selectedIds"
               }
             ]
           },
