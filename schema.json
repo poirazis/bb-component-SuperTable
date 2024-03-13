@@ -205,7 +205,7 @@
               { "label": "Single", "value": "single", "barIcon": "Checkmark" },
               { "label": "Multiple", "value": "multi", "barIcon": "MultipleCheck" }
             ],
-            "defaultValue": "single"
+            "defaultValue": "off"
           },
           {
             "type": "text",
