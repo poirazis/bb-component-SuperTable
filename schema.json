@@ -7,7 +7,10 @@
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "hasChildren": true,
-    "actions": [ { "type" : "RefreshDatasource" }, { "type": "ClearRowSelection" } ],
+    "actions": [
+      { "type": "RefreshDatasource" },
+      { "type": "ClearRowSelection" }
+    ],
     "showEmptyState": false,
     "context": {
       "type": "static",
@@ -61,7 +64,7 @@
         "key": "idColumn",
         "label": "ID Column",
         "required": true,
-        "resetOn" : "datasource"
+        "resetOn": "datasource"
       },
       {
         "type": "field/sortable",
@@ -123,9 +126,9 @@
         "dependsOn": "autoRefresh"
       },
       {
-        "section" : true,
-        "name" : "Column Settings",
-        "settings" : [
+        "section": true,
+        "name": "Column Settings",
+        "settings": [
           {
             "type": "columns",
             "key": "columnList",
@@ -134,10 +137,10 @@
             "nested": "true"
           },
           {
-            "type" : "boolean",
-            "key" : "autocolumns",
-            "label" : "Auto Columns",
-            "defaultValue" : false
+            "type": "boolean",
+            "key": "autocolumns",
+            "label": "Auto Columns",
+            "defaultValue": false
           },
           {
             "type": "select",
@@ -190,9 +193,9 @@
         ]
       },
       {
-        "section" : true,
-        "name" : "Table Settings",
-        "settings" : [
+        "section": true,
+        "name": "Table Settings",
+        "settings": [
           {
             "type": "select",
             "key": "rowSelectMode",
@@ -203,7 +206,11 @@
             "options": [
               { "label": "Off", "value": "off", "barIcon": "Close" },
               { "label": "Single", "value": "single", "barIcon": "Checkmark" },
-              { "label": "Multiple", "value": "multi", "barIcon": "MultipleCheck" }
+              {
+                "label": "Multiple",
+                "value": "multi",
+                "barIcon": "MultipleCheck"
+              }
             ],
             "defaultValue": "off"
           },
@@ -238,7 +245,11 @@
             "options": [
               { "label": "Off", "value": false, "barIcon": "Close" },
               { "label": "Simple", "value": "simple", "barIcon": "Filter" },
-              { "label": "Advanced", "value": "advanced", "barIcon": "FilterEdit" }
+              {
+                "label": "Advanced",
+                "value": "advanced",
+                "barIcon": "FilterEdit"
+              }
             ],
             "defaultValue": false
           },
@@ -260,7 +271,11 @@
             "options": [
               { "label": "Off", "value": false, "barIcon": "Close" },
               { "label": "Simple", "value": "simple", "barIcon": "Edit" },
-              { "label": "Advanced", "value": "advanced", "barIcon": "GearsEdit" }
+              {
+                "label": "Advanced",
+                "value": "advanced",
+                "barIcon": "GearsEdit"
+              }
             ],
             "defaultValue": false
           },
@@ -277,7 +292,7 @@
             ],
             "defaultValue": "horizontal"
           },
-    
+
           {
             "type": "boolean",
             "key": "canInsert",
@@ -308,7 +323,6 @@
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
           }
-
         ]
       },
       {
@@ -322,6 +336,7 @@
             "key": "size",
             "label": "Size",
             "options": [
+              { "label": "Extra Small", "value": "XS" },
               { "label": "Small", "value": "S" },
               { "label": "Medium", "value": "M" },
               { "label": "Large", "value": "L" },
