@@ -64,7 +64,8 @@
         "key": "idColumn",
         "label": "ID Column",
         "required": true,
-        "resetOn": "datasource"
+        "resetOn": "datasource",
+        "defaultValue": "_id"
       },
       {
         "type": "field/sortable",
