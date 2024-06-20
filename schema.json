@@ -516,8 +516,8 @@
             "key": "onRowClick",
             "context": [
               {
-                "label": "Row ID",
-                "key": "rowID"
+                "label": "Row",
+                "key": "row"
               }
             ]
           },
@@ -527,8 +527,8 @@
             "key": "onRowDblClick",
             "context": [
               {
-                "label": "Row ID",
-                "key": "rowID"
+                "label": "Row",
+                "key": "row"
               }
             ]
           },
