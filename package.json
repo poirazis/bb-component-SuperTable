@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "2.0.22-alpha",
+  "version": "2.0.23-alpha",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
@@ -18,10 +18,10 @@
     "svelte-legos": "^0.2.3"
   },
   "devDependencies": {
-    "@budibase/backend-core": "^2.29.0",
-    "@budibase/bbui": "^2.29.0",
-    "@budibase/frontend-core": "^2.29.0",
-    "@budibase/shared-core": "^2.29.0",
+    "@budibase/backend-core": "^2.29.1",
+    "@budibase/bbui": "^2.29.1",
+    "@budibase/frontend-core": "^2.29.1",
+    "@budibase/shared-core": "^2.29.1",
     "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-json": "^6.1.0",
