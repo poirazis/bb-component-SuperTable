@@ -18,6 +18,7 @@
   export let filter;
   export let columnList = [];
   export let autocolumns;
+  export let jsoncolumns;
 
   export let visibleRowCount;
   export let showFooter;
@@ -61,6 +62,7 @@
   export let optionsViewMode = "pills";
   export let relViewMode = "pills";
   export let zebraColors = false;
+  export let quiet;
   export let highlighters;
 
   // Events
@@ -85,6 +87,7 @@
     {filter}
     {columnList}
     {autocolumns}
+    {jsoncolumns}
     {visibleRowCount}
     {showFooter}
     {showHeader}
@@ -129,6 +132,7 @@
     {optionsViewMode}
     {relViewMode}
     {zebraColors}
+    {quiet}
     {highlighters}
     {onRowSelect}
     {onCellChange}

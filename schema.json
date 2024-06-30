@@ -144,6 +144,12 @@
             "defaultValue": false
           },
           {
+            "type": "boolean",
+            "key": "jsoncolumns",
+            "label": "JSON Columns",
+            "defaultValue": false
+          },
+          {
             "type": "select",
             "key": "superColumnsPos",
             "label": "Super Columns",
@@ -414,6 +420,12 @@
             "type": "boolean",
             "key": "zebraColors",
             "label": "Zebra Colors",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "quiet",
+            "label": "Quiet",
             "defaultValue": false
           }
         ]
