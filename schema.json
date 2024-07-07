@@ -21,6 +21,11 @@
           "type": "array"
         },
         {
+          "label": "Menu Row",
+          "key": "menuRow",
+          "type": "object"
+        },
+        {
           "label": "Selected Rows",
           "key": "selectedRows",
           "type": "array"
@@ -202,6 +207,7 @@
       {
         "section": true,
         "name": "Table Settings",
+        "collapsed": true,
         "settings": [
           {
             "type": "select",
@@ -329,6 +335,62 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Row Action Menu",
+        "collapsed": true,
+        "settings": [
+          {
+            "type": "select",
+            "key": "rowMenu",
+            "label": "Row Menu",
+            "options": [
+              { "label": "Disabled", "value": false },
+              { "label": "Column", "value": "actionColumn" }
+            ],
+            "defaultValue": false
+          },
+          {
+            "dependsOn": "rowMenu",
+            "type": "icon",
+            "defaultValue": "ri-more-fill",
+            "key": "rowMenuIcon",
+            "label": "Menu Icon"
+          },
+          {
+            "dependsOn": "rowMenu",
+            "type": "number",
+            "key": "menuItemsVisible",
+            "label": "Show Buttons",
+            "mim": 0,
+            "max": 12,
+            "defaultValue": 1
+          },
+          {
+            "dependsOn": "rowMenu",
+            "type": "buttonConfiguration",
+            "key": "rowMenuItems",
+            "label": "Menu Items",
+            "nested": true,
+            "wide": true
+          },
+          {
+            "type": "select",
+            "key": "selectionMenu",
+            "label": "Selection Menu",
+            "options": [{ "label": "Disabled", "value": false }],
+            "defaultValue": false
+          },
+          {
+            "dependsOn": "selectionMenu",
+            "type": "buttonConfiguration",
+            "key": "selectionMenuItems",
+            "label": "Menu Items",
+            "nested": true,
+            "wide": true
           }
         ]
       },

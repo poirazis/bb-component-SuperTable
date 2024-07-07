@@ -31,6 +31,11 @@
   export let debounce = 750;
 
   export let rowSelectMode;
+  export let rowMenu = false;
+  export let rowMenuItems;
+  export let selectionMenu = false;
+  export let selectionMenuItems;
+  export let menuItemsVisible;
   export let preselectedId;
   export let preselectedIds;
   export let selectionColumn;
@@ -102,6 +107,11 @@
     {superColumnsPos}
     {debounce}
     {rowSelectMode}
+    {rowMenu}
+    {rowMenuItems}
+    {menuItemsVisible}
+    {selectionMenu}
+    {selectionMenuItems}
     {preselectedId}
     {preselectedIds}
     {selectionColumn}
