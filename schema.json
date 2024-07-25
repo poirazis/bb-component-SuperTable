@@ -365,7 +365,7 @@
             "type": "number",
             "key": "menuItemsVisible",
             "label": "Show Buttons",
-            "mim": 0,
+            "min": 0,
             "max": 12,
             "defaultValue": 1
           },
