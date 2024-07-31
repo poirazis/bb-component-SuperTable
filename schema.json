@@ -65,6 +65,12 @@
         "required": true
       },
       {
+        "type": "boolean",
+        "key": "isTable",
+        "label": "Is Table",
+        "hidden": true
+      },
+      {
         "type": "field",
         "key": "idColumn",
         "label": "ID Column",
@@ -97,6 +103,13 @@
         "label": "Limit",
         "key": "limit",
         "defaultValue": 50
+      },
+      {
+        "type": "columns",
+        "key": "columnList",
+        "resetOn": "datasource",
+        "label": "Columns",
+        "nested": "true"
       },
       {
         "type": "boolean",
@@ -133,27 +146,9 @@
       },
       {
         "section": true,
-        "name": "Column Settings",
+        "name": "Table Features",
+        "collapsed": true,
         "settings": [
-          {
-            "type": "columns",
-            "key": "columnList",
-            "resetOn": "datasource",
-            "label": "Columns",
-            "nested": "true"
-          },
-          {
-            "type": "boolean",
-            "key": "autocolumns",
-            "label": "Auto Columns",
-            "defaultValue": false
-          },
-          {
-            "type": "boolean",
-            "key": "jsoncolumns",
-            "label": "JSON Columns",
-            "defaultValue": false
-          },
           {
             "type": "select",
             "key": "superColumnsPos",
@@ -177,38 +172,6 @@
             ],
             "defaultValue": "first"
           },
-          {
-            "type": "boolean",
-            "key": "showHeader",
-            "label": "Column Headers",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "showFooter",
-            "label": "Column Footers",
-            "defaultValue": false
-          },
-          {
-            "type": "boolean",
-            "key": "canResize",
-            "label": "Resize Columns",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "selectionColumn",
-            "label": "Selection Column",
-            "resetOn": "rowSelectMode",
-            "defaultValue": true
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "Table Settings",
-        "collapsed": true,
-        "settings": [
           {
             "type": "select",
             "key": "rowSelectMode",
@@ -276,18 +239,59 @@
           },
           {
             "type": "select",
+            "key": "canInsert",
+            "label": "Add Row",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Add Row",
+            "options": [
+              { "label": "Off", "value": false, "barIcon": "Close" },
+              {
+                "label": "Insert Inline",
+                "value": "simple",
+                "barIcon": "FlashAuto"
+              },
+              {
+                "label": "Insert Custom",
+                "value": "advanced",
+                "barIcon": "Events"
+              }
+            ],
+            "defaultValue": false
+          },
+          {
+            "type": "select",
+            "dependsOn": "isTable",
             "key": "canEdit",
-            "label": "Editing",
+            "label": "Edit Row",
             "showInBar": true,
             "barStyle": "buttons",
             "barTitle": "Editing",
             "options": [
               { "label": "Off", "value": false, "barIcon": "Close" },
-              { "label": "Simple", "value": "simple", "barIcon": "Edit" },
+              { "label": "Simple", "value": "simple", "barIcon": "FlashAuto" },
               {
                 "label": "Advanced",
                 "value": "advanced",
-                "barIcon": "GearsEdit"
+                "barIcon": "Events"
+              }
+            ],
+            "defaultValue": false
+          },
+          {
+            "type": "select",
+            "key": "canDelete",
+            "label": "Delete Row",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barTitle": "Delete Row",
+            "options": [
+              { "label": "Off", "value": false, "barIcon": "Close" },
+              { "label": "Simple", "value": "simple", "barIcon": "FlashAuto" },
+              {
+                "label": "Advanced",
+                "value": "advanced",
+                "barIcon": "Events"
               }
             ],
             "defaultValue": false
@@ -305,27 +309,6 @@
             ],
             "defaultValue": "horizontal"
           },
-
-          {
-            "type": "boolean",
-            "key": "canInsert",
-            "label": "Insert",
-            "defaultValue": false,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Add",
-            "barTitle": "Add New Row"
-          },
-          {
-            "type": "boolean",
-            "key": "canDelete",
-            "label": "Delete",
-            "defaultValue": false,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Delete",
-            "barTitle": "Delete Rows"
-          },
           {
             "type": "boolean",
             "key": "canSort",
@@ -335,6 +318,50 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Column Settings",
+        "collapsed": true,
+        "settings": [
+          {
+            "type": "boolean",
+            "key": "autocolumns",
+            "label": "Auto Columns",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "jsoncolumns",
+            "label": "JSON Columns",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "showHeader",
+            "label": "Column Headers",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "showFooter",
+            "label": "Column Footers",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "canResize",
+            "label": "Resize Columns",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "selectionColumn",
+            "label": "Selection Column",
+            "resetOn": "rowSelectMode",
+            "defaultValue": true
           }
         ]
       },
@@ -610,6 +637,11 @@
             "type": "event",
             "label": "On Row Select",
             "key": "onRowSelect",
+            "dependsOn": {
+              "setting": "rowSelectMode",
+              "value": "off",
+              "invert": true
+            },
             "context": [
               {
                 "label": "Selected Rows",
@@ -644,6 +676,26 @@
                 "key": "value"
               }
             ]
+          },
+          {
+            "type": "event",
+            "key": "onDelete",
+            "label": "On Delete",
+            "nested": true,
+            "dependsOn": "canDelete",
+            "context": [
+              {
+                "label": "RowID",
+                "key": "rowID"
+              }
+            ]
+          },
+          {
+            "type": "event",
+            "key": "onInsert",
+            "label": "On New Row",
+            "nested": true,
+            "dependsOn": "canInsert"
           }
         ]
       }
