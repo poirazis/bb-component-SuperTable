@@ -2,10 +2,12 @@
   import { getContext } from "svelte";
   import SuperTable from "../../bb_super_components_shared/src/lib/SuperTable/SuperTable.svelte";
 
-  const { styleable } = getContext("sdk");
+  const { styleable, memo, builderStore } = getContext("sdk");
   const component = getContext("component");
 
   export let datasource;
+  export let isTable;
+
   export let idColumn;
   export let sortColumn;
   export let sortOrder;
@@ -25,6 +27,7 @@
   export let showHeader;
   export let size;
   export let canInsert, canDelete, canEdit, canSort, canResize, canFilter;
+  export let deleteIconPosition = "left";
   export let showFilterOperators;
   export let superColumnsPos;
 
@@ -75,6 +78,17 @@
   export let onCellChange;
   export let onRowClick;
   export let onRowDblClick;
+  export let onInsert;
+  export let onDelete;
+
+  $: localIsTable = datasource?.type == "table" || datasource?.tableId;
+  $: if (
+    $builderStore.inBuilder &&
+    $component.selected &&
+    isTable != localIsTable
+  ) {
+    builderStore.actions.updateProp("isTable", localIsTable);
+  }
 </script>
 
 <div use:styleable={$component.styles}>
@@ -99,6 +113,7 @@
     {size}
     {canInsert}
     {canDelete}
+    {deleteIconPosition}
     {canEdit}
     {canSort}
     {canResize}
@@ -148,6 +163,8 @@
     {onCellChange}
     {onRowClick}
     {onRowDblClick}
+    {onInsert}
+    {onDelete}
   >
     <slot />
   </SuperTable>
