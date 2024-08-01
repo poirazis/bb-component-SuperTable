@@ -21,11 +21,6 @@
           "type": "array"
         },
         {
-          "label": "Menu Row",
-          "key": "menuRow",
-          "type": "object"
-        },
-        {
           "label": "Selected Rows",
           "key": "selectedRows",
           "type": "array"
@@ -180,7 +175,7 @@
             "barStyle": "buttons",
             "barTitle": "Row Selection",
             "options": [
-              { "label": "Off", "value": "off", "barIcon": "Close" },
+              { "label": "Off", "value": false, "barIcon": "Close" },
               { "label": "Single", "value": "single", "barIcon": "Checkmark" },
               {
                 "label": "Multiple",
@@ -188,7 +183,7 @@
                 "barIcon": "MultipleCheck"
               }
             ],
-            "defaultValue": "off"
+            "defaultValue": false
           },
           {
             "type": "text",
@@ -381,6 +376,28 @@
             "defaultValue": false
           },
           {
+            "type": "select",
+            "key": "rowMenuPosition",
+            "label": "Menu Position",
+            "barStyle": "buttons",
+            "dependsOn": "rowMenu",
+            "options": [
+              {
+                "label": "First",
+                "value": "first",
+                "barIcon": "PaddingLeft",
+                "barTitle": "First"
+              },
+              {
+                "label": "Last",
+                "value": "last",
+                "barIcon": "PaddingRight",
+                "barTitle": "Last"
+              }
+            ],
+            "defaultValue": "first"
+          },
+          {
             "dependsOn": "rowMenu",
             "type": "icon",
             "defaultValue": "ri-more-fill",
@@ -402,7 +419,13 @@
             "key": "rowMenuItems",
             "label": "Menu Items",
             "nested": true,
-            "wide": true
+            "wide": true,
+            "context": [
+              {
+                "key": "menuRow",
+                "label": "Menu Row"
+              }
+            ]
           },
           {
             "type": "select",
@@ -685,8 +708,8 @@
             "dependsOn": "canDelete",
             "context": [
               {
-                "label": "RowID",
-                "key": "rowID"
+                "label": "Delete Row",
+                "key": "menuRow"
               }
             ]
           },

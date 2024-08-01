@@ -8,7 +8,7 @@
   export let datasource;
   export let isTable;
 
-  export let idColumn;
+  export let idColumn = "_id";
   export let sortColumn;
   export let sortOrder;
   export let limit;
@@ -22,7 +22,7 @@
   export let autocolumns;
   export let jsoncolumns;
 
-  export let visibleRowCount;
+  export let visibleRowCount = 10;
   export let showFooter;
   export let showHeader;
   export let size;
@@ -47,7 +47,7 @@
   export let columnSizing = "flex";
   export let columnMinWidth = "6rem";
   export let columnMaxWidth = "auto";
-  export let columnFixedWidth;
+  export let columnFixedWidth = "6rem";
 
   export let headerFontSize, headerColor, headerBgColor, headerAlign;
   export let dividers, dividersColor;
@@ -81,6 +81,7 @@
   export let onInsert;
   export let onDelete;
 
+  // Builder Code to identify if we are dealing with a Table or View Datasource
   $: localIsTable = datasource?.type == "table" || datasource?.tableId;
   $: if (
     $builderStore.inBuilder &&
