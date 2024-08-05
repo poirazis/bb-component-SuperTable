@@ -80,6 +80,7 @@
   export let onRowDblClick;
   export let onInsert;
   export let onDelete;
+  export let onEdit;
 
   // Builder Code to identify if we are dealing with a Table or View Datasource
   $: localIsTable = datasource?.type == "table" || datasource?.tableId;
@@ -166,6 +167,7 @@
     {onRowDblClick}
     {onInsert}
     {onDelete}
+    {onEdit}
   >
     <slot />
   </SuperTable>

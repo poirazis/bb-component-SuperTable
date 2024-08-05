@@ -705,7 +705,7 @@
             "key": "onDelete",
             "label": "On Delete",
             "nested": true,
-            "dependsOn": "canDelete",
+            "dependsOn": { "setting": "canDelete", "value": "advanced" },
             "context": [
               {
                 "label": "Delete Row",
@@ -715,10 +715,23 @@
           },
           {
             "type": "event",
+            "key": "onEdit",
+            "label": "On Edit",
+            "nested": true,
+            "dependsOn": { "setting": "canEdit", "value": "advanced" },
+            "context": [
+              {
+                "label": "Edit Row",
+                "key": "menuRow"
+              }
+            ]
+          },
+          {
+            "type": "event",
             "key": "onInsert",
             "label": "On New Row",
             "nested": true,
-            "dependsOn": "canInsert"
+            "dependsOn": { "setting": "canInsert", "value": "advanced" }
           }
         ]
       }
