@@ -2,7 +2,7 @@
   import { getContext } from "svelte";
   import SuperTable from "../../bb_super_components_shared/src/lib/SuperTable/SuperTable.svelte";
 
-  const { styleable, memo, builderStore } = getContext("sdk");
+  const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
 
   export let datasource;
