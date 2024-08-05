@@ -240,14 +240,14 @@
             "barStyle": "buttons",
             "barTitle": "Add Row",
             "options": [
-              { "label": "Off", "value": false, "barIcon": "Close" },
+              { "label": "Off", "value": false, "barIcon": "Add" },
               {
-                "label": "Insert Inline",
+                "label": "Direct",
                 "value": "simple",
                 "barIcon": "FlashAuto"
               },
               {
-                "label": "Insert Custom",
+                "label": "Fire Event",
                 "value": "advanced",
                 "barIcon": "Events"
               }
@@ -263,10 +263,14 @@
             "barStyle": "buttons",
             "barTitle": "Editing",
             "options": [
-              { "label": "Off", "value": false, "barIcon": "Close" },
-              { "label": "Simple", "value": "simple", "barIcon": "FlashAuto" },
               {
-                "label": "Advanced",
+                "label": "Off",
+                "value": false,
+                "barIcon": "NoEdit"
+              },
+              { "label": "Direct", "value": "simple", "barIcon": "FlashAuto" },
+              {
+                "label": "Fire Event",
                 "value": "advanced",
                 "barIcon": "Events"
               }
@@ -281,10 +285,10 @@
             "barStyle": "buttons",
             "barTitle": "Delete Row",
             "options": [
-              { "label": "Off", "value": false, "barIcon": "Close" },
-              { "label": "Simple", "value": "simple", "barIcon": "FlashAuto" },
+              { "label": "Off", "value": false, "barIcon": "DeleteOutline" },
+              { "label": "Direct", "value": "simple", "barIcon": "FlashAuto" },
               {
-                "label": "Advanced",
+                "label": "Fire Event",
                 "value": "advanced",
                 "barIcon": "Events"
               }
