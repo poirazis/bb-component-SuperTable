@@ -43,11 +43,13 @@
   export let preselectedIds;
   export let selectionColumn;
   export let selectionLimit;
+  export let numberingColumn = true;
+  export let stickFirstColumn = false;
 
   export let columnSizing = "flex";
   export let columnMinWidth = "6rem";
   export let columnMaxWidth = "auto";
-  export let columnFixedWidth = "6rem";
+  export let columnFixedWidth = "8rem";
 
   export let headerFontSize, headerColor, headerBgColor, headerAlign;
   export let dividers, dividersColor;
@@ -91,6 +93,14 @@
   ) {
     builderStore.actions.updateProp("isTable", localIsTable);
   }
+
+  $: $component.styles = {
+    ...$component.styles,
+    normal: {
+      width: "100%",
+      overflow: "hidden",
+    },
+  };
 </script>
 
 <div use:styleable={$component.styles}>
@@ -168,6 +178,8 @@
     {onInsert}
     {onDelete}
     {onEdit}
+    {numberingColumn}
+    {stickFirstColumn}
   >
     <slot />
   </SuperTable>
