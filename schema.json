@@ -308,14 +308,7 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "Column Settings",
-        "collapsed": true,
-        "settings": [
+          },
           {
             "type": "boolean",
             "key": "autocolumns",
@@ -387,7 +380,9 @@
             "label": "Row Menu",
             "options": [
               { "label": "Disabled", "value": false },
-              { "label": "Column", "value": "actionColumn" }
+              { "label": "Column - Left", "value": "columnLeft" },
+              { "label": "Column - Right", "value": "columnRight" },
+              { "label": "Context Menu", "value": "contextMenu" }
             ],
             "defaultValue": false
           },

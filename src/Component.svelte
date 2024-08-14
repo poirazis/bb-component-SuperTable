@@ -36,6 +36,7 @@
   export let rowSelectMode;
   export let rowMenu = false;
   export let rowMenuItems;
+  export let rowMenuIcon = "ri-more-fill";
   export let selectionMenu = false;
   export let selectionMenuItems;
   export let menuItemsVisible;
@@ -136,6 +137,7 @@
     {rowSelectMode}
     {rowMenu}
     {rowMenuItems}
+    {rowMenuIcon}
     {menuItemsVisible}
     {selectionMenu}
     {selectionMenuItems}
