@@ -36,6 +36,7 @@
   export let rowSelectMode;
   export let rowMenu = false;
   export let rowMenuItems;
+  export let rowMenuIcon = "ri-more-fill";
   export let selectionMenu = false;
   export let selectionMenuItems;
   export let menuItemsVisible;
@@ -43,11 +44,13 @@
   export let preselectedIds;
   export let selectionColumn;
   export let selectionLimit;
+  export let numberingColumn = true;
+  export let stickFirstColumn = false;
 
   export let columnSizing = "flex";
   export let columnMinWidth = "6rem";
   export let columnMaxWidth = "auto";
-  export let columnFixedWidth = "6rem";
+  export let columnFixedWidth = "8rem";
 
   export let headerFontSize, headerColor, headerBgColor, headerAlign;
   export let dividers, dividersColor;
@@ -91,6 +94,14 @@
   ) {
     builderStore.actions.updateProp("isTable", localIsTable);
   }
+
+  $: $component.styles = {
+    ...$component.styles,
+    normal: {
+      width: "100%",
+      overflow: "hidden",
+    },
+  };
 </script>
 
 <div use:styleable={$component.styles}>
@@ -126,6 +137,7 @@
     {rowSelectMode}
     {rowMenu}
     {rowMenuItems}
+    {rowMenuIcon}
     {menuItemsVisible}
     {selectionMenu}
     {selectionMenuItems}
@@ -168,6 +180,8 @@
     {onInsert}
     {onDelete}
     {onEdit}
+    {numberingColumn}
+    {stickFirstColumn}
   >
     <slot />
   </SuperTable>

@@ -236,9 +236,6 @@
             "type": "select",
             "key": "canInsert",
             "label": "Add Row",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Add Row",
             "options": [
               { "label": "Off", "value": false, "barIcon": "Add" },
               {
@@ -259,9 +256,6 @@
             "dependsOn": "isTable",
             "key": "canEdit",
             "label": "Edit Row",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Editing",
             "options": [
               {
                 "label": "Off",
@@ -281,9 +275,6 @@
             "type": "select",
             "key": "canDelete",
             "label": "Delete Row",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barTitle": "Delete Row",
             "options": [
               { "label": "Off", "value": false, "barIcon": "DeleteOutline" },
               { "label": "Direct", "value": "simple", "barIcon": "FlashAuto" },
@@ -317,14 +308,7 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
-          }
-        ]
-      },
-      {
-        "section": true,
-        "name": "Column Settings",
-        "collapsed": true,
-        "settings": [
+          },
           {
             "type": "boolean",
             "key": "autocolumns",
@@ -357,10 +341,31 @@
           },
           {
             "type": "boolean",
+            "key": "numberingColumn",
+            "label": "Numbering",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "123",
+            "barTitle": "Numbering",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
             "key": "selectionColumn",
             "label": "Selection Column",
+            "dependsOn": "rowSelectMode",
             "resetOn": "rowSelectMode",
             "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "stickFirstColumn",
+            "label": "Pin 1st Column",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "PinOff",
+            "barTitle": "Pin 1st Column",
+            "defaultValue": false
           }
         ]
       },
@@ -375,31 +380,11 @@
             "label": "Row Menu",
             "options": [
               { "label": "Disabled", "value": false },
-              { "label": "Column", "value": "actionColumn" }
+              { "label": "Column - Left", "value": "columnLeft" },
+              { "label": "Column - Right", "value": "columnRight" },
+              { "label": "Context Menu", "value": "contextMenu" }
             ],
             "defaultValue": false
-          },
-          {
-            "type": "select",
-            "key": "rowMenuPosition",
-            "label": "Menu Position",
-            "barStyle": "buttons",
-            "dependsOn": "rowMenu",
-            "options": [
-              {
-                "label": "First",
-                "value": "first",
-                "barIcon": "PaddingLeft",
-                "barTitle": "First"
-              },
-              {
-                "label": "Last",
-                "value": "last",
-                "barIcon": "PaddingRight",
-                "barTitle": "Last"
-              }
-            ],
-            "defaultValue": "first"
           },
           {
             "dependsOn": "rowMenu",
