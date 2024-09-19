@@ -16,6 +16,11 @@
       "type": "static",
       "values": [
         {
+          "label": "Active Row",
+          "key": "activeRow",
+          "type": "object"
+        },
+        {
           "label": "Rows",
           "key": "rows",
           "type": "array"
@@ -225,79 +230,31 @@
             "defaultValue": false
           },
           {
-            "type": "number",
-            "key": "debounce",
-            "label": "Filter Delay(ms)",
-            "min": 100,
-            "defaultValue": 750,
-            "dependsOn": "canFilter"
-          },
-          {
-            "type": "select",
+            "type": "boolean",
             "key": "canInsert",
             "label": "Add Row",
-            "options": [
-              { "label": "Off", "value": false, "barIcon": "Add" },
-              {
-                "label": "Direct",
-                "value": "simple",
-                "barIcon": "FlashAuto"
-              },
-              {
-                "label": "Fire Event",
-                "value": "advanced",
-                "barIcon": "Events"
-              }
-            ],
             "defaultValue": false
           },
           {
-            "type": "select",
-            "dependsOn": "isTable",
+            "type": "boolean",
             "key": "canEdit",
             "label": "Edit Row",
-            "options": [
-              {
-                "label": "Off",
-                "value": false,
-                "barIcon": "NoEdit"
-              },
-              { "label": "Direct", "value": "simple", "barIcon": "FlashAuto" },
-              {
-                "label": "Fire Event",
-                "value": "advanced",
-                "barIcon": "Events"
-              }
-            ],
-            "defaultValue": false
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Edit",
+            "barTitle": "Edit",
+            "defaultValue": false,
+            "dependsOn": "isTable"
           },
           {
-            "type": "select",
+            "type": "boolean",
             "key": "canDelete",
             "label": "Delete Row",
-            "options": [
-              { "label": "Off", "value": false, "barIcon": "DeleteOutline" },
-              { "label": "Direct", "value": "simple", "barIcon": "FlashAuto" },
-              {
-                "label": "Fire Event",
-                "value": "advanced",
-                "barIcon": "Events"
-              }
-            ],
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Delete",
+            "barTitle": "Delete Row",
             "defaultValue": false
-          },
-          {
-            "type": "select",
-            "key": "highlighters",
-            "label": "Highlighters",
-            "dependsOn": "canEdit",
-            "options": [
-              { "label": "None", "value": "none" },
-              { "label": "Horizontal", "value": "horizontal" },
-              { "label": "Vertical", "value": "vertical" },
-              { "label": "Both", "value": "both" }
-            ],
-            "defaultValue": "horizontal"
           },
           {
             "type": "boolean",
@@ -311,16 +268,31 @@
           },
           {
             "type": "boolean",
-            "key": "autocolumns",
-            "label": "Auto Columns",
-            "defaultValue": false
+            "key": "numberingColumn",
+            "label": "Numbering",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "123",
+            "barTitle": "Numbering",
+            "defaultValue": true
           },
           {
             "type": "boolean",
-            "key": "jsoncolumns",
-            "label": "JSON Columns",
+            "key": "stickFirstColumn",
+            "label": "Pin 1st Column",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "PinOff",
+            "barTitle": "Pin 1st Column",
             "defaultValue": false
-          },
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Column Settings",
+        "collapsed": true,
+        "settings": [
           {
             "type": "boolean",
             "key": "showHeader",
@@ -341,48 +313,27 @@
           },
           {
             "type": "boolean",
-            "key": "numberingColumn",
-            "label": "Numbering",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "123",
-            "barTitle": "Numbering",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
             "key": "selectionColumn",
             "label": "Selection Column",
             "dependsOn": "rowSelectMode",
             "resetOn": "rowSelectMode",
             "defaultValue": true
-          },
-          {
-            "type": "boolean",
-            "key": "stickFirstColumn",
-            "label": "Pin 1st Column",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "PinOff",
-            "barTitle": "Pin 1st Column",
-            "defaultValue": false
           }
         ]
       },
       {
         "section": true,
-        "name": "Row Action Menu",
+        "name": "Row Settings",
         "collapsed": true,
         "settings": [
           {
             "type": "select",
             "key": "rowMenu",
-            "label": "Row Menu",
+            "label": "Row Buttons",
             "options": [
               { "label": "Disabled", "value": false },
               { "label": "Column - Left", "value": "columnLeft" },
-              { "label": "Column - Right", "value": "columnRight" },
-              { "label": "Context Menu", "value": "contextMenu" }
+              { "label": "Column - Right", "value": "columnRight" }
             ],
             "defaultValue": false
           },
@@ -398,23 +349,25 @@
             "type": "number",
             "key": "menuItemsVisible",
             "label": "Show Buttons",
-            "mi": 0,
-            "max": 12,
+            "min": 0,
+            "max": 6,
             "defaultValue": 1
           },
           {
             "dependsOn": "rowMenu",
             "type": "buttonConfiguration",
             "key": "rowMenuItems",
-            "label": "Menu Items",
+            "label": "Row Buttons",
+            "max": 6,
             "nested": true,
-            "wide": true,
-            "context": [
-              {
-                "key": "menuRow",
-                "label": "Menu Row"
-              }
-            ]
+            "wide": true
+          },
+          {
+            "type": "buttonConfiguration",
+            "key": "rowContextMenuItems",
+            "label": "Row Context Menu",
+            "nested": true,
+            "wide": true
           },
           {
             "type": "select",
@@ -444,11 +397,9 @@
             "key": "size",
             "label": "Size",
             "options": [
-              { "label": "Extra Small", "value": "XS" },
               { "label": "Small", "value": "S" },
               { "label": "Medium", "value": "M" },
-              { "label": "Large", "value": "L" },
-              { "label": "Custom", "value": "custom" }
+              { "label": "Large", "value": "L" }
             ],
             "defaultValue": "M"
           },
@@ -493,6 +444,19 @@
           },
           {
             "type": "select",
+            "key": "highlighters",
+            "label": "Highlighters",
+            "dependsOn": "canEdit",
+            "options": [
+              { "label": "None", "value": "none" },
+              { "label": "Horizontal", "value": "horizontal" },
+              { "label": "Vertical", "value": "vertical" },
+              { "label": "Both", "value": "both" }
+            ],
+            "defaultValue": "horizontal"
+          },
+          {
+            "type": "select",
             "key": "relViewMode",
             "label": "Relationships",
             "options": [
@@ -532,37 +496,6 @@
         ]
       },
       {
-        "section": true,
-        "name": "Custom Sizing Settings",
-        "dependsOn": { "setting": "size", "value": "custom" },
-        "tag": "style",
-        "settings": [
-          {
-            "type": "number",
-            "key": "customRowHeight",
-            "label": "Row Height",
-            "min": 0,
-            "max": 400,
-            "defaultValue": 36
-          },
-          {
-            "type": "number",
-            "key": "customCellPadding",
-            "label": "Cell Padding L/R",
-            "min": 0,
-            "max": 32,
-            "defaultValue": 8
-          },
-          {
-            "type": "number",
-            "key": "customBaseFont",
-            "label": "Row Font Size",
-            "min": 6,
-            "defaultValue": 14
-          }
-        ]
-      },
-      {
         "tag": "style",
         "section": true,
         "name": "Dynamic Row Colors",
@@ -570,7 +503,6 @@
           {
             "type": "text",
             "key": "rowColorTemplate",
-            "placeholder": "{{ Row }}",
             "label": "Text",
             "nested": true
           },
@@ -578,7 +510,6 @@
             "type": "text",
             "key": "rowBGColorTemplate",
             "label": "Background",
-            "placeholder": "{{ Row }}",
             "nested": true
           }
         ]
@@ -667,38 +598,27 @@
           },
           {
             "type": "event",
-            "key": "onCellChange",
-            "label": "On Cell Change",
-            "dependsOn": "canEdit",
+            "key": "onDelete",
+            "label": "On Delete",
+            "nested": true,
+            "dependsOn": "canDelete",
             "context": [
               {
-                "label": "RowID",
-                "key": "rowID"
-              },
-              {
-                "label": "Field",
-                "key": "field"
-              },
-              {
-                "label": "Previous Value",
-                "key": "previousValue"
-              },
-              {
-                "label": "New Value",
-                "key": "value"
+                "label": "Delete Row",
+                "key": "row"
               }
             ]
           },
           {
             "type": "event",
-            "key": "onDelete",
-            "label": "On Delete",
+            "key": "afterDelete",
+            "label": "After Delete",
             "nested": true,
-            "dependsOn": { "setting": "canDelete", "value": "advanced" },
+            "dependsOn": "canDelete",
             "context": [
               {
-                "label": "Delete Row",
-                "key": "menuRow"
+                "label": "Deleted Row",
+                "key": "row"
               }
             ]
           },
@@ -707,10 +627,23 @@
             "key": "onEdit",
             "label": "On Edit",
             "nested": true,
-            "dependsOn": { "setting": "canEdit", "value": "advanced" },
+            "dependsOn": "canEdit",
             "context": [
               {
                 "label": "Edit Row",
+                "key": "menuRow"
+              }
+            ]
+          },
+          {
+            "type": "event",
+            "key": "afterEdit",
+            "label": "After Edit",
+            "nested": true,
+            "dependsOn": "canEdit",
+            "context": [
+              {
+                "label": "Edited Row",
                 "key": "menuRow"
               }
             ]

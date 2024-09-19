@@ -66,10 +66,7 @@
     footerColorTemplate,
     footerBGColorTemplate;
 
-  export let customCellPadding;
-  export let customBaseFont;
-  export let customRowHeight;
-  export let useOptionColors = true;
+  export let useOptionColors;
   export let optionsViewMode = "pills";
   export let relViewMode = "pills";
   export let zebraColors = false;
@@ -83,10 +80,12 @@
   export let onRowDblClick;
   export let onInsert;
   export let onDelete;
+  export let afterDelete;
   export let onEdit;
 
   // Builder Code to identify if we are dealing with a Table or View Datasource
   $: localIsTable = datasource?.type == "table" || datasource?.tableId;
+  $: comp_id = $component.id;
   $: if (
     $builderStore.inBuilder &&
     $component.selected &&
@@ -106,6 +105,7 @@
 
 <div use:styleable={$component.styles}>
   <SuperTable
+    {comp_id}
     {datasource}
     {idColumn}
     {sortColumn}
@@ -164,9 +164,6 @@
     {footerFontSize}
     {footerColorTemplate}
     {footerBGColorTemplate}
-    {customCellPadding}
-    {customBaseFont}
-    {customRowHeight}
     {useOptionColors}
     {optionsViewMode}
     {relViewMode}
@@ -179,6 +176,7 @@
     {onRowDblClick}
     {onInsert}
     {onDelete}
+    {afterDelete}
     {onEdit}
     {numberingColumn}
     {stickFirstColumn}
