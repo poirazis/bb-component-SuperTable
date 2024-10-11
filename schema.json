@@ -12,12 +12,21 @@
       { "type": "ClearRowSelection" }
     ],
     "showEmptyState": false,
+    "styles": ["size"],
+    "size": {
+      "width": 600,
+      "height": 400
+    },
+    "grid": {
+      "hAlign": "stretch",
+      "vAlign": "stretch"
+    },
     "context": {
       "type": "static",
       "values": [
         {
-          "label": "Active Row",
-          "key": "activeRow",
+          "label": "Current Row",
+          "key": "row",
           "type": "object"
         },
         {
@@ -54,6 +63,16 @@
           "label": "Page Number",
           "key": "pageNumber",
           "type": "number"
+        },
+        {
+          "label": "Singular Name",
+          "key": "entitySingular",
+          "type": "string"
+        },
+        {
+          "label": "Plural Name",
+          "key": "entityPlural",
+          "type": "string"
         }
       ]
     },
@@ -103,6 +122,12 @@
         "label": "Limit",
         "key": "limit",
         "defaultValue": 50
+      },
+      {
+        "type": "text",
+        "key": "emptyMessage",
+        "label": "Empty Message",
+        "placeholder": "No Records Found"
       },
       {
         "type": "columns",
@@ -173,43 +198,24 @@
             "defaultValue": "first"
           },
           {
-            "type": "select",
-            "key": "rowSelectMode",
-            "label": "Row Selection",
+            "type": "boolean",
+            "key": "numberingColumn",
+            "label": "Numbering",
             "showInBar": true,
             "barStyle": "buttons",
-            "barTitle": "Row Selection",
-            "options": [
-              { "label": "Off", "value": false, "barIcon": "Close" },
-              { "label": "Single", "value": "single", "barIcon": "Checkmark" },
-              {
-                "label": "Multiple",
-                "value": "multi",
-                "barIcon": "MultipleCheck"
-              }
-            ],
+            "barIcon": "123",
+            "barTitle": "Numbering",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "canSelect",
+            "label": "Select Rows",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "SelectBox",
+            "barTitle": "Select Rows",
             "defaultValue": false
-          },
-          {
-            "type": "text",
-            "key": "preselectedIds",
-            "label": "Selected IDs",
-            "placeholder": "Comma Seperated Values",
-            "dependsOn": { "setting": "rowSelectMode", "value": "multi" }
-          },
-          {
-            "type": "number",
-            "key": "selectionLimit",
-            "label": "Limit",
-            "min": 0,
-            "defaultValue": 0,
-            "dependsOn": { "setting": "rowSelectMode", "value": "multi" }
-          },
-          {
-            "type": "text",
-            "key": "preselectedId",
-            "label": "Selected ID",
-            "dependsOn": { "setting": "rowSelectMode", "value": "single" }
           },
           {
             "type": "select",
@@ -233,6 +239,10 @@
             "type": "boolean",
             "key": "canInsert",
             "label": "Add Row",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Add",
+            "barTitle": "Add Records",
             "defaultValue": false
           },
           {
@@ -265,16 +275,6 @@
             "barStyle": "buttons",
             "barIcon": "SortOrderDown",
             "barTitle": "Sortable"
-          },
-          {
-            "type": "boolean",
-            "key": "numberingColumn",
-            "label": "Numbering",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "123",
-            "barTitle": "Numbering",
-            "defaultValue": true
           },
           {
             "type": "boolean",
@@ -368,19 +368,33 @@
             "label": "Row Context Menu",
             "nested": true,
             "wide": true
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Selection Settings",
+        "collapsed": true,
+        "dependsOn": "canSelect",
+        "settings": [
+          {
+            "type": "number",
+            "key": "maxSelected",
+            "label": "Limit",
+            "min": 0,
+            "defaultValue": 0
           },
           {
-            "type": "select",
-            "key": "selectionMenu",
-            "label": "Selection Menu",
-            "options": [{ "label": "Disabled", "value": false }],
-            "defaultValue": false
+            "type": "text",
+            "key": "preselectedIds",
+            "label": "Selected IDs",
+            "placeholder": "Comma Seperated Values"
           },
           {
-            "dependsOn": "selectionMenu",
             "type": "buttonConfiguration",
-            "key": "selectionMenuItems",
-            "label": "Menu Items",
+            "key": "selectedActions",
+            "label": "Action Buttons",
+            "max": 6,
             "nested": true,
             "wide": true
           }
@@ -393,6 +407,18 @@
         "collapsed": false,
         "settings": [
           {
+            "type": "text",
+            "key": "entitySingular",
+            "label": "Entity Singular",
+            "placeholder": "Customer"
+          },
+          {
+            "type": "text",
+            "key": "entityPlural",
+            "label": "Entity Plural",
+            "placeholder": "Customers"
+          },
+          {
             "type": "select",
             "key": "size",
             "label": "Size",
@@ -402,13 +428,6 @@
               { "label": "Large", "value": "L" }
             ],
             "defaultValue": "M"
-          },
-          {
-            "type": "number",
-            "key": "visibleRowCount",
-            "label": "Visible Rows",
-            "defaultValue": 10,
-            "min": 1
           },
           {
             "type": "select",
@@ -432,7 +451,7 @@
             "key": "columnMaxWidth",
             "label": "Max Width",
             "dependsOn": { "setting": "columnSizing", "value": "flexible" },
-            "placeholder": "16rem"
+            "placeholder": "auto"
           },
           {
             "type": "text",
@@ -558,102 +577,65 @@
             "type": "event",
             "label": "On Row Click",
             "key": "onRowClick",
-            "context": [
-              {
-                "label": "Row",
-                "key": "row"
-              }
-            ]
+            "nested": true
           },
           {
             "type": "event",
             "label": "On Row Dbl Click",
             "key": "onRowDblClick",
-            "context": [
-              {
-                "label": "Row",
-                "key": "row"
-              }
-            ]
+            "nested": true
           },
           {
             "type": "event",
             "label": "On Row Select",
             "key": "onRowSelect",
+            "nested": true,
             "dependsOn": {
               "setting": "rowSelectMode",
               "value": "off",
               "invert": true
-            },
-            "context": [
-              {
-                "label": "Selected Rows",
-                "key": "selectedRows"
-              },
-              {
-                "label": "Selected IDs",
-                "key": "selectedIds"
-              }
-            ]
+            }
           },
           {
             "type": "event",
             "key": "onDelete",
             "label": "On Delete",
             "nested": true,
-            "dependsOn": "canDelete",
-            "context": [
-              {
-                "label": "Delete Row",
-                "key": "row"
-              }
-            ]
+            "dependsOn": "canDelete"
           },
           {
             "type": "event",
             "key": "afterDelete",
             "label": "After Delete",
             "nested": true,
-            "dependsOn": "canDelete",
-            "context": [
-              {
-                "label": "Deleted Row",
-                "key": "row"
-              }
-            ]
-          },
-          {
-            "type": "event",
-            "key": "onEdit",
-            "label": "On Edit",
-            "nested": true,
-            "dependsOn": "canEdit",
-            "context": [
-              {
-                "label": "Edit Row",
-                "key": "menuRow"
-              }
-            ]
+            "dependsOn": "canDelete"
           },
           {
             "type": "event",
             "key": "afterEdit",
             "label": "After Edit",
             "nested": true,
-            "dependsOn": "canEdit",
-            "context": [
-              {
-                "label": "Edited Row",
-                "key": "menuRow"
-              }
-            ]
+            "dependsOn": "canEdit"
           },
           {
             "type": "event",
             "key": "onInsert",
             "label": "On New Row",
             "nested": true,
-            "dependsOn": { "setting": "canInsert", "value": "advanced" }
+            "dependsOn": "canInsert"
+          },
+          {
+            "type": "event",
+            "key": "afterInsert",
+            "label": "After New Row",
+            "nested": true,
+            "dependsOn": "canInsert",
+            "context": [
+              {
+                "label": "New Row",
+                "key": "newRow"
+              }
+            ]
           }
         ]
       }
