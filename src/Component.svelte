@@ -8,6 +8,7 @@
 
   export let datasource;
   export let isTable;
+  export let flex = "none";
 
   // Builder Code to identify if we are dealing with a Table or View Datasource
   $: localIsTable = datasource?.type == "table" || datasource?.tableId;
@@ -24,6 +25,8 @@
     ...$component.styles,
     normal: {
       ...$component.styles.normal,
+      flex,
+      display: "flex",
       height: $component.styles.normal.height
         ? $component.styles.normal.height
         : 360,

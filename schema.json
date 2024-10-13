@@ -143,15 +143,6 @@
         "defaultValue": false
       },
       {
-        "type": "number",
-        "key": "fetchPageSize",
-        "label": "Records to Fetch",
-        "dependsOn": "fetchOnScroll",
-        "min": 10,
-        "max": 500,
-        "defaultValue": 100
-      },
-      {
         "type": "boolean",
         "key": "autoRefresh",
         "label": "Auto Refresh",
@@ -406,6 +397,29 @@
         "name": "Appearance",
         "collapsed": false,
         "settings": [
+          {
+            "type": "select",
+            "label": "Flex Mode",
+            "showLabel": false,
+            "key": "flex",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "options": [
+              {
+                "label": "Shrink",
+                "value": "none",
+                "barIcon": "Minimize",
+                "barTitle": "Shrink container"
+              },
+              {
+                "label": "Grow",
+                "value": "auto",
+                "barIcon": "Maximize",
+                "barTitle": "Grow container"
+              }
+            ],
+            "defaultValue": "none"
+          },
           {
             "type": "text",
             "key": "entitySingular",
