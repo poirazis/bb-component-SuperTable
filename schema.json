@@ -30,6 +30,11 @@
           "type": "object"
         },
         {
+          "label": "Hovered Row",
+          "key": "hoveredRow",
+          "type": "object"
+        },
+        {
           "label": "Rows",
           "key": "rows",
           "type": "array"
