@@ -3,6 +3,8 @@
   position: relative;
   display: flex;
   border: 1px solid var(--spectrum-global-color-gray-200);
+  background-color: var(--spectrum-global-color-gray-50);
+  color: var(--spectrum-global-color-gray-800);
   overflow: hidden;
 
   .emptyTable {
@@ -15,7 +17,7 @@
     top: 3rem;
     bottom: 1rem;
     right: 1rem;
-    z-index: 2;
+    z-index: 0;
     background-color: hsla(0, 0%, 50%, 0.1);
     border-radius: 0.5rem;
   }
@@ -102,16 +104,31 @@
   align-items: center;
   background-color: var(--spectrum-global-color-gray-100);
   height: var(--super-table-header-height);
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 500;
   gap: 0.5rem;
-  letter-spacing: 1.2px;
+  padding: 0.5rem;
 
   span {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+  }
+
+  .headerLabel {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .innerText {
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: var(--super-table-header-color);
   }
 }
 
@@ -124,18 +141,23 @@
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   gap: 1rem;
+
+  .row-number {
+    min-width: 0.75rem;
+    text-align: right;
+    color: var(--spectrum-global-color-gray-500);
+    font-size: 11px;
+  }
 }
 
 /* 
   Body
 */
 .super-column-body {
-  flex: 0 1 auto;
+  flex: auto;
   overflow-y: scroll;
   scrollbar-width: none;
   max-height: var(--super-table-body-height);
-  background-color: var(--spectrum-global-color-gray-50);
-  color: var(--spectrum-global-color-gray-700);
   height: 100%;
 
   &.zebra {
@@ -197,18 +219,11 @@
   }
 
   &.is-selected {
-    background-color: var(
-      --spectrum-table-m-regular-row-background-color-selected-hover,
-      var(--spectrum-alias-highlight-selected-hover)
-    );
+    background-color: var(--spectrum-global-color-blue-100);
   }
 
   &.isLast {
     padding-right: 1.5rem;
-  }
-
-  &.odd {
-    background-color: var(--spectrum-global-color-gray-75) !important;
   }
 
   &.new-row {
@@ -219,8 +234,8 @@
   }
 
   .row-number {
-    min-width: 1rem;
-    text-align: center;
+    min-width: 0.75rem;
+    text-align: right;
     color: var(--spectrum-global-color-gray-500);
     font-size: 11px;
   }
@@ -279,93 +294,113 @@
   Overlays
 */
 
-.add-row-overlay {
+.overlay-button {
   position: absolute;
-  bottom: 28px;
-  right: 28px;
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 50%;
-  font-size: 20px;
-  color: var(--spectrum-global-color-gray-900);
-  background-color: var(--spectrum-global-color-gray-300);
-  border: 1px solid var(--spectrum-global-color-gray-300);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 230ms;
-  z-index: 1;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  transition: all 130ms;
+  opacity: 0.75;
 
-  &.highlighted {
+  &.add-row-overlay {
     bottom: 28px;
     right: 28px;
-    opacity: 1;
-  }
-  &.footer {
-    bottom: 58px;
-  }
+    font-size: 20px;
+    color: var(--spectrum-global-color-gray-700);
+    background-color: var(--spectrum-global-color-gray-100);
+    border: 1px solid var(--spectrum-global-color-gray-200);
+    z-index: 1;
 
-  &:hover {
-    background-color: var(--spectrum-global-color-blue-700);
-    box-shadow: 1.1px 1.1px 2.2px rgba(0, 0, 0, 0.07),
-      2.7px 2.7px 5.3px rgba(0, 0, 0, 0.05), 5px 5px 10px rgba(0, 0, 0, 0.042),
-      8.9px 8.9px 17.9px rgba(0, 0, 0, 0.035),
-      16.7px 16.7px 33.4px rgba(0, 0, 0, 0.028),
-      40px 40px 80px rgba(0, 0, 0, 0.02);
-    cursor: pointer;
-  }
+    &.highlighted {
+      opacity: 1;
+    }
+    &.footer {
+      bottom: 58px;
+    }
 
-  &.in-insert {
-    transform: rotate(45deg);
     &:hover {
-      background-color: var(--spectrum-global-color-red-400);
+      background-color: var(--spectrum-global-color-blue-100);
+      border-color: var(--spectrum-global-color-blue-500);
+      color: var(--spectrum-global-color-blue-700);
+      box-shadow: 1.1px 1.1px 2.2px rgba(0, 0, 0, 0.07),
+        2.7px 2.7px 5.3px rgba(0, 0, 0, 0.05), 5px 5px 10px rgba(0, 0, 0, 0.042),
+        8.9px 8.9px 17.9px rgba(0, 0, 0, 0.035),
+        16.7px 16.7px 33.4px rgba(0, 0, 0, 0.028),
+        40px 40px 80px rgba(0, 0, 0, 0.02);
+      cursor: pointer;
+    }
+
+    &.in-insert {
+      transform: rotate(45deg);
+      border-color: var(--spectrum-global-color-red-500);
+      color: var(--spectrum-global-color-red-700);
+      &:hover {
+        background-color: var(--spectrum-global-color-red-100);
+      }
     }
   }
-}
-.save-row-overlay {
-  position: absolute;
-  bottom: 28px;
-  right: 28px;
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 50%;
-  font-size: 16px;
-  color: var(--spectrum-global-color-gray-900);
-  background-color: var(--spectrum-global-color-gray-300);
-  border: 1px solid var(--spectrum-global-color-gray-300);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 230ms;
-  opacity: 0;
+  &.save-row-overlay {
+    bottom: 28px;
+    right: 28px;
+    font-size: 16px;
+    color: var(--spectrum-global-color-blue-700);
+    background-color: var(--spectrum-global-color-blue-100);
+    border: 1px solid var(--spectrum-global-color-blue-500);
+    opacity: 0;
 
-  &.highlighted {
-    opacity: 1;
-  }
-  &.footer {
-    bottom: 58px;
-  }
+    &.footer {
+      bottom: 58px;
+    }
 
-  &:hover {
-    background-color: var(--spectrum-global-color-blue-700);
-    filter: drop-shadow(4px, 4px, 4px);
-    cursor: pointer;
+    &:hover {
+      background-color: var(--spectrum-global-color-blue-500);
+      filter: drop-shadow(4px, 4px, 4px);
+      cursor: pointer;
+    }
+
+    &.in-insert {
+      opacity: 1;
+      right: 78px;
+    }
   }
 
-  &.in-insert {
-    opacity: 1;
-    right: 78px;
+  &.filter-row-overlay {
+    bottom: 28px;
+    right: 28px;
+    font-size: 16px;
+    color: var(--spectrum-global-color-green-400);
+    background-color: var(--spectrum-global-color-gray-200);
+    border: 1px solid var(--spectrum-global-color-green-400);
+    transition: all 230ms;
+
+    &.highlighted {
+      opacity: 1;
+    }
+    &.footer {
+      bottom: 58px;
+    }
+
+    &:hover {
+      background-color: var(--spectrum-global-color-red-100);
+      border-color: var(--spectrum-global-color-red-700);
+      color: var(--spectrum-global-color-red-700);
+      filter: drop-shadow(4px, 4px, 4px);
+      cursor: pointer;
+    }
   }
 }
 
 .selected-row-actions-overlay {
   position: absolute;
-  left: 40px;
-  height: 48px;
+  left: 1.25rem;
+  height: 36px;
   border-radius: 4px;
   color: var(--spectrum-global-color-gray-700);
   background-color: var(--spectrum-global-color-gray-200);
-  border: 1px solid var(--spectrum-global-color-blue-400);
+  border: 1px solid var(--spectrum-global-color-blue-100);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -373,6 +408,7 @@
   transition: all 230ms;
   padding-left: 0.25rem;
   padding-right: 0.75rem;
+  z-index: 80;
   box-shadow: 1.1px 1.1px 2.2px rgba(0, 0, 0, 0.07),
     2.7px 2.7px 5.3px rgba(0, 0, 0, 0.05), 5px 5px 10px rgba(0, 0, 0, 0.042),
     8.9px 8.9px 17.9px rgba(0, 0, 0, 0.035),

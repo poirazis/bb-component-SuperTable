@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -17,7 +18,7 @@ jobs:
           path: ${{ github.workspace }}/bb-component-SuperTable
       - uses: actions/checkout@v3
         name: Checkout Super Components Shared code repository
-        with: 
+        with:
           repository: poirazis/bb_super_components_shared
           path: ${{ github.workspace }}/bb_super_components_shared
           ref: develop

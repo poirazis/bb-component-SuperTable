@@ -182,6 +182,16 @@
           },
           {
             "type": "boolean",
+            "key": "canDelete",
+            "label": "Delete Row",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Delete",
+            "barTitle": "Delete Row",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
             "key": "canSelect",
             "label": "Select Rows",
             "showInBar": true,
@@ -193,7 +203,7 @@
           {
             "type": "select",
             "key": "canFilter",
-            "label": "Filtering",
+            "label": "Filter Rows",
             "showInBar": true,
             "barStyle": "buttons",
             "barTitle": "Filtering",
@@ -228,26 +238,6 @@
             "barTitle": "Edit Row",
             "defaultValue": false,
             "dependsOn": "isTable"
-          },
-          {
-            "type": "boolean",
-            "key": "canDelete",
-            "label": "Delete Row",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Delete",
-            "barTitle": "Delete Row",
-            "defaultValue": false
-          },
-          {
-            "type": "boolean",
-            "key": "canSort",
-            "label": "Sort",
-            "defaultValue": true,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "SortOrderDown",
-            "barTitle": "Sortable"
           }
         ]
       },
@@ -515,16 +505,11 @@
             "key": "optionsViewMode",
             "label": "Options",
             "options": [
+              { "label": "Color Text", "value": "colorText" },
               { "label": "Pills", "value": "pills" },
               { "label": "Text", "value": "text" }
             ],
             "defaultValue": "pills"
-          },
-          {
-            "type": "boolean",
-            "key": "useOptionColors",
-            "label": "Option Colors",
-            "defaultValue": true
           },
           {
             "type": "boolean",
