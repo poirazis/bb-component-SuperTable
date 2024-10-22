@@ -167,32 +167,9 @@
       },
       {
         "section": true,
-        "name": "Table Features",
+        "name": "Table Settings",
         "collapsed": true,
         "settings": [
-          {
-            "type": "select",
-            "key": "superColumnsPos",
-            "label": "Super Columns",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "options": [
-              { "label": "Off", "value": "off", "barIcon": "Close" },
-              {
-                "label": "First",
-                "value": "first",
-                "barIcon": "PaddingLeft",
-                "barTitle": "Super Columns First"
-              },
-              {
-                "label": "Last",
-                "value": "last",
-                "barIcon": "PaddingRight",
-                "barTitle": "Super Columns Last"
-              }
-            ],
-            "defaultValue": "first"
-          },
           {
             "type": "boolean",
             "key": "numberingColumn",
@@ -202,6 +179,16 @@
             "barIcon": "123",
             "barTitle": "Numbering",
             "defaultValue": true
+          },
+          {
+            "type": "boolean",
+            "key": "canDelete",
+            "label": "Delete Row",
+            "showInBar": true,
+            "barStyle": "buttons",
+            "barIcon": "Delete",
+            "barTitle": "Delete Row",
+            "defaultValue": false
           },
           {
             "type": "boolean",
@@ -216,7 +203,7 @@
           {
             "type": "select",
             "key": "canFilter",
-            "label": "Filtering",
+            "label": "Filter Rows",
             "showInBar": true,
             "barStyle": "buttons",
             "barTitle": "Filtering",
@@ -238,7 +225,7 @@
             "showInBar": true,
             "barStyle": "buttons",
             "barIcon": "Add",
-            "barTitle": "Add Records",
+            "barTitle": "Add Row",
             "defaultValue": false
           },
           {
@@ -248,39 +235,9 @@
             "showInBar": true,
             "barStyle": "buttons",
             "barIcon": "Edit",
-            "barTitle": "Edit",
+            "barTitle": "Edit Row",
             "defaultValue": false,
             "dependsOn": "isTable"
-          },
-          {
-            "type": "boolean",
-            "key": "canDelete",
-            "label": "Delete Row",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "Delete",
-            "barTitle": "Delete Row",
-            "defaultValue": false
-          },
-          {
-            "type": "boolean",
-            "key": "canSort",
-            "label": "Sort",
-            "defaultValue": true,
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "SortOrderDown",
-            "barTitle": "Sortable"
-          },
-          {
-            "type": "boolean",
-            "key": "stickFirstColumn",
-            "label": "Pin 1st Column",
-            "showInBar": true,
-            "barStyle": "buttons",
-            "barIcon": "PinOff",
-            "barTitle": "Pin 1st Column",
-            "defaultValue": false
           }
         ]
       },
@@ -289,6 +246,39 @@
         "name": "Column Settings",
         "collapsed": true,
         "settings": [
+          {
+            "type": "select",
+            "key": "superColumnsPos",
+            "label": "Super Columns",
+            "showInBar": false,
+            "barStyle": "buttons",
+            "options": [
+              { "label": "Off", "value": "off", "barIcon": "Close" },
+              {
+                "label": "First",
+                "value": "first",
+                "barIcon": "PaddingLeft",
+                "barTitle": "Super Columns First"
+              },
+              {
+                "label": "Last",
+                "value": "last",
+                "barIcon": "PaddingRight",
+                "barTitle": "Super Columns Last"
+              }
+            ],
+            "defaultValue": "first"
+          },
+          {
+            "type": "boolean",
+            "key": "stickFirstColumn",
+            "label": "Pin 1st Column",
+            "showInBar": false,
+            "barStyle": "buttons",
+            "barIcon": "PinOff",
+            "barTitle": "Pin 1st Column",
+            "defaultValue": false
+          },
           {
             "type": "boolean",
             "key": "showHeader",
@@ -373,6 +363,13 @@
         "collapsed": true,
         "dependsOn": "canSelect",
         "settings": [
+          {
+            "type": "boolean",
+            "key": "hideSelectionColumn",
+            "label": "Hide Checkboxes",
+            "dependsOn": { "setting": "canEdit", "value": false },
+            "resetOn": ["canEdit", "canSelect"]
+          },
           {
             "type": "number",
             "key": "maxSelected",
@@ -508,16 +505,11 @@
             "key": "optionsViewMode",
             "label": "Options",
             "options": [
+              { "label": "Color Text", "value": "colorText" },
               { "label": "Pills", "value": "pills" },
               { "label": "Text", "value": "text" }
             ],
             "defaultValue": "pills"
-          },
-          {
-            "type": "boolean",
-            "key": "useOptionColors",
-            "label": "Option Colors",
-            "defaultValue": true
           },
           {
             "type": "boolean",
