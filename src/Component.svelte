@@ -1,7 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import SuperTable from "../../bb_super_components_shared/src/lib/SuperTable/SuperTable.svelte";
-  import "./supertable.css";
+  import "../../bb_super_components_shared/src/lib/SuperTable/supertable.css";
 
   const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
