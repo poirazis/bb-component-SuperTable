@@ -95,14 +95,6 @@
         "hidden": true
       },
       {
-        "type": "field",
-        "key": "idColumn",
-        "label": "ID Column",
-        "required": true,
-        "resetOn": "datasource",
-        "defaultValue": "_id"
-      },
-      {
         "type": "field/sortable",
         "key": "sortColumn",
         "label": "Sort By",
@@ -271,6 +263,12 @@
           },
           {
             "type": "boolean",
+            "key": "jsoncolumns",
+            "label": "Spread JSON",
+            "defaultValue": true
+          },
+          {
+            "type": "boolean",
             "key": "stickFirstColumn",
             "label": "Pin 1st Column",
             "showInBar": false,
@@ -346,7 +344,13 @@
             "label": "Row Buttons",
             "max": 6,
             "nested": true,
-            "wide": true
+            "wide": true,
+            "context": [
+              {
+                "label": "Clicked row",
+                "key": "row"
+              }
+            ]
           },
           {
             "type": "buttonConfiguration",
@@ -509,7 +513,7 @@
               { "label": "Pills", "value": "pills" },
               { "label": "Text", "value": "text" }
             ],
-            "defaultValue": "pills"
+            "defaultValue": "colorText"
           },
           {
             "type": "boolean",
