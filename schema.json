@@ -121,12 +121,6 @@
         "defaultValue": 50
       },
       {
-        "type": "text",
-        "key": "emptyMessage",
-        "label": "Empty Message",
-        "placeholder": "No Records Found"
-      },
-      {
         "type": "columns",
         "key": "columnList",
         "resetOn": "datasource",
@@ -170,7 +164,7 @@
             "barStyle": "buttons",
             "barIcon": "123",
             "barTitle": "Numbering",
-            "defaultValue": true
+            "defaultValue": false
           },
           {
             "type": "boolean",
@@ -190,7 +184,7 @@
             "barStyle": "buttons",
             "barIcon": "SelectBox",
             "barTitle": "Select Rows",
-            "defaultValue": false
+            "defaultValue": true
           },
           {
             "type": "select",
@@ -263,12 +257,6 @@
           },
           {
             "type": "boolean",
-            "key": "jsoncolumns",
-            "label": "Spread JSON",
-            "defaultValue": true
-          },
-          {
-            "type": "boolean",
             "key": "stickFirstColumn",
             "label": "Pin 1st Column",
             "showInBar": false,
@@ -313,7 +301,7 @@
           {
             "type": "select",
             "key": "rowMenu",
-            "label": "Row Buttons",
+            "label": "Row Actions",
             "options": [
               { "label": "Disabled", "value": false },
               { "label": "Column - Left", "value": "columnLeft" },
@@ -341,16 +329,10 @@
             "dependsOn": "rowMenu",
             "type": "buttonConfiguration",
             "key": "rowMenuItems",
-            "label": "Row Buttons",
+            "label": "Row Actions",
             "max": 6,
             "nested": true,
-            "wide": true,
-            "context": [
-              {
-                "label": "Clicked row",
-                "key": "row"
-              }
-            ]
+            "wide": true
           },
           {
             "type": "buttonConfiguration",
@@ -379,7 +361,7 @@
             "key": "maxSelected",
             "label": "Limit",
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 1
           },
           {
             "type": "text",
@@ -390,7 +372,7 @@
           {
             "type": "buttonConfiguration",
             "key": "selectedActions",
-            "label": "Action Buttons",
+            "label": "Selection Actions",
             "max": 6,
             "nested": true,
             "wide": true
@@ -430,13 +412,19 @@
             "type": "text",
             "key": "entitySingular",
             "label": "Entity Singular",
-            "placeholder": "Customer"
+            "placeholder": "Row"
           },
           {
             "type": "text",
             "key": "entityPlural",
             "label": "Entity Plural",
-            "placeholder": "Customers"
+            "placeholder": "Rows"
+          },
+          {
+            "type": "text",
+            "key": "emptyMessage",
+            "label": "Empty Message",
+            "placeholder": "No Rows Found"
           },
           {
             "type": "select",
@@ -502,7 +490,7 @@
               { "label": "Pills", "value": "pills" },
               { "label": "Text", "value": "text" }
             ],
-            "defaultValue": "pills"
+            "defaultValue": "text"
           },
           {
             "type": "select",
@@ -569,17 +557,6 @@
             "type": "color",
             "key": "dividersColor",
             "label": "Dividers Color"
-          },
-          {
-            "type": "select",
-            "key": "submitOn",
-            "label": "Submit Cell",
-            "options": [
-              { "label": "On Blur", "value": "onBlur" },
-              { "label": "On Enter", "value": "onEnter" }
-            ],
-            "defaultValue": "onBlur",
-            "dependsOn": "editable"
           }
         ]
       },
