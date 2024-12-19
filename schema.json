@@ -89,6 +89,13 @@
         "required": true
       },
       {
+        "type": "columns",
+        "key": "columnList",
+        "resetOn": "datasource",
+        "label": "Columns",
+        "nested": "true"
+      },
+      {
         "type": "boolean",
         "key": "isTable",
         "label": "Is Table",
@@ -119,13 +126,6 @@
         "label": "Limit",
         "key": "limit",
         "defaultValue": 50
-      },
-      {
-        "type": "columns",
-        "key": "columnList",
-        "resetOn": "datasource",
-        "label": "Columns",
-        "nested": "true"
       },
       {
         "type": "boolean",
