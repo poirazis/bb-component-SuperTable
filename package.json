@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "2.0.43-alpha",
+  "version": "2.0.44-alpha",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-node-resolve": "^15.3.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@spectrum-css/actionbar": "6.0.65",
     "npm-run-all": "^4.1.5",
