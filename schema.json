@@ -573,6 +573,17 @@
           },
           {
             "type": "event",
+            "label": "On Cell Click",
+            "key": "onCellClick",
+            "nested": true,
+            "context": [
+              { "key": "column", "label": "column" },
+              { "key": "id", "label": "id" },
+              { "key": "value", "label": "value" }
+            ]
+          },
+          {
+            "type": "event",
             "label": "On Row Dbl Click",
             "key": "onRowDblClick",
             "nested": true
