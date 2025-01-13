@@ -99,6 +99,7 @@
         "type": "boolean",
         "key": "isTable",
         "label": "Is Table",
+        "resetOn": "datasource",
         "hidden": true
       },
       {
@@ -125,13 +126,13 @@
         "type": "number",
         "label": "Limit",
         "key": "limit",
-        "defaultValue": 50
+        "defaultValue": 15
       },
       {
         "type": "boolean",
         "key": "fetchOnScroll",
         "label": "Fetch on Scroll",
-        "defaultValue": false
+        "defaultValue": true
       },
       {
         "type": "boolean",
@@ -232,6 +233,17 @@
         "name": "Column Settings",
         "collapsed": true,
         "settings": [
+          {
+            "type": "boolean",
+            "key": "beautifyLabels",
+            "label": "Beautify Labels"
+          },
+          {
+            "type": "text",
+            "key": "columnLabelTemplate",
+            "label": "Label Template",
+            "placeholder": "{{ field }}"
+          },
           {
             "type": "select",
             "key": "superColumnsPos",
@@ -412,19 +424,22 @@
             "type": "text",
             "key": "entitySingular",
             "label": "Entity Singular",
-            "placeholder": "Row"
+            "placeholder": "Row",
+            "resetOn": "datasource"
           },
           {
             "type": "text",
             "key": "entityPlural",
             "label": "Entity Plural",
-            "placeholder": "Rows"
+            "placeholder": "Rows",
+            "resetOn": "datasource"
           },
           {
             "type": "text",
             "key": "emptyMessage",
             "label": "Empty Message",
-            "placeholder": "No Rows Found"
+            "placeholder": "No Rows Found",
+            "resetOn": "datasource"
           },
           {
             "type": "select",
@@ -452,7 +467,7 @@
             "key": "columnMinWidth",
             "label": "Min Width",
             "dependsOn": { "setting": "columnSizing", "value": "flexible" },
-            "placeholder": "6rem"
+            "placeholder": "7rem"
           },
           {
             "type": "text",
@@ -465,7 +480,7 @@
             "type": "text",
             "key": "columnFixedWidth",
             "label": "Width",
-            "placeholder": "8rem",
+            "placeholder": "7rem",
             "resetOn": "columnSizing",
             "dependsOn": { "setting": "columnSizing", "value": "fixed" }
           },
