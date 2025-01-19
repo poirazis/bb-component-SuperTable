@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "2.0.48-beta",
+  "version": "2.0.49-beta",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
@@ -11,8 +11,7 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "@crownframework/svelte-error-boundary": "^1.0.3",
-    "svelte": "^4.2.19"
+    "@crownframework/svelte-error-boundary": "^1.0.3"
   },
   "devDependencies": {
     "@budibase/backend-core": "^2.33.14",
@@ -26,13 +25,14 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@spectrum-css/actionbar": "6.0.65",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.1",
     "rollup": "^2.79.2",
     "rollup-plugin-copy2": "^0.3.1",
     "rollup-plugin-polyfill-node": "^0.8.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svelte": "^7.2.2",
     "rollup-plugin-svg": "^2.0.0",
-    "tar": "^6.2.1"
+    "tar": "^6.2.1",
+    "svelte": "^4.2.19"
   }
 }
