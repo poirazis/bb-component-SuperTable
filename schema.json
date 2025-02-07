@@ -503,6 +503,7 @@
             "label": "Relationships",
             "options": [
               { "label": "Pills", "value": "pills" },
+              { "label": "Links", "value": "links" },
               { "label": "Text", "value": "text" }
             ],
             "defaultValue": "text"
@@ -602,6 +603,18 @@
             "label": "On Row Dbl Click",
             "key": "onRowDblClick",
             "nested": true
+          },
+          {
+            "type": "event",
+            "label": "On Link Click",
+            "key": "onLinkClick",
+            "nested": true,
+            "dependsOn": { "setting": "relViewMode", "value": "links" },
+            "context": [
+              { "key": "column", "label": "column" },
+              { "key": "id", "label": "id" },
+              { "key": "primaryDisplay", "label": "primaryDisplay" }
+            ]
           },
           {
             "type": "event",
