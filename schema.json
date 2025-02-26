@@ -7,6 +7,7 @@
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
     "hasChildren": true,
+    "dataProvider": true,
     "actions": [
       { "type": "RefreshDatasource" },
       { "type": "ClearRowSelection" }
@@ -120,7 +121,8 @@
       {
         "type": "filter",
         "key": "filter",
-        "label": "Filter"
+        "label": "Filter",
+        "resetOn": "datasource"
       },
       {
         "type": "number",

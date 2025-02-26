@@ -24,12 +24,10 @@
   $: $component.styles = {
     ...$component.styles,
     normal: {
-      ...$component.styles.normal,
       flex,
       display: "flex",
-      height: $component.styles.normal.height
-        ? $component.styles.normal.height
-        : 360,
+      height: 360,
+      ...$component.styles.normal,
     },
   };
 </script>
