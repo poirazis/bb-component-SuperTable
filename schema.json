@@ -79,6 +79,16 @@
           "label": "Plural Name",
           "key": "entityPlural",
           "type": "string"
+        },
+        {
+          "label": "offset",
+          "key": "offset",
+          "type": "number"
+        },
+        {
+          "label": "limit",
+          "key": "limit",
+          "type": "number"
         }
       ]
     },
@@ -126,15 +136,40 @@
       },
       {
         "type": "number",
-        "label": "Limit",
+        "label": "Inital Limit",
         "key": "limit",
-        "defaultValue": 15
+        "defaultValue": 50
       },
       {
         "type": "boolean",
         "key": "fetchOnScroll",
         "label": "Fetch on Scroll",
         "defaultValue": true
+      },
+      {
+        "type": "select",
+        "key": "paginationMethod",
+        "label": "Pagination",
+        "options": [
+          {
+            "label": "Cursor",
+            "value": "cursor"
+          },
+          {
+            "label": "Limit/Offset",
+            "value": "limitOffset"
+          }
+        ],
+        "dependsOn": "fetchOnScroll",
+        "defaultValue": "cursor"
+      },
+      {
+        "type": "number",
+        "key": "pageSize",
+        "label": "Page Size",
+        "min": 1,
+        "defaultValue": 100,
+        "dependsOn": "fetchOnScroll"
       },
       {
         "type": "boolean",
@@ -454,38 +489,7 @@
             ],
             "defaultValue": "M"
           },
-          {
-            "type": "select",
-            "key": "columnSizing",
-            "label": "Column Sizing",
-            "options": [
-              { "label": "Flexible", "value": "flexible" },
-              { "label": "Fixed", "value": "fixed" }
-            ],
-            "defaultValue": "flexible"
-          },
-          {
-            "type": "text",
-            "key": "columnMinWidth",
-            "label": "Min Width",
-            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
-            "placeholder": "7rem"
-          },
-          {
-            "type": "text",
-            "key": "columnMaxWidth",
-            "label": "Max Width",
-            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
-            "placeholder": "auto"
-          },
-          {
-            "type": "text",
-            "key": "columnFixedWidth",
-            "label": "Width",
-            "placeholder": "7rem",
-            "resetOn": "columnSizing",
-            "dependsOn": { "setting": "columnSizing", "value": "fixed" }
-          },
+
           {
             "type": "select",
             "key": "highlighters",
@@ -538,12 +542,59 @@
       {
         "tag": "style",
         "section": true,
-        "name": "Dynamic Row Colors",
+        "name": "Column Settings",
+        "settings": [
+          {
+            "type": "select",
+            "key": "columnSizing",
+            "label": "Column Sizing",
+            "options": [
+              { "label": "Flexible", "value": "flexible" },
+              { "label": "Fixed", "value": "fixed" }
+            ],
+            "defaultValue": "flexible"
+          },
+          {
+            "type": "text",
+            "key": "columnMinWidth",
+            "label": "Min Width",
+            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
+            "placeholder": "7rem"
+          },
+          {
+            "type": "text",
+            "key": "columnMaxWidth",
+            "label": "Max Width",
+            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
+            "placeholder": "auto"
+          },
+          {
+            "type": "text",
+            "key": "columnFixedWidth",
+            "label": "Width",
+            "placeholder": "7rem",
+            "resetOn": "columnSizing",
+            "dependsOn": { "setting": "columnSizing", "value": "fixed" }
+          }
+        ]
+      },
+      {
+        "tag": "style",
+        "section": true,
+        "name": "Dynamic Row Properties",
         "settings": [
           {
             "type": "text",
+            "key": "rowHeight",
+            "label": "Row Height (px)",
+            "placeholder": 38,
+            "nested": true
+          },
+          {
+            "type": "text",
             "key": "rowColorTemplate",
-            "label": "Text",
+            "label": "Text Color",
+            "placeholder": "#BBBBBB",
             "nested": true
           },
           {
@@ -669,6 +720,13 @@
                 "key": "newRow"
               }
             ]
+          },
+          {
+            "type": "event",
+            "key": "onRefresh",
+            "label": "On Refresh",
+            "dependsOn": "autoRefresh",
+            "resetOn": "autoRefresh"
           }
         ]
       }
