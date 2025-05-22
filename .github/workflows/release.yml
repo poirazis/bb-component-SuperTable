@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          path: ${{ github.workspace }}/bb-component-SuperTable
+          path: ${{ github.workspace }}
       - uses: actions/setup-node@v1
         with:
           node-version: 18
