@@ -9,8 +9,10 @@
     "hasChildren": true,
     "dataProvider": true,
     "actions": [
-      { "type": "RefreshDatasource" },
-      { "type": "ClearRowSelection" }
+      "RefreshDatasource",
+      "ClearRowSelection",
+      "AddDataProviderFilterExtension",
+      "AddDataProviderQueryExtension"
     ],
     "showEmptyState": false,
     "styles": ["size"],
