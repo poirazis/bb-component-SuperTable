@@ -32,4 +32,4 @@ jobs:
           tag_name: v${{ env.RELEASE_VERSION }}
           generate_release_notes: true
           files: |
-            ${{ github.workspace }}/bb-component-SuperTable/dist/*.tar.gz
+            ${{ github.workspace }}/dist/*.tar.gz
