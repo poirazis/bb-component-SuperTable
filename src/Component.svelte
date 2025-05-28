@@ -1,7 +1,6 @@
 <script>
   import { getContext } from "svelte";
   import { SuperTable } from "@poirazis/supercomponents-shared";
-  import "@poirazis/supercomponents-shared/SuperTable/SuperTable.css";
 
   const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
