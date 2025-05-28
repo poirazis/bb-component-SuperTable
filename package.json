@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperTable",
-  "version": "2.0.60-beta",
+  "version": "2.0.61-beta",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
@@ -12,24 +12,26 @@
   },
   "dependencies": {
     "@crownframework/svelte-error-boundary": "^1.0.3",
-    "@poirazis/supercomponents-shared": "latest"
+    "@poirazis/supercomponents-shared": "^1.0.11"
   },
   "devDependencies": {
     "@budibase/backend-core": "^2.33.14",
-    "@rollup/plugin-commonjs": "^25.0.8",
-    "@rollup/plugin-image": "^3.0.3",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.3.1",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-commonjs": "^18.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.3",
     "rollup": "^2.79.2",
     "rollup-plugin-copy2": "^0.3.1",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-polyfill-node": "^0.8.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svelte": "^7.2.2",
     "rollup-plugin-svg": "^2.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "tar": "^6.2.1",
-    "svelte": "^4.2.19"
+    "svelte-preprocess": "^5.1.4",
+    "typescript": "^5.8.3",
+    "sass": "^1.89.0",
+    "svelte": "^4.2.20"
   }
 }

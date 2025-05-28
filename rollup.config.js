@@ -1,11 +1,10 @@
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
-import terser from "@rollup/plugin-terser";
+import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
-import image from "@rollup/plugin-image";
 import svg from "rollup-plugin-svg";
-import json from "@rollup/plugin-json";
+import json from "rollup-plugin-json";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import copy from "rollup-plugin-copy2";
 import tar from "tar";
@@ -13,14 +12,13 @@ import fs from "fs";
 import pkg from "./package.json";
 import crypto from "crypto";
 import { validate } from "@budibase/backend-core/plugins";
+import sveltePreprocess from "svelte-preprocess";
 
 const ignoredWarnings = [
   "unused-export-let",
   "css-unused-selector",
   "module-script-reactive-declaration",
   "a11y-no-onchange",
-  "a11y-click-events-have-key-events",
-  "a11y-no-noninteractive-tabindex",
 ];
 
 // Custom plugin to clean the dist folder before building
@@ -97,9 +95,9 @@ export default {
     validateSchema(),
     clean(),
     svelte({
+      preprocess: sveltePreprocess({ typescript: true }),
       emitCss: true,
       onwarn: (warning, handler) => {
-        // Ignore some warnings
         if (!ignoredWarnings.includes(warning.code)) {
           handler(warning);
         }
@@ -115,9 +113,6 @@ export default {
     }),
     svg(),
     json(),
-    image({
-      exclude: "**/*.svg",
-    }),
     terser(),
     copy({
       assets: ["schema.json", "package.json"],
