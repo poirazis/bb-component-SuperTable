@@ -12,7 +12,6 @@
 
   // Builder Code to identify if we are dealing with a Table or View Datasource
   $: localIsTable = datasource?.type == "table" || datasource?.tableId;
-  $: comp_id = $component.id;
   $: if (
     $builderStore.inBuilder &&
     $component.selected &&
@@ -34,7 +33,7 @@
 
 <div use:styleable={$component.styles}>
   {#key $component.children}
-    <SuperTable {comp_id} inBuilder={$builderStore.inBuilder} {...$$props}>
+    <SuperTable inBuilder={$builderStore.inBuilder} {...$$props}>
       <slot />
     </SuperTable>
   {/key}
