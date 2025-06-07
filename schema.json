@@ -11,7 +11,6 @@
     "actions": [
       "RefreshDatasource",
       "ClearRowSelection",
-      "AddDataProviderFilterExtension",
       "AddDataProviderQueryExtension"
     ],
     "showEmptyState": false,
@@ -33,14 +32,14 @@
           "type": "object"
         },
         {
-          "label": "Hovered Row",
-          "key": "hoveredRow",
-          "type": "object"
-        },
-        {
           "label": "Rows",
           "key": "rows",
           "type": "array"
+        },
+        {
+          "label": "Extra Info",
+          "key": "info",
+          "type": "string"
         },
         {
           "label": "Selected Rows",
