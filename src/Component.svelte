@@ -33,7 +33,11 @@
 
 <div use:styleable={$component.styles}>
   {#key $component.children}
-    <SuperTable inBuilder={$builderStore.inBuilder} {...$$props}>
+    <SuperTable
+      comp_id={$component.id}
+      inBuilder={$builderStore.inBuilder}
+      {...$$props}
+    >
       <slot />
     </SuperTable>
   {/key}
