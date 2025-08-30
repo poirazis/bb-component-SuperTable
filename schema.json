@@ -173,22 +173,36 @@
         "dependsOn": "fetchOnScroll"
       },
       {
-        "type": "boolean",
-        "key": "autoRefresh",
-        "label": "Auto Refresh",
-        "defaultValue": false,
-        "showInBar": true,
-        "barIcon": "Stopwatch",
-        "barStyle": "buttons",
-        "barTitle": "Auto Refresh"
-      },
-      {
-        "type": "number",
+        "type": "select",
         "key": "autoRefreshRate",
-        "label": "Refresh Every (s)",
-        "min": 5,
-        "defaultValue": 60,
-        "dependsOn": "autoRefresh"
+        "label": "Auto Refresh",
+        "defaultValue": 0,
+        "options": [
+          {
+            "label": "Disabled",
+            "value": 0
+          },
+          {
+            "label": "5 Seconds",
+            "value": 5
+          },
+          {
+            "label": "10 Seconds",
+            "value": 10
+          },
+          {
+            "label": "15 Seconds",
+            "value": 15
+          },
+          {
+            "label": "30 Seconds",
+            "value": 30
+          },
+          {
+            "label": "60 Seconds",
+            "value": 60
+          }
+        ]
       },
       {
         "section": true,
@@ -318,19 +332,19 @@
           {
             "type": "boolean",
             "key": "showHeader",
-            "label": "Column Headers",
+            "label": "Headers",
             "defaultValue": true
           },
           {
             "type": "boolean",
             "key": "showFooter",
-            "label": "Column Footers",
+            "label": "Footers",
             "defaultValue": false
           },
           {
             "type": "boolean",
             "key": "canResize",
-            "label": "Resize Columns",
+            "label": "Resize",
             "defaultValue": true
           },
           {
@@ -402,7 +416,7 @@
           {
             "type": "boolean",
             "key": "hideSelectionColumn",
-            "label": "Hide Checkboxes",
+            "label": "Hide Column",
             "dependsOn": { "setting": "canEdit", "value": false },
             "resetOn": ["canEdit", "canSelect"]
           },
@@ -470,13 +484,6 @@
             "key": "entityPlural",
             "label": "Entity Plural",
             "placeholder": "Rows",
-            "resetOn": "datasource"
-          },
-          {
-            "type": "text",
-            "key": "emptyMessage",
-            "label": "Empty Message",
-            "placeholder": "No Rows Found",
             "resetOn": "datasource"
           },
           {
@@ -587,7 +594,7 @@
           {
             "type": "text",
             "key": "rowHeight",
-            "label": "Row Height (px)",
+            "label": "Height (px)",
             "placeholder": 38,
             "nested": true
           },
@@ -602,6 +609,12 @@
             "type": "text",
             "key": "rowBGColorTemplate",
             "label": "Background",
+            "nested": true
+          },
+          {
+            "type": "text",
+            "key": "rowDisabledTemplate",
+            "label": "Disabled",
             "nested": true
           }
         ]
@@ -687,6 +700,9 @@
             "label": "On Delete",
             "nested": true,
             "dependsOn": "canDelete"
+          },
+          {
+            "type": "boolean"
           },
           {
             "type": "event",
