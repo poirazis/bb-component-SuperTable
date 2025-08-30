@@ -32,13 +32,11 @@
 </script>
 
 <div use:styleable={$component.styles}>
-  {#key $component.children}
-    <SuperTable
-      comp_id={$component.id}
-      inBuilder={$builderStore.inBuilder}
-      {...$$props}
-    >
-      <slot />
-    </SuperTable>
-  {/key}
+  <SuperTable
+    comp_id={$component.id}
+    inBuilder={$builderStore.inBuilder}
+    {...$$props}
+  >
+    <slot />
+  </SuperTable>
 </div>
