@@ -104,8 +104,7 @@
         "type": "columns",
         "key": "columnList",
         "resetOn": "datasource",
-        "label": "Columns",
-        "nested": "true"
+        "label": "Columns"
       },
       {
         "type": "boolean",
@@ -276,7 +275,8 @@
             "barIcon": "Edit",
             "barTitle": "Edit Row",
             "defaultValue": false,
-            "dependsOn": "isTable"
+            "dependsOn": "isTable",
+            "resetOn": "isTable"
           }
         ]
       },
@@ -700,9 +700,6 @@
             "label": "On Delete",
             "nested": true,
             "dependsOn": "canDelete"
-          },
-          {
-            "type": "boolean"
           },
           {
             "type": "event",

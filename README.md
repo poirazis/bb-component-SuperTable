@@ -1,4 +1,4 @@
-# BB-Component-SuperTable
+# SuperTable
 
 A fully customizable, high-performance table component designed specifically for Budibase applications, providing advanced features like virtual scrolling, inline editing, filtering, sorting, and extensive customization options.
 
@@ -41,10 +41,11 @@ A fully customizable, high-performance table component designed specifically for
 
 ### Basic Setup
 
-1. Add a Data Provider component to your screen
-2. Nest the Super Table component and connect it to your Data Provider
-3. Nest Super Column components for each column you want to display
-4. Configure table settings through the component panel
+1. Add the SuperTable component to your screen
+2. Connect it to a Budibase datasource (optional - works with or without a Data Provider)
+3. Configure the **Columns** setting to select which columns to display (auto-populated from schema)
+4. Optionally nest SuperTableColumn components for advanced column customization (templates, styling, behavior overrides)
+5. Configure additional settings through the component panel
 
 ### Configuration Sections
 
@@ -138,14 +139,12 @@ The Super Table provides rich context for binding:
 
 Custom column component for advanced column-specific styling and behavior. Use alongside SuperTable for:
 
-- Column-specific templates
-- Advanced filtering options
-- Custom cell components
-- Column-level actions
+- Column-specific templates and styling
+- Advanced filtering options and behavior overrides
+- Host any nested Budibase components within the column (buttons, forms, complex layouts, etc.)
+- Column-level actions and customization that goes beyond basic table column settings
 
-### SuperTableCells
-
-Specialized cell components for complex data types and custom rendering.
+You can drop any Budibase component inside a SuperTableColumn to create rich, interactive column content.
 
 ## Performance Notes
 

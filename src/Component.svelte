@@ -9,6 +9,7 @@
   export let datasource;
   export let isTable;
   export let flex = "none";
+  export let columnList = [];
 
   // Builder Code to identify if we are dealing with a Table or View Datasource
   $: localIsTable = datasource?.type == "table" || datasource?.tableId;
@@ -35,6 +36,7 @@
   <SuperTable
     comp_id={$component.id}
     inBuilder={$builderStore.inBuilder}
+    {columnList}
     {...$$props}
   >
     <slot />
