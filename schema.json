@@ -2,7 +2,7 @@
   "type": "component",
   "metadata": {},
   "schema": {
-    "name": "bb-component-SuperTable",
+    "name": "bb-component-supertable",
     "friendlyName": "Super Table",
     "description": "A Fully Customizable Columnar Table Component",
     "icon": "Table",
