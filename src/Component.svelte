@@ -6,13 +6,13 @@
   const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
 
-  export let datasource;
+  export let dataSource;
   export let isTable;
   export let flex = "none";
   export let columnList = [];
 
   // Builder Code to identify if we are dealing with a Table or View Datasource
-  $: localIsTable = datasource?.type == "table" || datasource?.tableId;
+  $: localIsTable = dataSource?.type == "table" || dataSource?.tableId;
   $: if (
     $builderStore.inBuilder &&
     $component.selected &&
@@ -38,6 +38,7 @@
     inBuilder={$builderStore.inBuilder}
     {columnList}
     {...$$props}
+    datasource={dataSource}
   >
     <slot />
   </SuperTable>
