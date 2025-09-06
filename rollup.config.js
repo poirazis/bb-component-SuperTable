@@ -95,7 +95,10 @@ export default {
     validateSchema(),
     clean(),
     svelte({
-      preprocess: sveltePreprocess({ typescript: true }),
+      preprocess: sveltePreprocess({
+        typescript: true,
+        sass: true,
+      }),
       emitCss: true,
       onwarn: (warning, handler) => {
         if (!ignoredWarnings.includes(warning.code)) {

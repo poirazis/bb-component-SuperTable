@@ -96,28 +96,29 @@
     "settings": [
       {
         "type": "dataSource",
-        "key": "datasource",
+        "key": "dataSource",
         "label": "Data Source",
         "required": true
       },
       {
         "type": "columns",
         "key": "columnList",
-        "resetOn": "datasource",
-        "label": "Columns"
+        "resetOn": "dataSource",
+        "label": "Columns",
+        "defaultValue": []
       },
       {
         "type": "boolean",
         "key": "isTable",
         "label": "Is Table",
-        "resetOn": "datasource",
+        "resetOn": "dataSource",
         "hidden": true
       },
       {
         "type": "field/sortable",
         "key": "sortColumn",
         "label": "Sort By",
-        "resetOn": "datasource"
+        "resetOn": "dataSource"
       },
       {
         "type": "select",
@@ -132,7 +133,7 @@
         "type": "filter",
         "key": "filter",
         "label": "Filter",
-        "resetOn": "datasource"
+        "resetOn": "dataSource"
       },
       {
         "type": "number",
@@ -286,17 +287,6 @@
         "collapsed": true,
         "settings": [
           {
-            "type": "boolean",
-            "key": "beautifyLabels",
-            "label": "Beautify Labels"
-          },
-          {
-            "type": "text",
-            "key": "columnLabelTemplate",
-            "label": "Label Template",
-            "placeholder": "{{ field }}"
-          },
-          {
             "type": "select",
             "key": "superColumnsPos",
             "label": "Super Columns",
@@ -318,6 +308,23 @@
               }
             ],
             "defaultValue": "first"
+          },
+          {
+            "type": "boolean",
+            "key": "beautifyLabels",
+            "label": "Beautify Labels"
+          },
+          {
+            "type": "boolean",
+            "key": "showAutoColumns",
+            "label": "Autocolumns",
+            "defaultValue": false
+          },
+          {
+            "type": "boolean",
+            "key": "showSpecialColumns",
+            "label": "Specialcolumns",
+            "defaultValue": false
           },
           {
             "type": "boolean",
@@ -477,14 +484,14 @@
             "key": "entitySingular",
             "label": "Entity Singular",
             "placeholder": "Row",
-            "resetOn": "datasource"
+            "resetOn": "dataSource"
           },
           {
             "type": "text",
             "key": "entityPlural",
             "label": "Entity Plural",
             "placeholder": "Rows",
-            "resetOn": "datasource"
+            "resetOn": "dataSource"
           },
           {
             "type": "select",
