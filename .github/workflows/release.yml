@@ -19,29 +19,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: "https://registry.npmjs.org/"
       - name: Make the production plugin bundle
         run: |
           release_version=$(cat package.json | jq -r '.version')
           echo "RELEASE_VERSION=$release_version" >> $GITHUB_ENV
-          # Check if prerelease (contains hyphen)
-          if [[ "$release_version" == *"-"* ]]; then
-            echo "IS_PRERELEASE=true" >> $GITHUB_ENV
-            echo "NPM_TAG=beta" >> $GITHUB_ENV
-          else
-            echo "IS_PRERELEASE=false" >> $GITHUB_ENV
-            echo "NPM_TAG=latest" >> $GITHUB_ENV
-          fi
           yarn
           yarn build
-      - name: Configure npm
-        run: |
-          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
-      - name: Publish to NPM
-        run: |
-          npm publish --tag ${{ env.NPM_TAG }} --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Perform Github Release
         uses: softprops/action-gh-release@v1
         with:
