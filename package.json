@@ -1,13 +1,13 @@
 {
-  "name": "bb-component-supertable",
-  "version": "2.0.77-beta",
+  "name": "bb-component-SuperTable",
+  "version": "2.0.78-beta",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "license": "MIT",
   "svelte": "index.js",
   "module": "dist/plugin.min.js",
   "scripts": {
-    "build": "SASS_API=modern rollup -c",
+    "build": "rollup -c",
     "watch": "rollup -cw"
   },
   "dependencies": {
