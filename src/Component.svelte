@@ -3,7 +3,7 @@
   import { SuperTable } from "@poirazis/supercomponents-shared";
   import "@poirazis/supercomponents-shared/src/lib/SuperTable/SuperTable.css";
 
-  const { styleable, builderStore } = getContext("sdk");
+  const { styleable, builderStore, memo } = getContext("sdk");
   const component = getContext("component");
 
   export let dataSource;
@@ -36,9 +36,7 @@
   <SuperTable
     comp_id={$component.id}
     inBuilder={$builderStore.inBuilder}
-    {columnList}
     {...$$props}
-    datasource={dataSource}
   >
     <slot />
   </SuperTable>
