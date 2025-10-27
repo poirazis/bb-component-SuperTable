@@ -104,8 +104,7 @@
         "type": "columns",
         "key": "columnList",
         "resetOn": "dataSource",
-        "label": "Columns",
-        "defaultValue": []
+        "label": "Columns"
       },
       {
         "type": "boolean",
@@ -201,6 +200,22 @@
           {
             "label": "60 Seconds",
             "value": 60
+          }
+        ]
+      },
+      {
+        "section": true,
+        "name": "Field Settings",
+        "collapsed": true,
+        "dependsOn": "canInsert",
+        "settings": [
+          {
+            "type": "fieldConfiguration",
+            "key": "insertFieldsConfig",
+            "label": "Insert Fields",
+            "nested": true,
+            "wide": true,
+            "resetOn": "dataSource"
           }
         ]
       },
