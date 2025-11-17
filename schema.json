@@ -629,7 +629,6 @@
             "type": "text",
             "key": "rowColorTemplate",
             "label": "Text Color",
-            "placeholder": "#BBBBBB",
             "nested": true
           },
           {
