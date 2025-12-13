@@ -99,7 +99,7 @@ export default {
         typescript: true,
         sass: true,
       }),
-      emitCss: true,
+      emitCss: false,
       onwarn: (warning, handler) => {
         if (!ignoredWarnings.includes(warning.code)) {
           handler(warning);

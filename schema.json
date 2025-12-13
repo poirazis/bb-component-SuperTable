@@ -70,26 +70,6 @@
           "label": "Page Number",
           "key": "pageNumber",
           "type": "number"
-        },
-        {
-          "label": "Singular Name",
-          "key": "entitySingular",
-          "type": "string"
-        },
-        {
-          "label": "Plural Name",
-          "key": "entityPlural",
-          "type": "string"
-        },
-        {
-          "label": "offset",
-          "key": "offset",
-          "type": "number"
-        },
-        {
-          "label": "limit",
-          "key": "limit",
-          "type": "number"
         }
       ]
     },
@@ -141,37 +121,6 @@
         "label": "Inital Limit",
         "key": "limit",
         "defaultValue": 50
-      },
-      {
-        "type": "boolean",
-        "key": "fetchOnScroll",
-        "label": "Fetch on Scroll",
-        "defaultValue": true
-      },
-      {
-        "type": "select",
-        "key": "paginationMethod",
-        "label": "Pagination",
-        "options": [
-          {
-            "label": "Cursor",
-            "value": "cursor"
-          },
-          {
-            "label": "Limit/Offset",
-            "value": "limitOffset"
-          }
-        ],
-        "dependsOn": "fetchOnScroll",
-        "defaultValue": "cursor"
-      },
-      {
-        "type": "number",
-        "key": "pageSize",
-        "label": "Page Size",
-        "min": 1,
-        "defaultValue": 100,
-        "dependsOn": "fetchOnScroll"
       },
       {
         "type": "select",
@@ -294,7 +243,7 @@
             "barTitle": "Edit Row",
             "defaultValue": false,
             "dependsOn": "isTable",
-            "resetOn": "isTable"
+            "resetOn": "dataSource"
           }
         ]
       },
@@ -458,7 +407,8 @@
             "type": "text",
             "key": "preselectedIds",
             "label": "Selected IDs",
-            "placeholder": "Comma Seperated Values"
+            "placeholder": "Comma Seperated Values",
+            "resetOn": ["dataSource", "canSelect"]
           },
           {
             "type": "buttonConfiguration",

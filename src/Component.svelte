@@ -26,7 +26,6 @@
     normal: {
       flex,
       display: "flex",
-      height: 360,
       ...$component.styles.normal,
     },
   };
