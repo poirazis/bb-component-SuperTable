@@ -118,7 +118,7 @@
       },
       {
         "type": "number",
-        "label": "Inital Limit",
+        "label": "Page Size",
         "key": "limit",
         "defaultValue": 50
       },
@@ -193,7 +193,9 @@
             "barStyle": "buttons",
             "barIcon": "Delete",
             "barTitle": "Delete Row",
-            "defaultValue": false
+            "defaultValue": false,
+            "dependsOn": "isTable",
+            "resetOn": "dataSource"
           },
           {
             "type": "boolean",
@@ -363,7 +365,8 @@
             "defaultValue": 1
           },
           {
-            "type": "buttonConfiguration",
+            "type": "componentConfiguration",
+            "componentType": "plugin/bb-component-SuperButton",
             "key": "rowMenuItems",
             "label": "Row Actions",
             "max": 6,
@@ -371,7 +374,8 @@
             "wide": true
           },
           {
-            "type": "buttonConfiguration",
+            "type": "componentConfiguration",
+            "componentType": "plugin/bb-component-SuperButton",
             "key": "rowContextMenuItems",
             "label": "Row Context Menu",
             "nested": true,
@@ -411,7 +415,8 @@
             "resetOn": ["dataSource", "canSelect"]
           },
           {
-            "type": "buttonConfiguration",
+            "type": "componentConfiguration",
+            "componentType": "plugin/bb-component-SuperButton",
             "key": "selectedActions",
             "label": "Selection Actions",
             "max": 6,

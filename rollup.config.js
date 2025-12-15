@@ -13,6 +13,7 @@ import pkg from "./package.json";
 import crypto from "crypto";
 import { validate } from "@budibase/backend-core/plugins";
 import sveltePreprocess from "svelte-preprocess";
+import * as sass from "sass-embedded";
 
 const ignoredWarnings = [
   "unused-export-let",
@@ -97,7 +98,10 @@ export default {
     svelte({
       preprocess: sveltePreprocess({
         typescript: true,
-        sass: true,
+        sass: {
+          implementation: sass,
+          renderSync: false,
+        },
       }),
       emitCss: false,
       onwarn: (warning, handler) => {
