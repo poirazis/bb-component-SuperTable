@@ -533,6 +533,7 @@
         "tag": "style",
         "section": true,
         "name": "Column Settings",
+        "collapsed": true,
         "settings": [
           {
             "type": "select",
@@ -572,6 +573,7 @@
         "tag": "style",
         "section": true,
         "name": "Dynamic Row Properties",
+        "collapsed": true,
         "settings": [
           {
             "type": "text",
@@ -604,6 +606,7 @@
         "tag": "style",
         "section": true,
         "name": "Dividers Settings",
+        "collapsed": true,
         "settings": [
           {
             "type": "select",
