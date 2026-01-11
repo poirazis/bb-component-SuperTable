@@ -1,6 +1,8 @@
 {
   "type": "component",
-  "metadata": {},
+  "metadata": {
+    "svelteMajor": 5
+  },
   "schema": {
     "name": "bb-component-SuperTable",
     "friendlyName": "Super Table",
@@ -14,7 +16,9 @@
       "AddDataProviderQueryExtension"
     ],
     "showEmptyState": false,
-    "styles": ["size"],
+    "styles": [
+      "size"
+    ],
     "size": {
       "width": 600,
       "height": 400
@@ -106,8 +110,14 @@
         "key": "sortOrder",
         "label": "Sort Order",
         "options": [
-          { "label": "Ascending", "value": "ascending" },
-          { "label": "Descending", "value": "descending" }
+          {
+            "label": "Ascending",
+            "value": "ascending"
+          },
+          {
+            "label": "Descending",
+            "value": "descending"
+          }
         ]
       },
       {
@@ -215,8 +225,16 @@
             "barStyle": "buttons",
             "barTitle": "Filtering",
             "options": [
-              { "label": "Off", "value": false, "barIcon": "Close" },
-              { "label": "Simple", "value": "simple", "barIcon": "Filter" },
+              {
+                "label": "Off",
+                "value": false,
+                "barIcon": "Close"
+              },
+              {
+                "label": "Simple",
+                "value": "simple",
+                "barIcon": "Filter"
+              },
               {
                 "label": "Advanced",
                 "value": "advanced",
@@ -261,7 +279,11 @@
             "showInBar": false,
             "barStyle": "buttons",
             "options": [
-              { "label": "Off", "value": "off", "barIcon": "Close" },
+              {
+                "label": "Off",
+                "value": "off",
+                "barIcon": "Close"
+              },
               {
                 "label": "First",
                 "value": "first",
@@ -342,9 +364,18 @@
             "key": "rowMenu",
             "label": "Row Actions",
             "options": [
-              { "label": "Disabled", "value": false },
-              { "label": "Column - Left", "value": "columnLeft" },
-              { "label": "Column - Right", "value": "columnRight" }
+              {
+                "label": "Disabled",
+                "value": false
+              },
+              {
+                "label": "Column - Left",
+                "value": "columnLeft"
+              },
+              {
+                "label": "Column - Right",
+                "value": "columnRight"
+              }
             ],
             "defaultValue": false
           },
@@ -398,7 +429,10 @@
               "value": true,
               "invert": true
             },
-            "resetOn": ["canEdit", "canSelect"]
+            "resetOn": [
+              "canEdit",
+              "canSelect"
+            ]
           },
           {
             "type": "number",
@@ -412,7 +446,10 @@
             "key": "preselectedIds",
             "label": "Selected IDs",
             "placeholder": "Comma Seperated Values",
-            "resetOn": ["dataSource", "canSelect"]
+            "resetOn": [
+              "dataSource",
+              "canSelect"
+            ]
           },
           {
             "type": "componentConfiguration",
@@ -473,23 +510,43 @@
             "key": "size",
             "label": "Size",
             "options": [
-              { "label": "Small", "value": "S" },
-              { "label": "Medium", "value": "M" },
-              { "label": "Large", "value": "L" }
+              {
+                "label": "Small",
+                "value": "S"
+              },
+              {
+                "label": "Medium",
+                "value": "M"
+              },
+              {
+                "label": "Large",
+                "value": "L"
+              }
             ],
             "defaultValue": "M"
           },
-
           {
             "type": "select",
             "key": "highlighters",
             "label": "Highlighters",
             "dependsOn": "canEdit",
             "options": [
-              { "label": "None", "value": "none" },
-              { "label": "Horizontal", "value": "horizontal" },
-              { "label": "Vertical", "value": "vertical" },
-              { "label": "Both", "value": "both" }
+              {
+                "label": "None",
+                "value": "none"
+              },
+              {
+                "label": "Horizontal",
+                "value": "horizontal"
+              },
+              {
+                "label": "Vertical",
+                "value": "vertical"
+              },
+              {
+                "label": "Both",
+                "value": "both"
+              }
             ],
             "defaultValue": "horizontal"
           },
@@ -498,9 +555,18 @@
             "key": "relViewMode",
             "label": "Relationships",
             "options": [
-              { "label": "Pills", "value": "pills" },
-              { "label": "Links", "value": "links" },
-              { "label": "Text", "value": "text" }
+              {
+                "label": "Pills",
+                "value": "pills"
+              },
+              {
+                "label": "Links",
+                "value": "links"
+              },
+              {
+                "label": "Text",
+                "value": "text"
+              }
             ],
             "defaultValue": "text"
           },
@@ -509,9 +575,18 @@
             "key": "optionsViewMode",
             "label": "Options",
             "options": [
-              { "label": "Color Text", "value": "colorText" },
-              { "label": "Pills", "value": "pills" },
-              { "label": "Text", "value": "text" }
+              {
+                "label": "Color Text",
+                "value": "colorText"
+              },
+              {
+                "label": "Pills",
+                "value": "pills"
+              },
+              {
+                "label": "Text",
+                "value": "text"
+              }
             ],
             "defaultValue": "colorText"
           },
@@ -540,8 +615,14 @@
             "key": "columnSizing",
             "label": "Column Sizing",
             "options": [
-              { "label": "Flexible", "value": "flexible" },
-              { "label": "Fixed", "value": "fixed" }
+              {
+                "label": "Flexible",
+                "value": "flexible"
+              },
+              {
+                "label": "Fixed",
+                "value": "fixed"
+              }
             ],
             "defaultValue": "flexible"
           },
@@ -549,14 +630,20 @@
             "type": "text",
             "key": "columnMinWidth",
             "label": "Min Width",
-            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
+            "dependsOn": {
+              "setting": "columnSizing",
+              "value": "flexible"
+            },
             "placeholder": "7rem"
           },
           {
             "type": "text",
             "key": "columnMaxWidth",
             "label": "Max Width",
-            "dependsOn": { "setting": "columnSizing", "value": "flexible" },
+            "dependsOn": {
+              "setting": "columnSizing",
+              "value": "flexible"
+            },
             "placeholder": "auto"
           },
           {
@@ -565,7 +652,10 @@
             "label": "Width",
             "placeholder": "7rem",
             "resetOn": "columnSizing",
-            "dependsOn": { "setting": "columnSizing", "value": "fixed" }
+            "dependsOn": {
+              "setting": "columnSizing",
+              "value": "fixed"
+            }
           }
         ]
       },
@@ -613,10 +703,22 @@
             "key": "dividers",
             "label": "Dividers",
             "options": [
-              { "label": "None", "value": "none" },
-              { "label": "Horizontal", "value": "horizontal" },
-              { "label": "Vertical", "value": "vertical" },
-              { "label": "Both", "value": "both" }
+              {
+                "label": "None",
+                "value": "none"
+              },
+              {
+                "label": "Horizontal",
+                "value": "horizontal"
+              },
+              {
+                "label": "Vertical",
+                "value": "vertical"
+              },
+              {
+                "label": "Both",
+                "value": "both"
+              }
             ],
             "defaultValue": "horizontal"
           },
@@ -644,9 +746,18 @@
             "key": "onCellClick",
             "nested": true,
             "context": [
-              { "key": "column", "label": "column" },
-              { "key": "id", "label": "id" },
-              { "key": "value", "label": "value" }
+              {
+                "key": "column",
+                "label": "column"
+              },
+              {
+                "key": "id",
+                "label": "id"
+              },
+              {
+                "key": "value",
+                "label": "value"
+              }
             ]
           },
           {
@@ -654,11 +765,23 @@
             "label": "On Link Click",
             "key": "onLinkClick",
             "nested": true,
-            "dependsOn": { "setting": "relViewMode", "value": "links" },
+            "dependsOn": {
+              "setting": "relViewMode",
+              "value": "links"
+            },
             "context": [
-              { "key": "column", "label": "column" },
-              { "key": "id", "label": "id" },
-              { "key": "primaryDisplay", "label": "primaryDisplay" }
+              {
+                "key": "column",
+                "label": "column"
+              },
+              {
+                "key": "id",
+                "label": "id"
+              },
+              {
+                "key": "primaryDisplay",
+                "label": "primaryDisplay"
+              }
             ]
           },
           {
