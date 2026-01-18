@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "bb-component-SuperTable",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "packageManager": "bun@1.0.0",
