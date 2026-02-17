@@ -16,9 +16,7 @@
       "AddDataProviderQueryExtension"
     ],
     "showEmptyState": false,
-    "styles": [
-      "size"
-    ],
+    "styles": ["size"],
     "size": {
       "width": 600,
       "height": 400
@@ -429,10 +427,7 @@
               "value": true,
               "invert": true
             },
-            "resetOn": [
-              "canEdit",
-              "canSelect"
-            ]
+            "resetOn": ["canEdit", "canSelect"]
           },
           {
             "type": "number",
@@ -446,10 +441,7 @@
             "key": "preselectedIds",
             "label": "Selected IDs",
             "placeholder": "Comma Seperated Values",
-            "resetOn": [
-              "dataSource",
-              "canSelect"
-            ]
+            "resetOn": ["dataSource", "canSelect"]
           },
           {
             "type": "componentConfiguration",
@@ -576,8 +568,8 @@
             "label": "Options",
             "options": [
               {
-                "label": "Color Text",
-                "value": "colorText"
+                "label": "Bullets",
+                "value": "bullets"
               },
               {
                 "label": "Pills",
@@ -588,7 +580,7 @@
                 "value": "text"
               }
             ],
-            "defaultValue": "colorText"
+            "defaultValue": "bullets"
           },
           {
             "type": "boolean",

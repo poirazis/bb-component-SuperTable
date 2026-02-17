@@ -24,6 +24,7 @@
     normal: {
       flex,
       display: "flex",
+      overflow: "hidden",
       ...$component.styles.normal,
     },
   };
