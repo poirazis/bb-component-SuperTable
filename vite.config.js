@@ -92,9 +92,8 @@ export default defineConfig({
     clean(),
     validateSchema(),
     svelte({
-      compilerOptions: { compatibility: { componentApi: 4 } },
+      compilerOptions: {},
       emitCss: true,
-      preprocess: [],
     }),
     cssInjectedByJsPlugin(),
     viteSingleFile(),
