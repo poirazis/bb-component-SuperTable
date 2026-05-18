@@ -379,8 +379,8 @@
           },
           {
             "dependsOn": "rowMenu",
-            "type": "icon",
-            "defaultValue": "ri-more-fill",
+            "type": "phosphorIcon",
+            "defaultValue": "dots-three-vertical",
             "key": "rowMenuIcon",
             "label": "Menu Icon"
           },
@@ -661,7 +661,7 @@
             "type": "text",
             "key": "rowHeight",
             "label": "Height (px)",
-            "placeholder": 38,
+            "placeholder": 36,
             "nested": true
           },
           {
