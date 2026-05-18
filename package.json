@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "bb-component-SuperTable",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "A Fully Customizable Budibase Table Component",
   "author": "Michael Poirazi",
   "packageManager": "bun@1.0.0",
@@ -13,18 +13,18 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
-    "@poirazis/supercomponents-shared": "latest"
+    "@poirazis/supercomponents-shared": "^1.2.16"
   },
   "devDependencies": {
-    "@budibase/backend-core": "^3.24.1",
-    "@sveltejs/vite-plugin-svelte": "^6.2.4",
-    "svelte": "^5.46.3",
-    "tar": "^7.5.2",
-    "terser": "^5.44.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1",
-    "vite-plugin-css-injected-by-js": "^3.5.2",
-    "vite-plugin-singlefile": "^2.3.0"
+    "@budibase/backend-core": "^3.38.4",
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "svelte": "^5.55.7",
+    "tar": "^7.5.15",
+    "terser": "^5.47.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.13",
+    "vite-plugin-css-injected-by-js": "^5.0.1",
+    "vite-plugin-singlefile": "^2.3.3"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
